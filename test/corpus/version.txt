@@ -6,8 +6,9 @@ VERSION 0.8
 
 ---
 
-(version_command
-  version: (earthly_version))
+(source_file
+  (version_command
+    version: (version_major_minor)))
 
 ==================
 version command with features
@@ -17,10 +18,11 @@ VERSION --pass-args --try 0.8
 
 ---
 
-(version_command
-  feature: (earthly_feature)
-  feature: (earthly_feature)
-  version: (earthly_version))
+(source_file
+  (version_command
+    feature: (feature_flag)
+    feature: (feature_flag)
+    version: (version_major_minor)))
 
 ==================
 version command multiline
@@ -33,7 +35,8 @@ VERSION \
 
 ---
 
-(version_command
-  feature: (earthly_feature)
-  feature: (earthly_feature)
-  version: (earthly_version))
+(source_file
+  (version_command
+    feature: (feature_flag)
+    feature: (feature_flag)
+    version: (version_major_minor)))

@@ -1,5 +1,156 @@
 [
   {
+    "type": "arg_command",
+    "named": true,
+    "fields": {
+      "default_value": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "double_quoted_string",
+            "named": true
+          },
+          {
+            "type": "single_quoted_string",
+            "named": true
+          },
+          {
+            "type": "unquoted_string",
+            "named": true
+          }
+        ]
+      },
+      "default_value_expr": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "expr",
+            "named": true
+          }
+        ]
+      },
+      "global": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "global",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "variable",
+            "named": true
+          }
+        ]
+      },
+      "required": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "required",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "double_quoted_string",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "escape_sequence",
+          "named": true
+        },
+        {
+          "type": "expansion",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "expansion",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "expansion_variable",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "single_quoted_string",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "escape_sequence",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "source_file",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "arg_command",
+          "named": true
+        },
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "version_command",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "unquoted_string",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "expansion",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "version_command",
     "named": true,
     "fields": {
@@ -8,7 +159,7 @@
         "required": false,
         "types": [
           {
-            "type": "earthly_feature",
+            "type": "feature_flag",
             "named": true
           }
         ]
@@ -18,7 +169,7 @@
         "required": true,
         "types": [
           {
-            "type": "earthly_version",
+            "type": "version_major_minor",
             "named": true
           }
         ]
@@ -26,15 +177,83 @@
     }
   },
   {
+    "type": "\n",
+    "named": false
+  },
+  {
+    "type": "\"",
+    "named": false
+  },
+  {
+    "type": "$",
+    "named": false
+  },
+  {
+    "type": "'",
+    "named": false
+  },
+  {
+    "type": "=",
+    "named": false
+  },
+  {
+    "type": "ARG",
+    "named": false
+  },
+  {
     "type": "VERSION",
     "named": false
   },
   {
-    "type": "earthly_feature",
+    "type": "\\",
+    "named": false
+  },
+  {
+    "type": "\\ ",
+    "named": false
+  },
+  {
+    "type": "comment",
     "named": true
   },
   {
-    "type": "earthly_version",
+    "type": "escape_sequence",
     "named": true
+  },
+  {
+    "type": "expansion_variable",
+    "named": true
+  },
+  {
+    "type": "expr",
+    "named": true
+  },
+  {
+    "type": "feature_flag",
+    "named": true
+  },
+  {
+    "type": "global",
+    "named": true
+  },
+  {
+    "type": "required",
+    "named": true
+  },
+  {
+    "type": "variable",
+    "named": true
+  },
+  {
+    "type": "version_major_minor",
+    "named": true
+  },
+  {
+    "type": "{",
+    "named": false
+  },
+  {
+    "type": "}",
+    "named": false
   }
 ]
