@@ -1,0 +1,56 @@
+{
+  "name": "earthfile",
+  "rules": {
+    "version_command": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "VERSION"
+        },
+        {
+          "type": "FIELD",
+          "name": "feature",
+          "content": {
+            "type": "REPEAT",
+            "content": {
+              "type": "SYMBOL",
+              "name": "earthly_feature"
+            }
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "version",
+          "content": {
+            "type": "SYMBOL",
+            "name": "earthly_version"
+          }
+        }
+      ]
+    },
+    "earthly_version": {
+      "type": "PATTERN",
+      "value": "[0-9]+\\.[0-9]+"
+    },
+    "earthly_feature": {
+      "type": "PATTERN",
+      "value": "--[a-zA-Z0-9\\-]+"
+    }
+  },
+  "extras": [
+    {
+      "type": "PATTERN",
+      "value": "\\s+"
+    },
+    {
+      "type": "STRING",
+      "value": "\\\n"
+    }
+  ],
+  "conflicts": [],
+  "precedences": [],
+  "externals": [],
+  "inline": [],
+  "supertypes": []
+}

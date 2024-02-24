@@ -1,0 +1,40 @@
+[
+  {
+    "type": "version_command",
+    "named": true,
+    "fields": {
+      "feature": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "earthly_feature",
+            "named": true
+          }
+        ]
+      },
+      "version": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "earthly_version",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "VERSION",
+    "named": false
+  },
+  {
+    "type": "earthly_feature",
+    "named": true
+  },
+  {
+    "type": "earthly_version",
+    "named": true
+  }
+]

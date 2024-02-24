@@ -1,0 +1,39 @@
+==================
+version command
+==================
+
+VERSION 0.8
+
+---
+
+(version_command
+  version: (earthly_version))
+
+==================
+version command with features
+==================
+
+VERSION --pass-args --try 0.8
+
+---
+
+(version_command
+  feature: (earthly_feature)
+  feature: (earthly_feature)
+  version: (earthly_version))
+
+==================
+version command multiline
+==================
+
+VERSION \
+    --pass-args \
+    --try \
+    0.8
+
+---
+
+(version_command
+  feature: (earthly_feature)
+  feature: (earthly_feature)
+  version: (earthly_version))
