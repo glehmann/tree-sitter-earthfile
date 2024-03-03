@@ -314,7 +314,7 @@
           "name": "name",
           "content": {
             "type": "SYMBOL",
-            "name": "identifier"
+            "name": "option_identifier"
           }
         },
         {
@@ -346,7 +346,7 @@
           "name": "name",
           "content": {
             "type": "SYMBOL",
-            "name": "identifier"
+            "name": "option_identifier"
           }
         },
         {
@@ -378,6 +378,13 @@
           ]
         }
       ]
+    },
+    "option_identifier": {
+      "type": "IMMEDIATE_TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "[a-zA-Z0-9\\-]+"
+      }
     },
     "double_quoted_string": {
       "type": "SEQ",

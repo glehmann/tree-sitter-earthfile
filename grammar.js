@@ -76,16 +76,17 @@ module.exports = grammar({
     build_arg_flag: ($) =>
       seq(
         "--",
-        field("name", $.identifier),
+        field("name", $.option_identifier),
         token.immediate("="),
         field("value", $._string)
       ),
     option: ($) =>
       seq(
         "--",
-        field("name", $.identifier),
+        field("name", $.option_identifier),
         optional(seq(token.immediate("="), field("value", $._string)))
       ),
+    option_identifier: ($) => token.immediate(/[a-zA-Z0-9\-]+/),
 
     double_quoted_string: ($) =>
       seq(

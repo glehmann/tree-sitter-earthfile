@@ -82,7 +82,7 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "option_identifier",
             "named": true
           }
         ]
@@ -258,7 +258,7 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "option_identifier",
             "named": true
           }
         ]
@@ -508,6 +508,10 @@
   },
   {
     "type": "identifier",
+    "named": true
+  },
+  {
+    "type": "option_identifier",
     "named": true
   },
   {

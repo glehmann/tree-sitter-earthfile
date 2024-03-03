@@ -66,7 +66,7 @@ FROM +build --foo=bar
         (target_ref
             name: (identifier))
         (build_arg_flag
-            name: (identifier)
+            name: (option_identifier)
             value: (unquoted_string))))
 
 ==================
@@ -80,9 +80,50 @@ FROM --platform=linux/arm64 --allow-privileged +build
 (source_file
     (from_command
         (option
-            name: (identifier)
+            name: (option_identifier)
             value: (unquoted_string))
         (option
-            name: (identifier))
+            name: (option_identifier))
         (target_ref
             name: (identifier))))
+
+==================
+from target invalid option
+:error
+==================
+
+FROM -- platform=linux/arm64 --allow-privileged +build
+
+---
+
+    (source_file
+      (from_command
+        (ERROR
+          (identifier)
+          (identifier)
+          (UNEXPECTED '/')
+          (identifier))
+        (option
+          (option_identifier))
+        (target_ref
+          (identifier))))
+
+==================
+from target invalid build arg
+:error
+==================
+
+FROM -- platform=linux/arm64 -- allow-privileged +build
+
+---
+
+    (source_file
+      (from_command
+        (ERROR
+          (identifier)
+          (identifier)
+          (UNEXPECTED '/')
+          (identifier)
+          (identifier))
+        (target_ref
+          (identifier))))
