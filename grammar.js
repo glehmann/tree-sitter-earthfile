@@ -1,16 +1,21 @@
 module.exports = grammar({
   name: "earthfile",
 
-  externals: ($) => [
-    $._indent,
-    $._dedent,
-  ],
+  externals: ($) => [$._indent, $._dedent],
 
   extras: ($) => [/\s+/, "\\\n"],
 
   rules: {
     source_file: ($) =>
-        repeat(choice($.version_command, $.arg_command, $.target, $.comment)),
+      repeat(
+        choice(
+          $.version_command,
+          $.from_command,
+          $.arg_command,
+          $.target,
+          $.comment
+        )
+      ),
 
     version_command: ($) =>
       seq(
@@ -31,20 +36,24 @@ module.exports = grammar({
           seq(
             token.immediate("="),
             choice(
-              field(
-                "default_value",
-                choice(
-                  $.double_quoted_string,
-                  $.single_quoted_string,
-                  $.unquoted_string
-                )
-              ),
+              field("default_value", $._string),
               field("default_value_expr", $.expr)
             )
           )
         ),
         optional($.comment),
         "\n"
+      ),
+
+    from_command: ($) =>
+      seq(
+        "FROM",
+        choice(
+          $.image_spec,
+          seq(repeat($.option), $.target_ref, repeat($.build_arg_flag)),
+          // optional($.comment),
+          "\n"
+        )
       ),
 
     target: ($) =>
@@ -56,7 +65,7 @@ module.exports = grammar({
         optional(
           seq(
             $._indent,
-            repeat($.arg_command),
+            repeat(choice($.from_command, $.arg_command)),
             $._dedent
           )
         )
@@ -64,6 +73,19 @@ module.exports = grammar({
 
     version_major_minor: ($) => /[0-9]+\.[0-9]+/,
     feature_flag: ($) => /--[a-zA-Z0-9\-]+/,
+    build_arg_flag: ($) =>
+      seq(
+        "--",
+        field("name", $.identifier),
+        token.immediate("="),
+        field("value", $._string)
+      ),
+    option: ($) =>
+      seq(
+        "--",
+        field("name", $.identifier),
+        optional(seq(token.immediate("="), field("value", $._string)))
+      ),
 
     double_quoted_string: ($) =>
       seq(
@@ -108,6 +130,8 @@ module.exports = grammar({
     single_quoted_escape_sequence: ($) =>
       token.immediate(choice("\\\\", "\\'")),
 
+    expansion: ($) => seq("$", $._expansion_body),
+
     // we have 2 rules b/c aliases don't work as expected on seq() directly
     _immediate_expansion: ($) => alias($._imm_expansion, $.expansion),
     _imm_expansion: ($) => seq(token.immediate("$"), $._expansion_body),
@@ -124,7 +148,7 @@ module.exports = grammar({
 
     variable: ($) => token.immediate(/[a-zA-Z_][a-zA-Z0-9_]*/),
 
-    identifier: ($) => /[a-zA-Z_][a-zA-Z0-9_]*/,
+    identifier: ($) => /[a-zA-Z_][a-zA-Z0-9_\-]*/,
 
     comment: ($) => /#.*/,
 
@@ -132,5 +156,37 @@ module.exports = grammar({
     global: ($) => "--global",
 
     expr: ($) => /\$\(.+\)/,
+
+    target_ref: ($) => seq("+", field("name", $.identifier)),
+
+    image_spec: ($) =>
+      seq(
+        field("name", $.image_name),
+        field("tag", optional($.image_tag)),
+        field("digest", optional($.image_digest))
+      ),
+
+    image_name: ($) =>
+      seq(
+        choice(/[^@:\s\$-]/, $.expansion),
+        repeat(choice(token.immediate(/[^@:\s\$]+/), $._immediate_expansion))
+      ),
+
+    image_tag: ($) =>
+      seq(
+        token.immediate(":"),
+        repeat1(choice(token.immediate(/[^@\s\$]+/), $._immediate_expansion))
+      ),
+
+    image_digest: ($) =>
+      seq(
+        token.immediate("@"),
+        repeat1(
+          choice(token.immediate(/[a-zA-Z0-9:]+/), $._immediate_expansion)
+        )
+      ),
+
+    _string: ($) =>
+      choice($.double_quoted_string, $.single_quoted_string, $.unquoted_string),
   },
 });

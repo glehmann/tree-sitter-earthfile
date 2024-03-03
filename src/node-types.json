@@ -74,6 +74,40 @@
     }
   },
   {
+    "type": "build_arg_flag",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "double_quoted_string",
+            "named": true
+          },
+          {
+            "type": "single_quoted_string",
+            "named": true
+          },
+          {
+            "type": "unquoted_string",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "double_quoted_string",
     "named": true,
     "fields": {},
@@ -108,6 +142,148 @@
     }
   },
   {
+    "type": "from_command",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "build_arg_flag",
+          "named": true
+        },
+        {
+          "type": "image_spec",
+          "named": true
+        },
+        {
+          "type": "option",
+          "named": true
+        },
+        {
+          "type": "target_ref",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "image_digest",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "expansion",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "image_name",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "expansion",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "image_spec",
+    "named": true,
+    "fields": {
+      "digest": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "image_digest",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "image_name",
+            "named": true
+          }
+        ]
+      },
+      "tag": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "image_tag",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "image_tag",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "expansion",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "option",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "double_quoted_string",
+            "named": true
+          },
+          {
+            "type": "single_quoted_string",
+            "named": true
+          },
+          {
+            "type": "unquoted_string",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "single_quoted_string",
     "named": true,
     "fields": {},
@@ -136,6 +312,10 @@
         },
         {
           "type": "comment",
+          "named": true
+        },
+        {
+          "type": "from_command",
           "named": true
         },
         {
@@ -175,8 +355,28 @@
         {
           "type": "comment",
           "named": true
+        },
+        {
+          "type": "from_command",
+          "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "target_ref",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -247,6 +447,14 @@
     "named": false
   },
   {
+    "type": "+",
+    "named": false
+  },
+  {
+    "type": "--",
+    "named": false
+  },
+  {
     "type": ":",
     "named": false
   },
@@ -255,7 +463,15 @@
     "named": false
   },
   {
+    "type": "@",
+    "named": false
+  },
+  {
     "type": "ARG",
+    "named": false
+  },
+  {
+    "type": "FROM",
     "named": false
   },
   {
