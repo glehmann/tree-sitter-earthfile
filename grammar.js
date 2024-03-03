@@ -56,6 +56,18 @@ module.exports = grammar({
         )
       ),
 
+    run_command: ($) =>
+      seq(
+        "RUN",
+        repeat($.option),
+        optional(" -- "),
+        field("command", $.shell_fragment),
+        // optional($.comment),
+        "\n"
+      ),
+
+    anything_but_newline: ($) => /[^\\n]+/,
+
     target: ($) =>
       seq(
         field("name", $.identifier),
@@ -65,7 +77,7 @@ module.exports = grammar({
         optional(
           seq(
             $._indent,
-            repeat(choice($.from_command, $.arg_command)),
+            repeat(choice($.from_command, $.arg_command, $.run_command)),
             $._dedent
           )
         )
@@ -189,5 +201,26 @@ module.exports = grammar({
 
     _string: ($) =>
       choice($.double_quoted_string, $.single_quoted_string, $.unquoted_string),
+
+      shell_fragment: ($) => repeat1(
+        choice(
+          // A shell fragment is broken into the same tokens as other
+          // constructs because the lexer prefers the longer tokens
+          // when it has a choice. The example below shows the tokenization
+          // of the --mount parameter.
+          //
+          //   RUN --mount=foo=bar,baz=42 ls --all
+          //       ^^     ^   ^   ^   ^
+          //         ^^^^^ ^^^ ^^^ ^^^ ^^
+          //       |--------param-------|
+          //                              |--shell_command--|
+          //
+          /[,=-]/,
+          /[^\\\[\n#\s,=-][^\\\n]*/,
+          /\\[^\n,=-]/
+        )
+      ),
+
+
   },
 });

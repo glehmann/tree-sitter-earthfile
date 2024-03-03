@@ -284,6 +284,37 @@
     }
   },
   {
+    "type": "run_command",
+    "named": true,
+    "fields": {
+      "command": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "shell_fragment",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "option",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "shell_fragment",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "single_quoted_string",
     "named": true,
     "fields": {},
@@ -358,6 +389,10 @@
         },
         {
           "type": "from_command",
+          "named": true
+        },
+        {
+          "type": "run_command",
           "named": true
         }
       ]
@@ -435,6 +470,10 @@
     "named": false
   },
   {
+    "type": " -- ",
+    "named": false
+  },
+  {
     "type": "\"",
     "named": false
   },
@@ -472,6 +511,10 @@
   },
   {
     "type": "FROM",
+    "named": false
+  },
+  {
+    "type": "RUN",
     "named": false
   },
   {

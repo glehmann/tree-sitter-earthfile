@@ -224,6 +224,50 @@
         }
       ]
     },
+    "run_command": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "RUN"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "option"
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "STRING",
+              "value": " -- "
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "FIELD",
+          "name": "command",
+          "content": {
+            "type": "SYMBOL",
+            "name": "shell_fragment"
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "\n"
+        }
+      ]
+    },
+    "anything_but_newline": {
+      "type": "PATTERN",
+      "value": "[^\\\\n]+"
+    },
     "target": {
       "type": "SEQ",
       "members": [
@@ -277,6 +321,10 @@
                       {
                         "type": "SYMBOL",
                         "name": "arg_command"
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "run_command"
                       }
                     ]
                   }
@@ -812,6 +860,26 @@
           "name": "unquoted_string"
         }
       ]
+    },
+    "shell_fragment": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "PATTERN",
+            "value": "[,=-]"
+          },
+          {
+            "type": "PATTERN",
+            "value": "[^\\\\\\[\\n#\\s,=-][^\\\\\\n]*"
+          },
+          {
+            "type": "PATTERN",
+            "value": "\\\\[^\\n,=-]"
+          }
+        ]
+      }
     }
   },
   "extras": [
