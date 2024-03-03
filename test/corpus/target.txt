@@ -1,0 +1,39 @@
+==================
+target
+==================
+
+foo:
+
+---
+
+(source_file
+  (target
+    name: (identifier)))
+
+==================
+target with comment
+==================
+
+foo: # the foo target
+
+---
+
+(source_file
+  (target
+    name: (identifier)
+    (comment)))
+
+==================
+target with command
+==================
+
+foo:
+    ARG bar
+
+---
+
+(source_file
+  (target
+    name: (identifier)
+    (arg_command
+        name: (identifier))))

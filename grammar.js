@@ -1,15 +1,24 @@
 module.exports = grammar({
   name: "earthfile",
+
+  externals: ($) => [
+    $._indent,
+    $._dedent,
+  ],
+
   extras: ($) => [/\s+/, "\\\n"],
+
   rules: {
-    source_file: ($) => repeat(seq(choice($._command, $.comment), "\n")),
-    _command: ($) => choice($.version_command, $.arg_command),
+    source_file: ($) =>
+        repeat(choice($.version_command, $.arg_command, $.target, $.comment)),
 
     version_command: ($) =>
       seq(
         "VERSION",
         field("feature", repeat($.feature_flag)),
-        field("version", $.version_major_minor)
+        field("version", $.version_major_minor),
+        optional($.comment),
+        "\n"
       ),
 
     arg_command: ($) =>
@@ -17,7 +26,7 @@ module.exports = grammar({
         "ARG",
         optional(field("required", $.required)),
         optional(field("global", $.global)),
-        field("name", $.variable),
+        field("name", $.identifier),
         optional(
           seq(
             token.immediate("="),
@@ -32,6 +41,23 @@ module.exports = grammar({
               ),
               field("default_value_expr", $.expr)
             )
+          )
+        ),
+        optional($.comment),
+        "\n"
+      ),
+
+    target: ($) =>
+      seq(
+        field("name", $.identifier),
+        ":",
+        optional($.comment),
+        "\n",
+        optional(
+          seq(
+            $._indent,
+            repeat($.arg_command),
+            $._dedent
           )
         )
       ),
@@ -88,17 +114,17 @@ module.exports = grammar({
 
     _expansion_body: ($) =>
       choice(
-        $.expansion_variable,
+        $.variable,
         seq(
           token.immediate("{"),
-          alias(token.immediate(/[^\}]+/), $.expansion_variable),
+          alias(token.immediate(/[^\}]+/), $.variable),
           token.immediate("}")
         )
       ),
 
-    expansion_variable: ($) => token.immediate(/[a-zA-Z_][a-zA-Z0-9_]*/),
+    variable: ($) => token.immediate(/[a-zA-Z_][a-zA-Z0-9_]*/),
 
-    variable: ($) => /[a-zA-Z_][a-zA-Z0-9_]*/,
+    identifier: ($) => /[a-zA-Z_][a-zA-Z0-9_]*/,
 
     comment: ($) => /#.*/,
 
