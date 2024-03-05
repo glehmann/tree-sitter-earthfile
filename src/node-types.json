@@ -144,21 +144,40 @@
   {
     "type": "from_command",
     "named": true,
-    "fields": {},
+    "fields": {
+      "platform": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "double_quoted_string",
+            "named": true
+          },
+          {
+            "type": "single_quoted_string",
+            "named": true
+          },
+          {
+            "type": "unquoted_string",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": false,
       "types": [
+        {
+          "type": "allow_privileged",
+          "named": true
+        },
         {
           "type": "build_arg_flag",
           "named": true
         },
         {
           "type": "image_spec",
-          "named": true
-        },
-        {
-          "type": "option",
           "named": true
         },
         {
@@ -250,21 +269,39 @@
     }
   },
   {
-    "type": "option",
+    "type": "run_command",
     "named": true,
     "fields": {
-      "name": {
+      "command": {
         "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "option_identifier",
+            "type": "shell_fragment",
             "named": true
           }
         ]
       },
-      "value": {
-        "multiple": false,
+      "mount": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "double_quoted_string",
+            "named": true
+          },
+          {
+            "type": "single_quoted_string",
+            "named": true
+          },
+          {
+            "type": "unquoted_string",
+            "named": true
+          }
+        ]
+      },
+      "secret": {
+        "multiple": true,
         "required": false,
         "types": [
           {
@@ -281,29 +318,33 @@
           }
         ]
       }
-    }
-  },
-  {
-    "type": "run_command",
-    "named": true,
-    "fields": {
-      "command": {
-        "multiple": false,
-        "required": true,
-        "types": [
-          {
-            "type": "shell_fragment",
-            "named": true
-          }
-        ]
-      }
     },
     "children": {
       "multiple": true,
       "required": false,
       "types": [
         {
-          "type": "option",
+          "type": "entrypoint",
+          "named": true
+        },
+        {
+          "type": "network_none",
+          "named": true
+        },
+        {
+          "type": "no_cache",
+          "named": true
+        },
+        {
+          "type": "privileged",
+          "named": true
+        },
+        {
+          "type": "push",
+          "named": true
+        },
+        {
+          "type": "ssh",
           "named": true
         }
       ]
@@ -494,6 +535,18 @@
     "named": false
   },
   {
+    "type": "--mount",
+    "named": false
+  },
+  {
+    "type": "--platform",
+    "named": false
+  },
+  {
+    "type": "--secret",
+    "named": false
+  },
+  {
     "type": ":",
     "named": false
   },
@@ -530,7 +583,15 @@
     "named": false
   },
   {
+    "type": "allow_privileged",
+    "named": true
+  },
+  {
     "type": "comment",
+    "named": true
+  },
+  {
+    "type": "entrypoint",
     "named": true
   },
   {
@@ -554,11 +615,31 @@
     "named": true
   },
   {
+    "type": "network_none",
+    "named": true
+  },
+  {
+    "type": "no_cache",
+    "named": true
+  },
+  {
     "type": "option_identifier",
     "named": true
   },
   {
+    "type": "privileged",
+    "named": true
+  },
+  {
+    "type": "push",
+    "named": true
+  },
+  {
     "type": "required",
+    "named": true
+  },
+  {
+    "type": "ssh",
     "named": true
   },
   {

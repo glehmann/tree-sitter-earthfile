@@ -199,8 +199,37 @@
                 {
                   "type": "REPEAT",
                   "content": {
-                    "type": "SYMBOL",
-                    "name": "option"
+                    "type": "CHOICE",
+                    "members": [
+                      {
+                        "type": "SEQ",
+                        "members": [
+                          {
+                            "type": "STRING",
+                            "value": "--platform"
+                          },
+                          {
+                            "type": "IMMEDIATE_TOKEN",
+                            "content": {
+                              "type": "PATTERN",
+                              "value": "[ =]"
+                            }
+                          },
+                          {
+                            "type": "FIELD",
+                            "name": "platform",
+                            "content": {
+                              "type": "SYMBOL",
+                              "name": "_string"
+                            }
+                          }
+                        ]
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "allow_privileged"
+                      }
+                    ]
                   }
                 },
                 {
@@ -234,8 +263,81 @@
         {
           "type": "REPEAT",
           "content": {
-            "type": "SYMBOL",
-            "name": "option"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": "--secret"
+                  },
+                  {
+                    "type": "IMMEDIATE_TOKEN",
+                    "content": {
+                      "type": "PATTERN",
+                      "value": "[ =]"
+                    }
+                  },
+                  {
+                    "type": "FIELD",
+                    "name": "secret",
+                    "content": {
+                      "type": "SYMBOL",
+                      "name": "_string"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": "--mount"
+                  },
+                  {
+                    "type": "IMMEDIATE_TOKEN",
+                    "content": {
+                      "type": "PATTERN",
+                      "value": "[ =]"
+                    }
+                  },
+                  {
+                    "type": "FIELD",
+                    "name": "mount",
+                    "content": {
+                      "type": "SYMBOL",
+                      "name": "_string"
+                    }
+                  }
+                ]
+              },
+              {
+                "type": "SYMBOL",
+                "name": "push"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "no_cache"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "entrypoint"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "privileged"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "network_none"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "ssh"
+              }
+            ]
           }
         },
         {
@@ -368,8 +470,8 @@
         {
           "type": "IMMEDIATE_TOKEN",
           "content": {
-            "type": "STRING",
-            "value": "="
+            "type": "PATTERN",
+            "value": "[ =]"
           }
         },
         {
@@ -678,6 +780,34 @@
     "global": {
       "type": "STRING",
       "value": "--global"
+    },
+    "allow_privileged": {
+      "type": "STRING",
+      "value": "--allow-privileged"
+    },
+    "push": {
+      "type": "STRING",
+      "value": "--push"
+    },
+    "no_cache": {
+      "type": "STRING",
+      "value": "--no-cache"
+    },
+    "entrypoint": {
+      "type": "STRING",
+      "value": "--entrypoint"
+    },
+    "privileged": {
+      "type": "STRING",
+      "value": "--privileged"
+    },
+    "network_none": {
+      "type": "STRING",
+      "value": "--network=none"
+    },
+    "ssh": {
+      "type": "STRING",
+      "value": "--ssh"
     },
     "expr": {
       "type": "PATTERN",

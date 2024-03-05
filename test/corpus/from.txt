@@ -68,3 +68,58 @@ FROM +build --foo=bar
         (build_arg_flag
             name: (option_identifier)
             value: (unquoted_string))))
+
+==================
+from target with space build arg
+==================
+
+FROM +build --foo bar
+
+---
+
+(source_file
+    (from_command
+        (target_ref
+            name: (identifier))
+        (build_arg_flag
+            name: (option_identifier)
+            value: (unquoted_string))))
+
+==================
+from target with platform
+==================
+
+FROM --platform=linux/arm64 +build
+
+---
+    (source_file
+      (from_command
+        platform: (unquoted_string)
+        (target_ref
+          name: (identifier))))
+
+==================
+from target with space platform
+==================
+
+FROM --platform linux/arm64 +build
+
+---
+    (source_file
+      (from_command
+        platform: (unquoted_string)
+        (target_ref
+          name: (identifier))))
+
+==================
+from target with allow privileged
+==================
+
+FROM --allow-privileged +build
+
+---
+    (source_file
+      (from_command
+        (allow_privileged)
+        (target_ref
+          name: (identifier))))

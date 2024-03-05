@@ -50,7 +50,20 @@ module.exports = grammar({
         "FROM",
         choice(
           $.image_spec,
-          seq(repeat($.option), $.target_ref, repeat($.build_arg_flag)),
+          seq(
+            repeat(
+              choice(
+                seq(
+                  "--platform",
+                  token.immediate(/[ =]/),
+                  field("platform", $._string)
+                ),
+                $.allow_privileged
+              )
+            ),
+            $.target_ref,
+            repeat($.build_arg_flag)
+          ),
           // optional($.comment),
           "\n"
         )
@@ -59,7 +72,22 @@ module.exports = grammar({
     run_command: ($) =>
       seq(
         "RUN",
-        repeat($.option),
+        repeat(
+          choice(
+            seq(
+              "--secret",
+              token.immediate(/[ =]/),
+              field("secret", $._string)
+            ),
+            seq("--mount", token.immediate(/[ =]/), field("mount", $._string)),
+            $.push,
+            $.no_cache,
+            $.entrypoint,
+            $.privileged,
+            $.network_none,
+            $.ssh
+          )
+        ),
         optional(" -- "),
         field("command", $.shell_fragment),
         // optional($.comment),
@@ -89,7 +117,7 @@ module.exports = grammar({
       seq(
         "--",
         field("name", $.option_identifier),
-        token.immediate("="),
+        token.immediate(/[ =]/),
         field("value", $._string)
       ),
     option: ($) =>
@@ -167,6 +195,13 @@ module.exports = grammar({
 
     required: ($) => "--required",
     global: ($) => "--global",
+    allow_privileged: ($) => "--allow-privileged",
+    push: ($) => "--push",
+    no_cache: ($) => "--no-cache",
+    entrypoint: ($) => "--entrypoint",
+    privileged: ($) => "--privileged",
+    network_none: ($) => "--network=none",
+    ssh: ($) => "--ssh",
 
     expr: ($) => /\$\(.+\)/,
 
@@ -202,7 +237,8 @@ module.exports = grammar({
     _string: ($) =>
       choice($.double_quoted_string, $.single_quoted_string, $.unquoted_string),
 
-      shell_fragment: ($) => repeat1(
+    shell_fragment: ($) =>
+      repeat1(
         choice(
           // A shell fragment is broken into the same tokens as other
           // constructs because the lexer prefers the longer tokens
@@ -220,7 +256,5 @@ module.exports = grammar({
           /\\[^\n,=-]/
         )
       ),
-
-
   },
 });
