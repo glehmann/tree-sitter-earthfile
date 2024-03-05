@@ -1,0 +1,52 @@
+==================
+copy
+==================
+
+foo:
+    COPY foo bar
+
+---
+
+    (source_file
+      (target
+        name: (identifier)
+        (copy_command
+          src: (path)
+          dest: (path))))
+
+==================
+copy multi sources
+==================
+
+foo:
+    COPY foo bar hop
+
+---
+
+    (source_file
+      (target
+        name: (identifier)
+        (copy_command
+          src: (path)
+          src: (path)
+          dest: (path))))
+
+==================
+copy with options
+==================
+
+foo:
+    COPY --dir --keep-ts --platform=linux/arm64 foo bar
+
+---
+
+    (source_file
+      (target
+        name: (identifier)
+        (copy_command
+          (dir)
+          (keep_ts)
+          (platform
+            value: (unquoted_string))
+          src: (path)
+          dest: (path))))

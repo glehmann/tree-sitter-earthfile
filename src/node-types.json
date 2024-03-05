@@ -108,6 +108,102 @@
     }
   },
   {
+    "type": "chmod",
+    "named": true,
+    "fields": {
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "double_quoted_string",
+            "named": true
+          },
+          {
+            "type": "single_quoted_string",
+            "named": true
+          },
+          {
+            "type": "unquoted_string",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "copy_command",
+    "named": true,
+    "fields": {
+      "dest": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "path",
+            "named": true
+          }
+        ]
+      },
+      "src": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "path",
+            "named": true
+          },
+          {
+            "type": "target_artifact",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "allow_privileged",
+          "named": true
+        },
+        {
+          "type": "chmod",
+          "named": true
+        },
+        {
+          "type": "dir",
+          "named": true
+        },
+        {
+          "type": "if_exists",
+          "named": true
+        },
+        {
+          "type": "keep_own",
+          "named": true
+        },
+        {
+          "type": "keep_ts",
+          "named": true
+        },
+        {
+          "type": "pass_args",
+          "named": true
+        },
+        {
+          "type": "platform",
+          "named": true
+        },
+        {
+          "type": "symlink_no_follow",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "double_quoted_string",
     "named": true,
     "fields": {},
@@ -144,26 +240,7 @@
   {
     "type": "from_command",
     "named": true,
-    "fields": {
-      "platform": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "double_quoted_string",
-            "named": true
-          },
-          {
-            "type": "single_quoted_string",
-            "named": true
-          },
-          {
-            "type": "unquoted_string",
-            "named": true
-          }
-        ]
-      }
-    },
+    "fields": {},
     "children": {
       "multiple": true,
       "required": false,
@@ -178,6 +255,10 @@
         },
         {
           "type": "image_spec",
+          "named": true
+        },
+        {
+          "type": "platform",
           "named": true
         },
         {
@@ -269,40 +350,12 @@
     }
   },
   {
-    "type": "run_command",
+    "type": "mount",
     "named": true,
     "fields": {
-      "command": {
+      "value": {
         "multiple": false,
         "required": true,
-        "types": [
-          {
-            "type": "shell_fragment",
-            "named": true
-          }
-        ]
-      },
-      "mount": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "double_quoted_string",
-            "named": true
-          },
-          {
-            "type": "single_quoted_string",
-            "named": true
-          },
-          {
-            "type": "unquoted_string",
-            "named": true
-          }
-        ]
-      },
-      "secret": {
-        "multiple": true,
-        "required": false,
         "types": [
           {
             "type": "double_quoted_string",
@@ -318,6 +371,61 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "path",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "expansion",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "platform",
+    "named": true,
+    "fields": {
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "double_quoted_string",
+            "named": true
+          },
+          {
+            "type": "single_quoted_string",
+            "named": true
+          },
+          {
+            "type": "unquoted_string",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "run_command",
+    "named": true,
+    "fields": {
+      "command": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "shell_fragment",
+            "named": true
+          }
+        ]
+      }
     },
     "children": {
       "multiple": true,
@@ -325,6 +433,10 @@
       "types": [
         {
           "type": "entrypoint",
+          "named": true
+        },
+        {
+          "type": "mount",
           "named": true
         },
         {
@@ -344,10 +456,38 @@
           "named": true
         },
         {
+          "type": "secret",
+          "named": true
+        },
+        {
           "type": "ssh",
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "secret",
+    "named": true,
+    "fields": {
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "double_quoted_string",
+            "named": true
+          },
+          {
+            "type": "single_quoted_string",
+            "named": true
+          },
+          {
+            "type": "unquoted_string",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -429,11 +569,51 @@
           "named": true
         },
         {
+          "type": "copy_command",
+          "named": true
+        },
+        {
           "type": "from_command",
           "named": true
         },
         {
           "type": "run_command",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "target_artifact",
+    "named": true,
+    "fields": {
+      "artifact": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "path",
+            "named": true
+          }
+        ]
+      },
+      "target_ref": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "target_ref",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "build_arg_flag",
           "named": true
         }
       ]
@@ -527,11 +707,23 @@
     "named": false
   },
   {
+    "type": "(",
+    "named": false
+  },
+  {
+    "type": ")",
+    "named": false
+  },
+  {
     "type": "+",
     "named": false
   },
   {
     "type": "--",
+    "named": false
+  },
+  {
+    "type": "--chmod",
     "named": false
   },
   {
@@ -544,6 +736,10 @@
   },
   {
     "type": "--secret",
+    "named": false
+  },
+  {
+    "type": "/",
     "named": false
   },
   {
@@ -560,6 +756,10 @@
   },
   {
     "type": "ARG",
+    "named": false
+  },
+  {
+    "type": "COPY",
     "named": false
   },
   {
@@ -591,6 +791,10 @@
     "named": true
   },
   {
+    "type": "dir",
+    "named": true
+  },
+  {
     "type": "entrypoint",
     "named": true
   },
@@ -615,6 +819,18 @@
     "named": true
   },
   {
+    "type": "if_exists",
+    "named": true
+  },
+  {
+    "type": "keep_own",
+    "named": true
+  },
+  {
+    "type": "keep_ts",
+    "named": true
+  },
+  {
     "type": "network_none",
     "named": true
   },
@@ -624,6 +840,10 @@
   },
   {
     "type": "option_identifier",
+    "named": true
+  },
+  {
+    "type": "pass_args",
     "named": true
   },
   {
@@ -640,6 +860,10 @@
   },
   {
     "type": "ssh",
+    "named": true
+  },
+  {
+    "type": "symlink_no_follow",
     "named": true
   },
   {

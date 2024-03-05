@@ -27,5 +27,6 @@ foo:
         name: (identifier)
         (run_command
           (push)
-          secret: (unquoted_string)
+          (secret
+            value: (unquoted_string))
           command: (shell_fragment))))

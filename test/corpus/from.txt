@@ -94,7 +94,8 @@ FROM --platform=linux/arm64 +build
 ---
     (source_file
       (from_command
-        platform: (unquoted_string)
+        (platform
+          value: (unquoted_string))
         (target_ref
           name: (identifier))))
 
@@ -107,7 +108,8 @@ FROM --platform linux/arm64 +build
 ---
     (source_file
       (from_command
-        platform: (unquoted_string)
+        (platform
+          value: (unquoted_string))
         (target_ref
           name: (identifier))))
 

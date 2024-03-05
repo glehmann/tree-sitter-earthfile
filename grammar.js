@@ -51,16 +51,7 @@ module.exports = grammar({
         choice(
           $.image_spec,
           seq(
-            repeat(
-              choice(
-                seq(
-                  "--platform",
-                  token.immediate(/[ =]/),
-                  field("platform", $._string)
-                ),
-                $.allow_privileged
-              )
-            ),
+            repeat(choice($.platform, $.allow_privileged)),
             $.target_ref,
             repeat($.build_arg_flag)
           ),
@@ -74,12 +65,8 @@ module.exports = grammar({
         "RUN",
         repeat(
           choice(
-            seq(
-              "--secret",
-              token.immediate(/[ =]/),
-              field("secret", $._string)
-            ),
-            seq("--mount", token.immediate(/[ =]/), field("mount", $._string)),
+            $.secret,
+            $.mount,
             $.push,
             $.no_cache,
             $.entrypoint,
@@ -94,7 +81,27 @@ module.exports = grammar({
         "\n"
       ),
 
-    anything_but_newline: ($) => /[^\\n]+/,
+    copy_command: ($) =>
+      seq(
+        "COPY",
+        repeat(
+          choice(
+            $.chmod,
+            $.platform,
+            $.dir,
+            $.keep_ts,
+            $.keep_own,
+            $.if_exists,
+            $.symlink_no_follow,
+            $.allow_privileged,
+            $.pass_args
+          )
+        ),
+        repeat1(field("src", choice($.target_artifact, $.path))),
+        field("dest", $.path),
+        // optional($.comment),
+        "\n"
+      ),
 
     target: ($) =>
       seq(
@@ -105,7 +112,14 @@ module.exports = grammar({
         optional(
           seq(
             $._indent,
-            repeat(choice($.from_command, $.arg_command, $.run_command)),
+            repeat(
+              choice(
+                $.from_command,
+                $.arg_command,
+                $.run_command,
+                $.copy_command
+              )
+            ),
             $._dedent
           )
         )
@@ -133,7 +147,7 @@ module.exports = grammar({
         '"',
         repeat(
           choice(
-            token.immediate(/[^"\n\\\$]+/),
+            token.immediate(/[^"\n\\\$()]+/),
             alias($.double_quoted_escape_sequence, $.escape_sequence),
             "\\",
             $._immediate_expansion
@@ -187,6 +201,32 @@ module.exports = grammar({
         )
       ),
 
+    path: ($) =>
+      seq(
+        choice(
+          /[^-\s\$]/, // cannot start with a '-' to avoid conflicts with params
+          $.expansion
+        ),
+        repeat(choice(token.immediate(/[^\s\$]+/), $._immediate_expansion))
+      ),
+
+    target_artifact: ($) =>
+      choice(
+        seq(
+          field("target_ref", $.target_ref),
+          token.immediate("/"),
+          field("artifact", $.path)
+        ),
+        seq(
+          "(",
+          field("target_ref", $.target_ref),
+          token.immediate("/"),
+          field("artifact", $.path),
+          repeat($.build_arg_flag),
+          ")"
+        )
+      ),
+
     variable: ($) => token.immediate(/[a-zA-Z_][a-zA-Z0-9_]*/),
 
     identifier: ($) => /[a-zA-Z_][a-zA-Z0-9_\-]*/,
@@ -202,6 +242,20 @@ module.exports = grammar({
     privileged: ($) => "--privileged",
     network_none: ($) => "--network=none",
     ssh: ($) => "--ssh",
+    dir: ($) => "--dir",
+    keep_ts: ($) => "--keep-ts",
+    keep_own: ($) => "--keep-own",
+    if_exists: ($) => "--if-exists",
+    symlink_no_follow: ($) => "--symlink-no-follow",
+    pass_args: ($) => "--pass-args",
+    platform: ($) =>
+      seq("--platform", token.immediate(/[ =]/), field("value", $._string)),
+    chmod: ($) =>
+      seq("--chmod", token.immediate(/[ =]/), field("value", $._string)),
+    secret: ($) =>
+      seq("--secret", token.immediate(/[ =]/), field("value", $._string)),
+    mount: ($) =>
+      seq("--mount", token.immediate(/[ =]/), field("value", $._string)),
 
     expr: ($) => /\$\(.+\)/,
 
