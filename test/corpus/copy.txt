@@ -44,9 +44,9 @@ foo:
       (target
         name: (identifier)
         (copy_command
-          (dir)
-          (keep_ts)
-          (platform
+          option: (dir)
+          option: (keep_ts)
+          option: (platform
             value: (unquoted_string))
           src: (path)
           dest: (path))))

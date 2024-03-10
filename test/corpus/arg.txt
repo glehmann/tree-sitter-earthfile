@@ -20,7 +20,7 @@ ARG --required foo
 
 (source_file
   (arg_command
-    required: (required)
+    option: (required)
     name: (identifier)))
 
 ==================
@@ -33,7 +33,7 @@ ARG --global foo
 
 (source_file
   (arg_command
-    global: (global)
+    option: (global)
     name: (identifier)))
 
 ==================

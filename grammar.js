@@ -3,34 +3,26 @@ module.exports = grammar({
 
   externals: ($) => [$._indent, $._dedent],
 
-  extras: ($) => [/\s+/, "\\\n"],
+  extras: ($) => [
+    /\s+/,
+    $.line_continuation,
+    $.comment,
+    $.line_continuation_comment,
+  ],
 
   rules: {
+    // main rule, for the whole file
+    // it must be the first rule in the list
     source_file: ($) =>
       repeat(
-        choice(
-          $.version_command,
-          $.from_command,
-          $.arg_command,
-          $.target,
-          $.comment
-        )
+        choice($.arg_command, $.from_command, $.target, $.version_command)
       ),
 
-    version_command: ($) =>
-      seq(
-        "VERSION",
-        field("feature", repeat($.feature_flag)),
-        field("version", $.version_major_minor),
-        optional($.comment),
-        "\n"
-      ),
-
+    // the root commands/elements
     arg_command: ($) =>
       seq(
         "ARG",
-        optional(field("required", $.required)),
-        optional(field("global", $.global)),
+        repeat(field("option", choice($.required, $.global))),
         field("name", $.identifier),
         optional(
           seq(
@@ -41,8 +33,7 @@ module.exports = grammar({
             )
           )
         ),
-        optional($.comment),
-        "\n"
+        $._eol
       ),
 
     from_command: ($) =>
@@ -51,73 +42,28 @@ module.exports = grammar({
         choice(
           $.image_spec,
           seq(
-            repeat(choice($.platform, $.allow_privileged)),
+            repeat(field("option", choice($.platform, $.allow_privileged))),
             $.target_ref,
-            repeat($.build_arg_flag)
+            repeat($.build_arg)
           ),
-          // optional($.comment),
-          "\n"
+          $._eol
         )
-      ),
-
-    run_command: ($) =>
-      seq(
-        "RUN",
-        repeat(
-          choice(
-            $.secret,
-            $.mount,
-            $.push,
-            $.no_cache,
-            $.entrypoint,
-            $.privileged,
-            $.network_none,
-            $.ssh
-          )
-        ),
-        optional(" -- "),
-        field("command", $.shell_fragment),
-        // optional($.comment),
-        "\n"
-      ),
-
-    copy_command: ($) =>
-      seq(
-        "COPY",
-        repeat(
-          choice(
-            $.chmod,
-            $.platform,
-            $.dir,
-            $.keep_ts,
-            $.keep_own,
-            $.if_exists,
-            $.symlink_no_follow,
-            $.allow_privileged,
-            $.pass_args
-          )
-        ),
-        repeat1(field("src", choice($.target_artifact, $.path))),
-        field("dest", $.path),
-        // optional($.comment),
-        "\n"
       ),
 
     target: ($) =>
       seq(
         field("name", $.identifier),
         ":",
-        optional($.comment),
-        "\n",
+        $._eol,
         optional(
           seq(
             $._indent,
             repeat(
               choice(
-                $.from_command,
                 $.arg_command,
-                $.run_command,
-                $.copy_command
+                $.copy_command,
+                $.from_command,
+                $.run_command
               )
             ),
             $._dedent
@@ -125,172 +71,82 @@ module.exports = grammar({
         )
       ),
 
-    version_major_minor: ($) => /[0-9]+\.[0-9]+/,
-    feature_flag: ($) => /--[a-zA-Z0-9\-]+/,
-    build_arg_flag: ($) =>
+    version_command: ($) =>
       seq(
-        "--",
-        field("name", $.option_identifier),
-        token.immediate(/[ =]/),
-        field("value", $._string)
+        "VERSION",
+        field("option", repeat($.feature_flag)),
+        field("version", $.version_major_minor),
+        $._eol
       ),
-    option: ($) =>
-      seq(
-        "--",
-        field("name", $.option_identifier),
-        optional(seq(token.immediate("="), field("value", $._string)))
-      ),
-    option_identifier: ($) => token.immediate(/[a-zA-Z0-9\-]+/),
 
-    double_quoted_string: ($) =>
+    // the target commands
+    copy_command: ($) =>
       seq(
-        '"',
+        "COPY",
         repeat(
-          choice(
-            token.immediate(/[^"\n\\\$()]+/),
-            alias($.double_quoted_escape_sequence, $.escape_sequence),
-            "\\",
-            $._immediate_expansion
+          field(
+            "option",
+            choice(
+              $.allow_privileged,
+              $.chmod,
+              $.chown,
+              $.dir,
+              $.if_exists,
+              $.keep_own,
+              $.keep_ts,
+              $.pass_args,
+              $.platform,
+              $.symlink_no_follow
+            )
           )
         ),
-        '"'
-      ),
-
-    // same as double_quoted_string but without $-expansions:
-    single_quoted_string: ($) =>
-      seq(
-        "'",
-        repeat(
-          choice(
-            token.immediate(/[^'\n\\]+/),
-            alias($.single_quoted_escape_sequence, $.escape_sequence),
-            "\\"
+        repeat1(
+          field(
+            "src",
+            choice($.target_artifact, $.target_artifact_build_args, $.path)
           )
         ),
-        "'"
+        field("dest", $.path),
+        $._eol
       ),
 
-    unquoted_string: ($) =>
-      repeat1(
-        choice(
-          token.immediate(/[^\s\n\"'\\\$]+/),
-          token.immediate("\\ "),
-          $._immediate_expansion
-        )
-      ),
-
-    double_quoted_escape_sequence: ($) =>
-      token.immediate(choice("\\\\", '\\"')),
-
-    single_quoted_escape_sequence: ($) =>
-      token.immediate(choice("\\\\", "\\'")),
-
-    expansion: ($) => seq("$", $._expansion_body),
-
-    // we have 2 rules b/c aliases don't work as expected on seq() directly
-    _immediate_expansion: ($) => alias($._imm_expansion, $.expansion),
-    _imm_expansion: ($) => seq(token.immediate("$"), $._expansion_body),
-
-    _expansion_body: ($) =>
-      choice(
-        $.variable,
-        seq(
-          token.immediate("{"),
-          alias(token.immediate(/[^\}]+/), $.variable),
-          token.immediate("}")
-        )
-      ),
-
-    path: ($) =>
+    run_command: ($) =>
       seq(
-        choice(
-          /[^-\s\$]/, // cannot start with a '-' to avoid conflicts with params
-          $.expansion
+        "RUN",
+        repeat(
+          field(
+            "option",
+            choice(
+              $.entrypoint,
+              $.mount,
+              $.network_none,
+              $.no_cache,
+              $.privileged,
+              $.push,
+              $.secret,
+              $.ssh
+            )
+          )
         ),
-        repeat(choice(token.immediate(/[^\s\$]+/), $._immediate_expansion))
+        optional(" -- "),
+        field("command", $.shell_fragment),
+        $._eol
       ),
 
-    target_artifact: ($) =>
-      choice(
-        seq(
-          field("target_ref", $.target_ref),
-          token.immediate("/"),
-          field("artifact", $.path)
-        ),
-        seq(
-          "(",
-          field("target_ref", $.target_ref),
-          token.immediate("/"),
-          field("artifact", $.path),
-          repeat($.build_arg_flag),
-          ")"
-        )
-      ),
-
-    variable: ($) => token.immediate(/[a-zA-Z_][a-zA-Z0-9_]*/),
-
-    identifier: ($) => /[a-zA-Z_][a-zA-Z0-9_\-]*/,
-
-    comment: ($) => /#.*/,
-
-    required: ($) => "--required",
-    global: ($) => "--global",
-    allow_privileged: ($) => "--allow-privileged",
-    push: ($) => "--push",
-    no_cache: ($) => "--no-cache",
-    entrypoint: ($) => "--entrypoint",
-    privileged: ($) => "--privileged",
-    network_none: ($) => "--network=none",
-    ssh: ($) => "--ssh",
-    dir: ($) => "--dir",
-    keep_ts: ($) => "--keep-ts",
-    keep_own: ($) => "--keep-own",
-    if_exists: ($) => "--if-exists",
-    symlink_no_follow: ($) => "--symlink-no-follow",
-    pass_args: ($) => "--pass-args",
-    platform: ($) =>
-      seq("--platform", token.immediate(/[ =]/), field("value", $._string)),
-    chmod: ($) =>
-      seq("--chmod", token.immediate(/[ =]/), field("value", $._string)),
-    secret: ($) =>
-      seq("--secret", token.immediate(/[ =]/), field("value", $._string)),
-    mount: ($) =>
-      seq("--mount", token.immediate(/[ =]/), field("value", $._string)),
-
+    // command elements
     expr: ($) => /\$\(.+\)/,
-
-    target_ref: ($) => seq("+", field("name", $.identifier)),
-
+    identifier: ($) => /[a-zA-Z_]\w*/,
     image_spec: ($) =>
       seq(
         field("name", $.image_name),
-        field("tag", optional($.image_tag)),
-        field("digest", optional($.image_digest))
+        field("tag", optional(seq(token.immediate(":"), $.image_tag))),
+        field("digest", optional(seq(token.immediate("@"), $.image_digest)))
       ),
-
-    image_name: ($) =>
-      seq(
-        choice(/[^@:\s\$-]/, $.expansion),
-        repeat(choice(token.immediate(/[^@:\s\$]+/), $._immediate_expansion))
-      ),
-
-    image_tag: ($) =>
-      seq(
-        token.immediate(":"),
-        repeat1(choice(token.immediate(/[^@\s\$]+/), $._immediate_expansion))
-      ),
-
-    image_digest: ($) =>
-      seq(
-        token.immediate("@"),
-        repeat1(
-          choice(token.immediate(/[a-zA-Z0-9:]+/), $._immediate_expansion)
-        )
-      ),
-
-    _string: ($) =>
-      choice($.double_quoted_string, $.single_quoted_string, $.unquoted_string),
-
+    image_name: ($) => /[^@:\s\$-]+/,
+    image_tag: ($) => token.immediate(/[^@\s\$]+/),
+    image_digest: ($) => token.immediate(/[a-zA-Z0-9:]+/),
+    immediate_identifier: ($) => token.immediate(/[a-zA-Z_]\w*/),
+    path: ($) => /[^\s()\\]+/,
     shell_fragment: ($) =>
       repeat1(
         choice(
@@ -310,5 +166,86 @@ module.exports = grammar({
           /\\[^\n,=-]/
         )
       ),
+    target_ref: ($) =>
+      seq(token(prec(5, "+")), field("name", $.immediate_identifier)),
+    target_artifact: ($) => seq($.target_ref, token.immediate("/"), $.path),
+    target_artifact_build_args: ($) =>
+      seq(
+        "(",
+        $.target_ref,
+        token.immediate("/"),
+        $.path,
+        repeat($.build_arg),
+        ")"
+      ),
+    version_major_minor: ($) => /[0-9]+\.[0-9]+/,
+
+    // options
+    allow_privileged: ($) => token(prec(5, "--allow-privileged")),
+    build_arg: ($) =>
+      seq(
+        token(prec(5, "--")),
+        field("name", $.immediate_identifier),
+        optional(seq(token.immediate(/[ =]/), field("value", $._string)))
+      ),
+    chmod: ($) =>
+      seq(
+        token(prec(5, "--chmod")),
+        token.immediate(/[ =]/),
+        field("value", $._string)
+      ),
+    chown: ($) =>
+      seq(
+        token(prec(5, "--chown")),
+        token.immediate(/[ =]/),
+        field("value", $._string)
+      ),
+    dir: ($) => token(prec(5, "--dir")),
+    entrypoint: ($) => token(prec(5, "--entrypoint")),
+    feature_flag: ($) => /--[a-zA-Z0-9\-]+/,
+    global: ($) => token(prec(5, "--global")),
+    if_exists: ($) => token(prec(5, "--if-exists")),
+    keep_own: ($) => token(prec(5, "--keep-own")),
+    keep_ts: ($) => token(prec(5, "--keep-ts")),
+    mount: ($) =>
+      seq(
+        token(prec(5, "--mount")),
+        token.immediate(/[ =]/),
+        field("value", $._string)
+      ),
+    network_none: ($) => token(prec(5, "--network=none")),
+    no_cache: ($) => token(prec(5, "--no-cache")),
+    pass_args: ($) => token(prec(5, "--pass-args")),
+    platform: ($) =>
+      seq(
+        token(prec(5, "--platform")),
+        token.immediate(/[ =]/),
+        field("value", $._string)
+      ),
+    privileged: ($) => token(prec(5, "--privileged")),
+    push: ($) => token(prec(5, "--push")),
+    required: ($) => token(prec(5, "--required")),
+    secret: ($) =>
+      seq(
+        token(prec(5, "--secret")),
+        token.immediate(/[ =]/),
+        field("value", $._string)
+      ),
+    ssh: ($) => token(prec(5, "--ssh")),
+    symlink_no_follow: ($) => token(prec(5, "--symlink-no-follow")),
+
+    // string stuff
+    _string: ($) =>
+      choice($.double_quoted_string, $.single_quoted_string, $.unquoted_string),
+    double_quoted_string: ($) =>
+      seq('"', token.immediate(/[^"\n\\\$()]+/), '"'),
+    single_quoted_string: ($) => seq("'", token.immediate(/[^'\n\\]+/), "'"),
+    unquoted_string: ($) => /[^\s\n\"'\\\$]+/,
+
+    // extra tokens, eol, …
+    line_continuation: (_) => token(prec(10, "\\\n")),
+    comment: (_) => token(prec(10, /#[^\n]*(\n|\r\n|\f)/)),
+    line_continuation_comment: (_) => token(prec(10, /\\\s*#.*(\n|\r\n|\f)/)),
+    _eol: ($) => choice("\n", "\rn", "\f", $.comment),
   },
 });

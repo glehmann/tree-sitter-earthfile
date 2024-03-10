@@ -20,8 +20,8 @@ VERSION --pass-args --try 0.8
 
 (source_file
   (version_command
-    feature: (feature_flag)
-    feature: (feature_flag)
+    option: (feature_flag)
+    option: (feature_flag)
     version: (version_major_minor)))
 
 ==================
@@ -37,6 +37,9 @@ VERSION \
 
 (source_file
   (version_command
-    feature: (feature_flag)
-    feature: (feature_flag)
+    (line_continuation)
+    option: (feature_flag)
+    (line_continuation)
+    option: (feature_flag)
+    (line_continuation)
     version: (version_major_minor)))
