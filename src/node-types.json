@@ -443,6 +443,68 @@
     }
   },
   {
+    "type": "save_artifact_command",
+    "named": true,
+    "fields": {
+      "as_local": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "path",
+            "named": true
+          }
+        ]
+      },
+      "dest": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "path",
+            "named": true
+          }
+        ]
+      },
+      "option": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "force",
+            "named": true
+          },
+          {
+            "type": "if_exists",
+            "named": true
+          },
+          {
+            "type": "keep_own",
+            "named": true
+          },
+          {
+            "type": "keep_ts",
+            "named": true
+          },
+          {
+            "type": "symlink_no_follow",
+            "named": true
+          }
+        ]
+      },
+      "src": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "path",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "secret",
     "named": true,
     "fields": {
@@ -540,6 +602,10 @@
         },
         {
           "type": "run_command",
+          "named": true
+        },
+        {
+          "type": "save_artifact_command",
           "named": true
         }
       ]
@@ -720,6 +786,14 @@
     "named": false
   },
   {
+    "type": "ARTIFACT",
+    "named": false
+  },
+  {
+    "type": "AS",
+    "named": false
+  },
+  {
     "type": "COPY",
     "named": false
   },
@@ -728,7 +802,15 @@
     "named": false
   },
   {
+    "type": "LOCAL",
+    "named": false
+  },
+  {
     "type": "RUN",
+    "named": false
+  },
+  {
+    "type": "SAVE",
     "named": false
   },
   {
@@ -757,6 +839,10 @@
   },
   {
     "type": "feature_flag",
+    "named": true
+  },
+  {
+    "type": "force",
     "named": true
   },
   {

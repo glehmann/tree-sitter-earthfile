@@ -63,7 +63,8 @@ module.exports = grammar({
                 $.arg_command,
                 $.copy_command,
                 $.from_command,
-                $.run_command
+                $.run_command,
+                $.save_artifact_command,
               )
             ),
             $._dedent
@@ -131,6 +132,18 @@ module.exports = grammar({
         optional(" -- "),
         field("command", $.shell_fragment),
         $._eol
+      ),
+
+    save_artifact_command: ($) =>
+      seq(
+        "SAVE",
+        "ARTIFACT",
+        repeat(
+          field("option", choice($.if_exists, $.force, $.keep_own, $.keep_ts, $.symlink_no_follow))
+        ),
+        field("src", $.path),
+        optional(field("dest", $.path)),
+        optional(seq("AS", "LOCAL", field("as_local", $.path)))
       ),
 
     // command elements
@@ -203,6 +216,7 @@ module.exports = grammar({
     dir: ($) => token(prec(5, "--dir")),
     entrypoint: ($) => token(prec(5, "--entrypoint")),
     feature_flag: ($) => /--[a-zA-Z0-9\-]+/,
+    force: ($) => token(prec(5, "--force")),
     global: ($) => token(prec(5, "--global")),
     if_exists: ($) => token(prec(5, "--if-exists")),
     keep_own: ($) => token(prec(5, "--keep-own")),

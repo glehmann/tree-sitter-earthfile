@@ -1,0 +1,64 @@
+==================
+save artifact
+==================
+
+foo:
+    SAVE ARTIFACT /foo
+
+---
+
+    (source_file
+      (target
+        name: (identifier)
+        (save_artifact_command
+          src: (path))))
+
+==================
+save artifact with dest
+==================
+
+foo:
+    SAVE ARTIFACT /foo /bar
+
+---
+
+    (source_file
+      (target
+        name: (identifier)
+        (save_artifact_command
+          src: (path)
+          dest: (path))))
+
+==================
+save artifact with dest as local
+==================
+
+foo:
+    SAVE ARTIFACT /foo /bar AS LOCAL /bar
+
+---
+
+    (source_file
+      (target
+        name: (identifier)
+        (save_artifact_command
+          src: (path)
+          dest: (path)
+          as_local: (path))))
+
+==================
+save artifact with options
+==================
+
+foo:
+    SAVE ARTIFACT --keep-ts --force /foo
+
+---
+
+    (source_file
+      (target
+        name: (identifier)
+        (save_artifact_command
+          option: (keep_ts)
+          option: (force)
+          src: (path))))
