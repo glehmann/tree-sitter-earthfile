@@ -470,7 +470,7 @@
     "type": "save_artifact_command",
     "named": true,
     "fields": {
-      "as_local": {
+      "dest": {
         "multiple": false,
         "required": false,
         "types": [
@@ -480,7 +480,7 @@
           }
         ]
       },
-      "dest": {
+      "local_dest": {
         "multiple": false,
         "required": false,
         "types": [

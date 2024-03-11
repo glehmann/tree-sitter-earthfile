@@ -44,7 +44,7 @@ foo:
         (save_artifact_command
           src: (path)
           dest: (path)
-          as_local: (path))))
+          local_dest: (path))))
 
 ==================
 save artifact with options

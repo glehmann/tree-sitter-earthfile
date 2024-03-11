@@ -144,10 +144,10 @@ module.exports = grammar({
         ),
         field("src", $.path),
         optional(field("dest", $.path)),
-        optional(seq("AS", "LOCAL", field("as_local", $.path)))
+        optional(seq("AS", "LOCAL", field("local_dest", $.path)))
       ),
 
-      save_image_command: ($) =>
+    save_image_command: ($) =>
       seq(
         "SAVE",
         "IMAGE",

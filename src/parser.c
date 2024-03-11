@@ -792,12 +792,12 @@ static const TSSymbolMetadata ts_symbol_metadata[] = {
 };
 
 enum ts_field_identifiers {
-  field_as_local = 1,
-  field_command = 2,
-  field_default_value = 3,
-  field_default_value_expr = 4,
-  field_dest = 5,
-  field_digest = 6,
+  field_command = 1,
+  field_default_value = 2,
+  field_default_value_expr = 3,
+  field_dest = 4,
+  field_digest = 5,
+  field_local_dest = 6,
   field_name = 7,
   field_option = 8,
   field_src = 9,
@@ -808,12 +808,12 @@ enum ts_field_identifiers {
 
 static const char * const ts_field_names[] = {
   [0] = NULL,
-  [field_as_local] = "as_local",
   [field_command] = "command",
   [field_default_value] = "default_value",
   [field_default_value_expr] = "default_value_expr",
   [field_dest] = "dest",
   [field_digest] = "digest",
+  [field_local_dest] = "local_dest",
   [field_name] = "name",
   [field_option] = "option",
   [field_src] = "src",
@@ -952,19 +952,19 @@ static const TSFieldMapEntry ts_field_map_entries[] = {
     {field_option, 2, .inherited = true},
     {field_src, 3},
   [59] =
-    {field_as_local, 5},
+    {field_local_dest, 5},
     {field_src, 2},
   [61] =
-    {field_as_local, 6},
     {field_dest, 3},
+    {field_local_dest, 6},
     {field_src, 2},
   [64] =
-    {field_as_local, 6},
+    {field_local_dest, 6},
     {field_option, 2, .inherited = true},
     {field_src, 3},
   [67] =
-    {field_as_local, 7},
     {field_dest, 4},
+    {field_local_dest, 7},
     {field_option, 2, .inherited = true},
     {field_src, 3},
 };
