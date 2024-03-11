@@ -15,7 +15,13 @@ module.exports = grammar({
     // it must be the first rule in the list
     source_file: ($) =>
       repeat(
-        choice($.arg_command, $.from_command, $.target, $.version_command)
+        choice(
+          $.arg_command,
+          $.from_command,
+          $.project_command,
+          $.target,
+          $.version_command
+        )
       ),
 
     // the root commands/elements
@@ -67,6 +73,15 @@ module.exports = grammar({
           ),
           $._eol
         )
+      ),
+
+    project_command: ($) =>
+      seq(
+        "PROJECT",
+        field("org_name", $.identifier),
+        token.immediate("/"),
+        field("project_name", $.identifier),
+        $._eol
       ),
 
     target: ($) =>

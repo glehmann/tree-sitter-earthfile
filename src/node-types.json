@@ -451,6 +451,42 @@
     }
   },
   {
+    "type": "project_command",
+    "named": true,
+    "fields": {
+      "org_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "project_name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "comment",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "run_command",
     "named": true,
     "fields": {
@@ -702,6 +738,10 @@
         },
         {
           "type": "from_command",
+          "named": true
+        },
+        {
+          "type": "project_command",
           "named": true
         },
         {
@@ -981,6 +1021,10 @@
   },
   {
     "type": "LOCAL",
+    "named": false
+  },
+  {
+    "type": "PROJECT",
     "named": false
   },
   {
