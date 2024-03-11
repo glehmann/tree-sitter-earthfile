@@ -89,27 +89,7 @@ module.exports = grammar({
         field("name", $.identifier),
         ":",
         $._eol,
-        optional(
-          seq(
-            $._indent,
-            repeat(
-              choice(
-                $.arg_command,
-                $.copy_command,
-                $.from_command,
-                $.from_dockerfile_command,
-                $.git_clone_command,
-                $.let_command,
-                $.run_command,
-                $.save_artifact_command,
-                $.save_image_command,
-                $.set_command,
-                $.with_docker_command
-              )
-            ),
-            $._dedent
-          )
-        )
+        optional(seq($._indent, optional($._target_block), $._dedent))
       ),
 
     version_command: ($) =>
@@ -153,8 +133,7 @@ module.exports = grammar({
 
     from_dockerfile_command: ($) =>
       seq(
-        "FROM",
-        "DOCKERFILE",
+        "FROM DOCKERFILE",
         repeat(
           field(
             "option",
@@ -177,6 +156,15 @@ module.exports = grammar({
         repeat(field("option", choice($.branch, $.keep_ts))),
         field("url", $.path),
         field("dest", $.path),
+        $._eol
+      ),
+
+    if_command: ($) =>
+      seq(
+        "IF", $._conditional_block,
+        repeat(field("else_if", seq("ELSE IF", $.else_if_block))),
+        optional(field("else", seq("ELSE", $.else_block))),
+        "END",
         $._eol
       ),
 
@@ -214,8 +202,7 @@ module.exports = grammar({
 
     save_artifact_command: ($) =>
       seq(
-        "SAVE",
-        "ARTIFACT",
+        "SAVE ARTIFACT",
         repeat(
           field(
             "option",
@@ -230,13 +217,12 @@ module.exports = grammar({
         ),
         field("src", $.path),
         optional(field("dest", $.path)),
-        optional(seq("AS", "LOCAL", field("local_dest", $.path)))
+        optional(seq("AS LOCAL", field("local_dest", $.path)))
       ),
 
     save_image_command: ($) =>
       seq(
-        "SAVE",
-        "IMAGE",
+        "SAVE IMAGE",
         choice(
           seq(
             repeat(field("option", choice($.cache_from, $.push))),
@@ -257,8 +243,7 @@ module.exports = grammar({
 
     with_docker_command: ($) =>
       seq(
-        "WITH",
-        "DOCKER",
+        "WITH DOCKER",
         repeat(
           field(
             "option",
@@ -276,6 +261,39 @@ module.exports = grammar({
         "END",
         $._eol
       ),
+
+    // code blocks
+    _target_block: ($) =>
+      repeat1(
+        choice(
+          $.arg_command,
+          $.copy_command,
+          $.from_command,
+          $.from_dockerfile_command,
+          $.git_clone_command,
+          $.if_command,
+          $.let_command,
+          $.run_command,
+          $.save_artifact_command,
+          $.save_image_command,
+          $.set_command,
+          $.with_docker_command
+        )
+      ),
+    _conditional_block: ($) =>
+      seq(
+        repeat(
+          field(
+            "option",
+            choice($.ssh, $.privileged, $.no_cache, $.mount, $.secret)
+          )
+        ),
+        field("condition", $.identifier),
+        $._eol,
+        optional($._target_block)
+      ),
+    else_if_block: ($) => $._conditional_block,
+    else_block: ($) => $._target_block,
 
     // command elements
     expr: ($) => /\$\(.+\)/,
@@ -402,12 +420,7 @@ module.exports = grammar({
           "target",
           choice(
             $.target_ref,
-            seq(
-              "(",
-              $.target_ref,
-              repeat1($.build_arg),
-              ")"
-            )
+            seq("(", $.target_ref, repeat1($.build_arg), ")")
           )
         )
       ),

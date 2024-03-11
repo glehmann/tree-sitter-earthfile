@@ -291,56 +291,16 @@
                   "name": "_indent"
                 },
                 {
-                  "type": "REPEAT",
-                  "content": {
-                    "type": "CHOICE",
-                    "members": [
-                      {
-                        "type": "SYMBOL",
-                        "name": "arg_command"
-                      },
-                      {
-                        "type": "SYMBOL",
-                        "name": "copy_command"
-                      },
-                      {
-                        "type": "SYMBOL",
-                        "name": "from_command"
-                      },
-                      {
-                        "type": "SYMBOL",
-                        "name": "from_dockerfile_command"
-                      },
-                      {
-                        "type": "SYMBOL",
-                        "name": "git_clone_command"
-                      },
-                      {
-                        "type": "SYMBOL",
-                        "name": "let_command"
-                      },
-                      {
-                        "type": "SYMBOL",
-                        "name": "run_command"
-                      },
-                      {
-                        "type": "SYMBOL",
-                        "name": "save_artifact_command"
-                      },
-                      {
-                        "type": "SYMBOL",
-                        "name": "save_image_command"
-                      },
-                      {
-                        "type": "SYMBOL",
-                        "name": "set_command"
-                      },
-                      {
-                        "type": "SYMBOL",
-                        "name": "with_docker_command"
-                      }
-                    ]
-                  }
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "_target_block"
+                    },
+                    {
+                      "type": "BLANK"
+                    }
+                  ]
                 },
                 {
                   "type": "SYMBOL",
@@ -489,11 +449,7 @@
       "members": [
         {
           "type": "STRING",
-          "value": "FROM"
-        },
-        {
-          "type": "STRING",
-          "value": "DOCKERFILE"
+          "value": "FROM DOCKERFILE"
         },
         {
           "type": "REPEAT",
@@ -583,6 +539,72 @@
             "type": "SYMBOL",
             "name": "path"
           }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_eol"
+        }
+      ]
+    },
+    "if_command": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "IF"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_conditional_block"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "FIELD",
+            "name": "else_if",
+            "content": {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "ELSE IF"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "else_if_block"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "FIELD",
+              "name": "else",
+              "content": {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": "ELSE"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "else_block"
+                  }
+                ]
+              }
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "END"
         },
         {
           "type": "SYMBOL",
@@ -708,11 +730,7 @@
       "members": [
         {
           "type": "STRING",
-          "value": "SAVE"
-        },
-        {
-          "type": "STRING",
-          "value": "ARTIFACT"
+          "value": "SAVE ARTIFACT"
         },
         {
           "type": "REPEAT",
@@ -778,11 +796,7 @@
               "members": [
                 {
                   "type": "STRING",
-                  "value": "AS"
-                },
-                {
-                  "type": "STRING",
-                  "value": "LOCAL"
+                  "value": "AS LOCAL"
                 },
                 {
                   "type": "FIELD",
@@ -806,11 +820,7 @@
       "members": [
         {
           "type": "STRING",
-          "value": "SAVE"
-        },
-        {
-          "type": "STRING",
-          "value": "IMAGE"
+          "value": "SAVE IMAGE"
         },
         {
           "type": "CHOICE",
@@ -900,11 +910,7 @@
       "members": [
         {
           "type": "STRING",
-          "value": "WITH"
-        },
-        {
-          "type": "STRING",
-          "value": "DOCKER"
+          "value": "WITH DOCKER"
         },
         {
           "type": "REPEAT",
@@ -955,6 +961,131 @@
           "name": "_eol"
         }
       ]
+    },
+    "_target_block": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "arg_command"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "copy_command"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "from_command"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "from_dockerfile_command"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "git_clone_command"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "if_command"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "let_command"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "run_command"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "save_artifact_command"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "save_image_command"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "set_command"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "with_docker_command"
+          }
+        ]
+      }
+    },
+    "_conditional_block": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "FIELD",
+            "name": "option",
+            "content": {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "ssh"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "privileged"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "no_cache"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "mount"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "secret"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "condition",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_eol"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_target_block"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        }
+      ]
+    },
+    "else_if_block": {
+      "type": "SYMBOL",
+      "name": "_conditional_block"
+    },
+    "else_block": {
+      "type": "SYMBOL",
+      "name": "_target_block"
     },
     "expr": {
       "type": "PATTERN",
