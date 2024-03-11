@@ -282,6 +282,10 @@
                       {
                         "type": "SYMBOL",
                         "name": "save_image_command"
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "set_command"
                       }
                     ]
                   }
@@ -694,6 +698,42 @@
               }
             }
           ]
+        }
+      ]
+    },
+    "set_command": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "SET"
+        },
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "IMMEDIATE_TOKEN",
+          "content": {
+            "type": "STRING",
+            "value": "="
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "value",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_string"
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_eol"
         }
       ]
     },

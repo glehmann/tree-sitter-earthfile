@@ -85,7 +85,8 @@ module.exports = grammar({
                 $.let_command,
                 $.run_command,
                 $.save_artifact_command,
-                $.save_image_command
+                $.save_image_command,
+                $.set_command
               )
             ),
             $._dedent
@@ -196,6 +197,15 @@ module.exports = grammar({
           ),
           field("option", $.cache_hint)
         )
+      ),
+
+    set_command: ($) =>
+      seq(
+        "SET",
+        field("name", $.identifier),
+        token.immediate("="),
+        field("value", $._string),
+        $._eol
       ),
 
     // command elements

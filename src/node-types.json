@@ -635,6 +635,50 @@
     }
   },
   {
+    "type": "set_command",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "double_quoted_string",
+            "named": true
+          },
+          {
+            "type": "single_quoted_string",
+            "named": true
+          },
+          {
+            "type": "unquoted_string",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "comment",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "shell_fragment",
     "named": true,
     "fields": {}
@@ -720,6 +764,10 @@
         },
         {
           "type": "save_image_command",
+          "named": true
+        },
+        {
+          "type": "set_command",
           "named": true
         }
       ]
@@ -941,6 +989,10 @@
   },
   {
     "type": "SAVE",
+    "named": false
+  },
+  {
+    "type": "SET",
     "named": false
   },
   {
