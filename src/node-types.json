@@ -190,6 +190,22 @@
     }
   },
   {
+    "type": "compose",
+    "named": true,
+    "fields": {
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "path",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "copy_command",
     "named": true,
     "fields": {
@@ -583,6 +599,44 @@
     }
   },
   {
+    "type": "load",
+    "named": true,
+    "fields": {
+      "image": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "image_spec",
+            "named": true
+          }
+        ]
+      },
+      "target": {
+        "multiple": true,
+        "required": true,
+        "types": [
+          {
+            "type": "(",
+            "named": false
+          },
+          {
+            "type": ")",
+            "named": false
+          },
+          {
+            "type": "build_arg",
+            "named": true
+          },
+          {
+            "type": "target_ref",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "mount",
     "named": true,
     "fields": {
@@ -664,6 +718,22 @@
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "pull",
+    "named": true,
+    "fields": {
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "image_spec",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -851,6 +921,30 @@
     }
   },
   {
+    "type": "service",
+    "named": true,
+    "fields": {
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "double_quoted_string",
+            "named": true
+          },
+          {
+            "type": "single_quoted_string",
+            "named": true
+          },
+          {
+            "type": "unquoted_string",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "set_command",
     "named": true,
     "fields": {
@@ -997,6 +1091,10 @@
         {
           "type": "set_command",
           "named": true
+        },
+        {
+          "type": "with_docker_command",
+          "named": true
         }
       ]
     }
@@ -1096,6 +1194,56 @@
     }
   },
   {
+    "type": "with_docker_command",
+    "named": true,
+    "fields": {
+      "option": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "allow_privileged",
+            "named": true
+          },
+          {
+            "type": "compose",
+            "named": true
+          },
+          {
+            "type": "load",
+            "named": true
+          },
+          {
+            "type": "platform",
+            "named": true
+          },
+          {
+            "type": "pull",
+            "named": true
+          },
+          {
+            "type": "service",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "run_command",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "\n",
     "named": false
   },
@@ -1156,6 +1304,14 @@
     "named": false
   },
   {
+    "type": "--compose",
+    "named": false
+  },
+  {
+    "type": "--load",
+    "named": false
+  },
+  {
     "type": "--mount",
     "named": false
   },
@@ -1164,7 +1320,15 @@
     "named": false
   },
   {
+    "type": "--pull",
+    "named": false
+  },
+  {
     "type": "--secret",
+    "named": false
+  },
+  {
+    "type": "--service",
     "named": false
   },
   {
@@ -1216,7 +1380,15 @@
     "named": false
   },
   {
+    "type": "DOCKER",
+    "named": false
+  },
+  {
     "type": "DOCKERFILE",
+    "named": false
+  },
+  {
+    "type": "END",
     "named": false
   },
   {
@@ -1257,6 +1429,10 @@
   },
   {
     "type": "VERSION",
+    "named": false
+  },
+  {
+    "type": "WITH",
     "named": false
   },
   {

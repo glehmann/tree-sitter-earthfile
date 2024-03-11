@@ -103,7 +103,8 @@ module.exports = grammar({
                 $.run_command,
                 $.save_artifact_command,
                 $.save_image_command,
-                $.set_command
+                $.set_command,
+                $.with_docker_command
               )
             ),
             $._dedent
@@ -161,7 +162,7 @@ module.exports = grammar({
               $.docker_build_arg,
               $.docker_file,
               $.docker_target,
-              $.platform,
+              $.platform
             )
           )
         ),
@@ -173,21 +174,13 @@ module.exports = grammar({
       seq(
         "GIT",
         "CLONE",
-        repeat(
-          field(
-            "option",
-            choice(
-              $.branch,
-              $.keep_ts
-            )
-          )
-        ),
+        repeat(field("option", choice($.branch, $.keep_ts))),
         field("url", $.path),
         field("dest", $.path),
         $._eol
       ),
 
-      let_command: ($) =>
+    let_command: ($) =>
       seq(
         "LET",
         field("name", $.identifier),
@@ -262,6 +255,28 @@ module.exports = grammar({
         $._eol
       ),
 
+    with_docker_command: ($) =>
+      seq(
+        "WITH",
+        "DOCKER",
+        repeat(
+          field(
+            "option",
+            choice(
+              $.allow_privileged,
+              $.compose,
+              $.load,
+              $.platform,
+              $.pull,
+              $.service
+            )
+          )
+        ),
+        $.run_command,
+        "END",
+        $._eol
+      ),
+
     // command elements
     expr: ($) => /\$\(.+\)/,
     identifier: ($) => /[a-zA-Z_]\w*/,
@@ -271,7 +286,7 @@ module.exports = grammar({
         field("tag", optional(seq(token.immediate(":"), $.image_tag))),
         field("digest", optional(seq(token.immediate("@"), $.image_digest)))
       ),
-    image_name: ($) => /[^@:\s\$-]+/,
+    image_name: ($) => /[a-zA-Z0-9\-./]+/,
     image_tag: ($) => token.immediate(/[^@\s\$]+/),
     image_digest: ($) => token.immediate(/[a-zA-Z0-9:]+/),
     immediate_identifier: ($) => token.immediate(/[a-zA-Z_]\w*/),
@@ -343,12 +358,19 @@ module.exports = grammar({
         token.immediate(/[ =]/),
         field("value", $._string)
       ),
+    compose: ($) =>
+      seq(
+        token(prec(5, "--compose")),
+        token.immediate(/[ =]/),
+        field("value", $.path)
+      ),
     dir: ($) => token(prec(5, "--dir")),
     docker_build_arg: ($) =>
       seq(
         token(prec(5, "--build-arg")),
         token.immediate(/[ =]/),
         field("key", $.identifier),
+        token.immediate(/[ =]/),
         field("value", $._string)
       ),
     docker_file: ($) =>
@@ -370,6 +392,25 @@ module.exports = grammar({
     if_exists: ($) => token(prec(5, "--if-exists")),
     keep_own: ($) => token(prec(5, "--keep-own")),
     keep_ts: ($) => token(prec(5, "--keep-ts")),
+    load: ($) =>
+      seq(
+        token(prec(5, "--load")),
+        token.immediate(/[ =]/),
+        field("image", $.image_spec),
+        token.immediate("="),
+        field(
+          "target",
+          choice(
+            $.target_ref,
+            seq(
+              "(",
+              $.target_ref,
+              repeat1($.build_arg),
+              ")"
+            )
+          )
+        )
+      ),
     mount: ($) =>
       seq(
         token(prec(5, "--mount")),
@@ -386,11 +427,23 @@ module.exports = grammar({
         field("value", $._string)
       ),
     privileged: ($) => token(prec(5, "--privileged")),
+    pull: ($) =>
+      seq(
+        token(prec(5, "--pull")),
+        token.immediate(/[ =]/),
+        field("value", $.image_spec)
+      ),
     push: ($) => token(prec(5, "--push")),
     required: ($) => token(prec(5, "--required")),
     secret: ($) =>
       seq(
         token(prec(5, "--secret")),
+        token.immediate(/[ =]/),
+        field("value", $._string)
+      ),
+    service: ($) =>
+      seq(
+        token(prec(5, "--service")),
         token.immediate(/[ =]/),
         field("value", $._string)
       ),
@@ -403,7 +456,7 @@ module.exports = grammar({
     double_quoted_string: ($) =>
       seq('"', token.immediate(/[^"\n\\\$()]+/), '"'),
     single_quoted_string: ($) => seq("'", token.immediate(/[^'\n\\]+/), "'"),
-    unquoted_string: ($) => /[^\s\n\"'\\\$]+/,
+    unquoted_string: ($) => /[^\s\n\"'\\\$)]+/,
 
     // extra tokens, eol, …
     line_continuation: (_) => token(prec(10, "\\\n")),

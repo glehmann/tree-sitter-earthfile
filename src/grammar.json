@@ -334,6 +334,10 @@
                       {
                         "type": "SYMBOL",
                         "name": "set_command"
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "with_docker_command"
                       }
                     ]
                   }
@@ -891,6 +895,67 @@
         }
       ]
     },
+    "with_docker_command": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "WITH"
+        },
+        {
+          "type": "STRING",
+          "value": "DOCKER"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "FIELD",
+            "name": "option",
+            "content": {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "allow_privileged"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "compose"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "load"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "platform"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "pull"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "service"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "run_command"
+        },
+        {
+          "type": "STRING",
+          "value": "END"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_eol"
+        }
+      ]
+    },
     "expr": {
       "type": "PATTERN",
       "value": "\\$\\(.+\\)"
@@ -970,7 +1035,7 @@
     },
     "image_name": {
       "type": "PATTERN",
-      "value": "[^@:\\s\\$-]+"
+      "value": "[a-zA-Z0-9\\-./]+"
     },
     "image_tag": {
       "type": "IMMEDIATE_TOKEN",
@@ -1309,6 +1374,37 @@
         }
       ]
     },
+    "compose": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "TOKEN",
+          "content": {
+            "type": "PREC",
+            "value": 5,
+            "content": {
+              "type": "STRING",
+              "value": "--compose"
+            }
+          }
+        },
+        {
+          "type": "IMMEDIATE_TOKEN",
+          "content": {
+            "type": "PATTERN",
+            "value": "[ =]"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "value",
+          "content": {
+            "type": "SYMBOL",
+            "name": "path"
+          }
+        }
+      ]
+    },
     "dir": {
       "type": "TOKEN",
       "content": {
@@ -1347,6 +1443,13 @@
           "content": {
             "type": "SYMBOL",
             "name": "identifier"
+          }
+        },
+        {
+          "type": "IMMEDIATE_TOKEN",
+          "content": {
+            "type": "PATTERN",
+            "value": "[ =]"
           }
         },
         {
@@ -1491,6 +1594,81 @@
         }
       }
     },
+    "load": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "TOKEN",
+          "content": {
+            "type": "PREC",
+            "value": 5,
+            "content": {
+              "type": "STRING",
+              "value": "--load"
+            }
+          }
+        },
+        {
+          "type": "IMMEDIATE_TOKEN",
+          "content": {
+            "type": "PATTERN",
+            "value": "[ =]"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "image",
+          "content": {
+            "type": "SYMBOL",
+            "name": "image_spec"
+          }
+        },
+        {
+          "type": "IMMEDIATE_TOKEN",
+          "content": {
+            "type": "STRING",
+            "value": "="
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "target",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "target_ref"
+              },
+              {
+                "type": "SEQ",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": "("
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "target_ref"
+                  },
+                  {
+                    "type": "REPEAT1",
+                    "content": {
+                      "type": "SYMBOL",
+                      "name": "build_arg"
+                    }
+                  },
+                  {
+                    "type": "STRING",
+                    "value": ")"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
     "mount": {
       "type": "SEQ",
       "members": [
@@ -1597,6 +1775,37 @@
         }
       }
     },
+    "pull": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "TOKEN",
+          "content": {
+            "type": "PREC",
+            "value": 5,
+            "content": {
+              "type": "STRING",
+              "value": "--pull"
+            }
+          }
+        },
+        {
+          "type": "IMMEDIATE_TOKEN",
+          "content": {
+            "type": "PATTERN",
+            "value": "[ =]"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "value",
+          "content": {
+            "type": "SYMBOL",
+            "name": "image_spec"
+          }
+        }
+      ]
+    },
     "push": {
       "type": "TOKEN",
       "content": {
@@ -1630,6 +1839,37 @@
             "content": {
               "type": "STRING",
               "value": "--secret"
+            }
+          }
+        },
+        {
+          "type": "IMMEDIATE_TOKEN",
+          "content": {
+            "type": "PATTERN",
+            "value": "[ =]"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "value",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_string"
+          }
+        }
+      ]
+    },
+    "service": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "TOKEN",
+          "content": {
+            "type": "PREC",
+            "value": 5,
+            "content": {
+              "type": "STRING",
+              "value": "--service"
             }
           }
         },
@@ -1731,7 +1971,7 @@
     },
     "unquoted_string": {
       "type": "PATTERN",
-      "value": "[^\\s\\n\\\"'\\\\\\$]+"
+      "value": "[^\\s\\n\\\"'\\\\\\$)]+"
     },
     "line_continuation": {
       "type": "TOKEN",
