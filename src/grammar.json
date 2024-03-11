@@ -1006,6 +1006,35 @@
         }
       ]
     },
+    "wait_command": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "WAIT"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_target_block"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "END"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_eol"
+        }
+      ]
+    },
     "with_docker_command": {
       "type": "SEQ",
       "members": [
@@ -1115,6 +1144,10 @@
           {
             "type": "SYMBOL",
             "name": "set_command"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "wait_command"
           },
           {
             "type": "SYMBOL",

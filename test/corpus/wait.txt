@@ -1,0 +1,17 @@
+==================
+wait command
+==================
+
+foo:
+  WAIT
+    RUN echo "foo"
+  END
+
+---
+
+    (source_file
+      (target
+        name: (identifier)
+        (wait_command
+          (run_command
+            command: (shell_fragment)))))

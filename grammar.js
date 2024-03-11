@@ -137,14 +137,7 @@ module.exports = grammar({
         repeat(
           field(
             "option",
-            choice(
-              $.sep,
-              $.privileged,
-              $.ssh,
-              $.no_cache,
-              $.mount,
-              $.secret,
-            )
+            choice($.sep, $.privileged, $.ssh, $.no_cache, $.mount, $.secret)
           )
         ),
         field("name", $.identifier),
@@ -267,6 +260,8 @@ module.exports = grammar({
         $._eol
       ),
 
+    wait_command: ($) => seq("WAIT", optional($._target_block), "END", $._eol),
+
     with_docker_command: ($) =>
       seq(
         "WITH DOCKER",
@@ -304,6 +299,7 @@ module.exports = grammar({
           $.save_artifact_command,
           $.save_image_command,
           $.set_command,
+          $.wait_command,
           $.with_docker_command
         )
       ),
