@@ -280,6 +280,72 @@
     }
   },
   {
+    "type": "docker_build_arg",
+    "named": true,
+    "fields": {
+      "key": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "double_quoted_string",
+            "named": true
+          },
+          {
+            "type": "single_quoted_string",
+            "named": true
+          },
+          {
+            "type": "unquoted_string",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "docker_file",
+    "named": true,
+    "fields": {
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "path",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "docker_target",
+    "named": true,
+    "fields": {
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "double_quoted_string",
     "named": true,
     "fields": {}
@@ -325,6 +391,54 @@
         },
         {
           "type": "target_ref",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "from_dockerfile_command",
+    "named": true,
+    "fields": {
+      "context": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "path",
+            "named": true
+          }
+        ]
+      },
+      "option": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "docker_build_arg",
+            "named": true
+          },
+          {
+            "type": "docker_file",
+            "named": true
+          },
+          {
+            "type": "docker_target",
+            "named": true
+          },
+          {
+            "type": "platform",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "comment",
           "named": true
         }
       ]
@@ -857,6 +971,10 @@
           "named": true
         },
         {
+          "type": "from_dockerfile_command",
+          "named": true
+        },
+        {
           "type": "git_clone_command",
           "named": true
         },
@@ -1022,6 +1140,10 @@
     "named": false
   },
   {
+    "type": "--build-arg",
+    "named": false
+  },
+  {
     "type": "--cache-from",
     "named": false
   },
@@ -1043,6 +1165,14 @@
   },
   {
     "type": "--secret",
+    "named": false
+  },
+  {
+    "type": "--target",
+    "named": false
+  },
+  {
+    "type": "-f",
     "named": false
   },
   {
@@ -1083,6 +1213,10 @@
   },
   {
     "type": "COPY",
+    "named": false
+  },
+  {
+    "type": "DOCKERFILE",
     "named": false
   },
   {

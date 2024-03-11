@@ -1,0 +1,44 @@
+==================
+from dockerfile command
+==================
+
+foo:
+  FROM DOCKERFILE ./
+
+---
+
+    (source_file
+      (target
+        name: (identifier)
+        (from_dockerfile_command
+          context: (path))))
+
+==================
+from dockerfile command with options
+==================
+
+foo:
+  FROM DOCKERFILE \
+    -f Dockerfile.backend \
+    --build-arg version=1.2.3 \
+    --target prod \
+    ./
+
+---
+
+    (source_file
+      (target
+        name: (identifier)
+        (from_dockerfile_command
+          (line_continuation)
+          option: (docker_file
+            value: (path))
+          (line_continuation)
+          option: (docker_build_arg
+            key: (identifier)
+            value: (unquoted_string))
+          (line_continuation)
+          option: (docker_target
+            value: (identifier))
+          (line_continuation)
+          context: (path))))

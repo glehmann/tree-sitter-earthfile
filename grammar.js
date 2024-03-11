@@ -97,6 +97,7 @@ module.exports = grammar({
                 $.arg_command,
                 $.copy_command,
                 $.from_command,
+                $.from_dockerfile_command,
                 $.git_clone_command,
                 $.let_command,
                 $.run_command,
@@ -146,6 +147,25 @@ module.exports = grammar({
           )
         ),
         field("dest", $.path),
+        $._eol
+      ),
+
+    from_dockerfile_command: ($) =>
+      seq(
+        "FROM",
+        "DOCKERFILE",
+        repeat(
+          field(
+            "option",
+            choice(
+              $.docker_build_arg,
+              $.docker_file,
+              $.docker_target,
+              $.platform,
+            )
+          )
+        ),
+        field("context", $.path),
         $._eol
       ),
 
@@ -324,6 +344,25 @@ module.exports = grammar({
         field("value", $._string)
       ),
     dir: ($) => token(prec(5, "--dir")),
+    docker_build_arg: ($) =>
+      seq(
+        token(prec(5, "--build-arg")),
+        token.immediate(/[ =]/),
+        field("key", $.identifier),
+        field("value", $._string)
+      ),
+    docker_file: ($) =>
+      seq(
+        token(prec(5, "-f")),
+        token.immediate(/[ =]/),
+        field("value", $.path)
+      ),
+    docker_target: ($) =>
+      seq(
+        token(prec(5, "--target")),
+        token.immediate(/[ =]/),
+        field("value", $.identifier)
+      ),
     entrypoint: ($) => token(prec(5, "--entrypoint")),
     feature_flag: ($) => /--[a-zA-Z0-9\-]+/,
     force: ($) => token(prec(5, "--force")),
