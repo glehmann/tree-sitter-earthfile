@@ -447,6 +447,10 @@
           "named": true
         },
         {
+          "type": "function_command",
+          "named": true
+        },
+        {
           "type": "git_clone_command",
           "named": true
         },
@@ -564,6 +568,10 @@
         },
         {
           "type": "from_dockerfile_command",
+          "named": true
+        },
+        {
+          "type": "function_command",
           "named": true
         },
         {
@@ -713,6 +721,10 @@
           "named": true
         },
         {
+          "type": "function_command",
+          "named": true
+        },
+        {
           "type": "git_clone_command",
           "named": true
         },
@@ -842,6 +854,21 @@
         ]
       }
     },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "comment",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "function_command",
+    "named": true,
+    "fields": {},
     "children": {
       "multiple": false,
       "required": false,
@@ -1017,6 +1044,10 @@
         },
         {
           "type": "from_dockerfile_command",
+          "named": true
+        },
+        {
+          "type": "function_command",
           "named": true
         },
         {
@@ -1687,6 +1718,10 @@
           "named": true
         },
         {
+          "type": "function_command",
+          "named": true
+        },
+        {
           "type": "git_clone_command",
           "named": true
         },
@@ -1839,6 +1874,10 @@
           "named": true
         },
         {
+          "type": "function_command",
+          "named": true
+        },
+        {
           "type": "git_clone_command",
           "named": true
         },
@@ -1955,6 +1994,10 @@
         },
         {
           "type": "from_dockerfile_command",
+          "named": true
+        },
+        {
+          "type": "function_command",
           "named": true
         },
         {
@@ -2228,6 +2271,10 @@
   },
   {
     "type": "FROM DOCKERFILE",
+    "named": false
+  },
+  {
+    "type": "FUNCTION",
     "named": false
   },
   {

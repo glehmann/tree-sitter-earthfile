@@ -643,6 +643,19 @@
         }
       ]
     },
+    "function_command": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "FUNCTION"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_eol"
+        }
+      ]
+    },
     "git_clone_command": {
       "type": "SEQ",
       "members": [
@@ -1234,6 +1247,10 @@
           {
             "type": "SYMBOL",
             "name": "from_dockerfile_command"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "function_command"
           },
           {
             "type": "SYMBOL",

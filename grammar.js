@@ -175,7 +175,9 @@ module.exports = grammar({
         $._eol
       ),
 
-    git_clone_command: ($) =>
+      function_command: ($) => seq("FUNCTION", $._eol),
+
+      git_clone_command: ($) =>
       seq(
         "GIT",
         "CLONE",
@@ -315,6 +317,7 @@ module.exports = grammar({
           $.for_command,
           $.from_command,
           $.from_dockerfile_command,
+          $.function_command,
           $.git_clone_command,
           $.if_command,
           $.let_command,
