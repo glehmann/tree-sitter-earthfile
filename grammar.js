@@ -260,6 +260,18 @@ module.exports = grammar({
         $._eol
       ),
 
+    try_command: ($) =>
+      seq(
+        "TRY",
+        $._eol,
+        optional($._target_block),
+        "FINALLY",
+        $._eol,
+        repeat(field("finally", $.save_artifact_command)),
+        "END",
+        $._eol
+      ),
+
     wait_command: ($) => seq("WAIT", optional($._target_block), "END", $._eol),
 
     with_docker_command: ($) =>
@@ -299,6 +311,7 @@ module.exports = grammar({
           $.save_artifact_command,
           $.save_image_command,
           $.set_command,
+          $.try_command,
           $.wait_command,
           $.with_docker_command
         )

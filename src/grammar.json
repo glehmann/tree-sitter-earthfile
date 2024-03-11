@@ -1006,6 +1006,58 @@
         }
       ]
     },
+    "try_command": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "TRY"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_eol"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_target_block"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "STRING",
+          "value": "FINALLY"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_eol"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "FIELD",
+            "name": "finally",
+            "content": {
+              "type": "SYMBOL",
+              "name": "save_artifact_command"
+            }
+          }
+        },
+        {
+          "type": "STRING",
+          "value": "END"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_eol"
+        }
+      ]
+    },
     "wait_command": {
       "type": "SEQ",
       "members": [
@@ -1144,6 +1196,10 @@
           {
             "type": "SYMBOL",
             "name": "set_command"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "try_command"
           },
           {
             "type": "SYMBOL",

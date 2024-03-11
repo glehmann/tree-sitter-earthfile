@@ -423,6 +423,10 @@
           "named": true
         },
         {
+          "type": "try_command",
+          "named": true
+        },
+        {
           "type": "wait_command",
           "named": true
         },
@@ -528,6 +532,10 @@
         },
         {
           "type": "set_command",
+          "named": true
+        },
+        {
+          "type": "try_command",
           "named": true
         },
         {
@@ -662,6 +670,10 @@
         },
         {
           "type": "set_command",
+          "named": true
+        },
+        {
+          "type": "try_command",
           "named": true
         },
         {
@@ -942,6 +954,10 @@
         },
         {
           "type": "set_command",
+          "named": true
+        },
+        {
+          "type": "try_command",
           "named": true
         },
         {
@@ -1570,6 +1586,10 @@
           "named": true
         },
         {
+          "type": "try_command",
+          "named": true
+        },
+        {
           "type": "wait_command",
           "named": true
         },
@@ -1636,6 +1656,92 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "try_command",
+    "named": true,
+    "fields": {
+      "finally": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "save_artifact_command",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "arg_command",
+          "named": true
+        },
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "copy_command",
+          "named": true
+        },
+        {
+          "type": "for_command",
+          "named": true
+        },
+        {
+          "type": "from_command",
+          "named": true
+        },
+        {
+          "type": "from_dockerfile_command",
+          "named": true
+        },
+        {
+          "type": "git_clone_command",
+          "named": true
+        },
+        {
+          "type": "if_command",
+          "named": true
+        },
+        {
+          "type": "let_command",
+          "named": true
+        },
+        {
+          "type": "run_command",
+          "named": true
+        },
+        {
+          "type": "save_artifact_command",
+          "named": true
+        },
+        {
+          "type": "save_image_command",
+          "named": true
+        },
+        {
+          "type": "set_command",
+          "named": true
+        },
+        {
+          "type": "try_command",
+          "named": true
+        },
+        {
+          "type": "wait_command",
+          "named": true
+        },
+        {
+          "type": "with_docker_command",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -1732,6 +1838,10 @@
         },
         {
           "type": "set_command",
+          "named": true
+        },
+        {
+          "type": "try_command",
           "named": true
         },
         {
@@ -1944,6 +2054,10 @@
     "named": false
   },
   {
+    "type": "FINALLY",
+    "named": false
+  },
+  {
     "type": "FOR",
     "named": false
   },
@@ -1989,6 +2103,10 @@
   },
   {
     "type": "SET",
+    "named": false
+  },
+  {
+    "type": "TRY",
     "named": false
   },
   {
