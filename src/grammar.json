@@ -218,6 +218,10 @@
                       {
                         "type": "SYMBOL",
                         "name": "save_artifact_command"
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "save_image_command"
                       }
                     ]
                   }
@@ -539,6 +543,64 @@
         }
       ]
     },
+    "save_image_command": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "SAVE"
+        },
+        {
+          "type": "STRING",
+          "value": "IMAGE"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "REPEAT",
+                  "content": {
+                    "type": "FIELD",
+                    "name": "option",
+                    "content": {
+                      "type": "CHOICE",
+                      "members": [
+                        {
+                          "type": "SYMBOL",
+                          "name": "cache_from"
+                        },
+                        {
+                          "type": "SYMBOL",
+                          "name": "push"
+                        }
+                      ]
+                    }
+                  }
+                },
+                {
+                  "type": "REPEAT",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "image_spec"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "FIELD",
+              "name": "option",
+              "content": {
+                "type": "SYMBOL",
+                "name": "cache_hint"
+              }
+            }
+          ]
+        }
+      ]
+    },
     "expr": {
       "type": "PATTERN",
       "value": "\\$\\(.+\\)"
@@ -810,6 +872,48 @@
           ]
         }
       ]
+    },
+    "cache_from": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "TOKEN",
+          "content": {
+            "type": "PREC",
+            "value": 5,
+            "content": {
+              "type": "STRING",
+              "value": "--cache-from"
+            }
+          }
+        },
+        {
+          "type": "IMMEDIATE_TOKEN",
+          "content": {
+            "type": "PATTERN",
+            "value": "[ =]"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "value",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_string"
+          }
+        }
+      ]
+    },
+    "cache_hint": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 5,
+        "content": {
+          "type": "STRING",
+          "value": "--cache-hint"
+        }
+      }
     },
     "chmod": {
       "type": "SEQ",

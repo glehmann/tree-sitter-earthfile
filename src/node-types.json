@@ -102,6 +102,30 @@
     }
   },
   {
+    "type": "cache_from",
+    "named": true,
+    "fields": {
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "double_quoted_string",
+            "named": true
+          },
+          {
+            "type": "single_quoted_string",
+            "named": true
+          },
+          {
+            "type": "unquoted_string",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "chmod",
     "named": true,
     "fields": {
@@ -505,6 +529,40 @@
     }
   },
   {
+    "type": "save_image_command",
+    "named": true,
+    "fields": {
+      "option": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "cache_from",
+            "named": true
+          },
+          {
+            "type": "cache_hint",
+            "named": true
+          },
+          {
+            "type": "push",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "image_spec",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "secret",
     "named": true,
     "fields": {
@@ -606,6 +664,10 @@
         },
         {
           "type": "save_artifact_command",
+          "named": true
+        },
+        {
+          "type": "save_image_command",
           "named": true
         }
       ]
@@ -746,6 +808,10 @@
     "named": false
   },
   {
+    "type": "--cache-from",
+    "named": false
+  },
+  {
     "type": "--chmod",
     "named": false
   },
@@ -802,6 +868,10 @@
     "named": false
   },
   {
+    "type": "IMAGE",
+    "named": false
+  },
+  {
     "type": "LOCAL",
     "named": false
   },
@@ -819,6 +889,10 @@
   },
   {
     "type": "allow_privileged",
+    "named": true
+  },
+  {
+    "type": "cache_hint",
     "named": true
   },
   {

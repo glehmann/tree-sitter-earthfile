@@ -65,6 +65,7 @@ module.exports = grammar({
                 $.from_command,
                 $.run_command,
                 $.save_artifact_command,
+                $.save_image_command,
               )
             ),
             $._dedent
@@ -146,6 +147,16 @@ module.exports = grammar({
         optional(seq("AS", "LOCAL", field("as_local", $.path)))
       ),
 
+      save_image_command: ($) =>
+      seq(
+        "SAVE",
+        "IMAGE",
+        choice(
+          seq(repeat(field("option", choice($.cache_from, $.push))), repeat($.image_spec)),
+          field("option", $.cache_hint),
+        )
+      ),
+
     // command elements
     expr: ($) => /\$\(.+\)/,
     identifier: ($) => /[a-zA-Z_]\w*/,
@@ -201,6 +212,13 @@ module.exports = grammar({
         field("name", $.immediate_identifier),
         optional(seq(token.immediate(/[ =]/), field("value", $._string)))
       ),
+    cache_from: ($) =>
+      seq(
+        token(prec(5, "--cache-from")),
+        token.immediate(/[ =]/),
+        field("value", $._string)
+      ),
+    cache_hint: ($) => token(prec(5, "--cache-hint")),
     chmod: ($) =>
       seq(
         token(prec(5, "--chmod")),

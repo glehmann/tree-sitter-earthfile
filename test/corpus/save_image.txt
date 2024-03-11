@@ -1,0 +1,51 @@
+==================
+save image
+==================
+
+foo:
+    SAVE IMAGE ghcr.io/glehmann/foo
+
+---
+
+    (source_file
+      (target
+        name: (identifier)
+        (save_image_command
+          (image_spec
+            name: (image_name)))))
+
+==================
+save image with options
+==================
+
+foo:
+    SAVE IMAGE --push ghcr.io/glehmann/foo:latest ghcr.io/glehmann/foo:1.2.3
+
+---
+
+    (source_file
+      (target
+        name: (identifier)
+        (save_image_command
+          option: (push)
+          (image_spec
+            name: (image_name)
+            tag: (image_tag))
+          (image_spec
+            name: (image_name)
+            tag: (image_tag)))))
+
+==================
+save image cache hint
+==================
+
+foo:
+    SAVE IMAGE --cache-hint
+
+---
+
+    (source_file
+      (target
+        name: (identifier)
+        (save_image_command
+          option: (cache_hint))))
