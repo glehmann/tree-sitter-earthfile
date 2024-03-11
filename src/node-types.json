@@ -383,6 +383,10 @@
           "named": true
         },
         {
+          "type": "for_command",
+          "named": true
+        },
+        {
           "type": "from_command",
           "named": true
         },
@@ -480,6 +484,140 @@
         },
         {
           "type": "copy_command",
+          "named": true
+        },
+        {
+          "type": "for_command",
+          "named": true
+        },
+        {
+          "type": "from_command",
+          "named": true
+        },
+        {
+          "type": "from_dockerfile_command",
+          "named": true
+        },
+        {
+          "type": "git_clone_command",
+          "named": true
+        },
+        {
+          "type": "if_command",
+          "named": true
+        },
+        {
+          "type": "let_command",
+          "named": true
+        },
+        {
+          "type": "run_command",
+          "named": true
+        },
+        {
+          "type": "save_artifact_command",
+          "named": true
+        },
+        {
+          "type": "save_image_command",
+          "named": true
+        },
+        {
+          "type": "set_command",
+          "named": true
+        },
+        {
+          "type": "with_docker_command",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "for_command",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "option": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "mount",
+            "named": true
+          },
+          {
+            "type": "no_cache",
+            "named": true
+          },
+          {
+            "type": "privileged",
+            "named": true
+          },
+          {
+            "type": "secret",
+            "named": true
+          },
+          {
+            "type": "sep",
+            "named": true
+          },
+          {
+            "type": "ssh",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "double_quoted_string",
+            "named": true
+          },
+          {
+            "type": "expr",
+            "named": true
+          },
+          {
+            "type": "single_quoted_string",
+            "named": true
+          },
+          {
+            "type": "unquoted_string",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "arg_command",
+          "named": true
+        },
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "copy_command",
+          "named": true
+        },
+        {
+          "type": "for_command",
           "named": true
         },
         {
@@ -752,6 +890,10 @@
         },
         {
           "type": "copy_command",
+          "named": true
+        },
+        {
+          "type": "for_command",
           "named": true
         },
         {
@@ -1208,6 +1350,30 @@
     }
   },
   {
+    "type": "sep",
+    "named": true,
+    "fields": {
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "double_quoted_string",
+            "named": true
+          },
+          {
+            "type": "single_quoted_string",
+            "named": true
+          },
+          {
+            "type": "unquoted_string",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "service",
     "named": true,
     "fields": {
@@ -1345,6 +1511,10 @@
         },
         {
           "type": "copy_command",
+          "named": true
+        },
+        {
+          "type": "for_command",
           "named": true
         },
         {
@@ -1619,6 +1789,10 @@
     "named": false
   },
   {
+    "type": "--sep",
+    "named": false
+  },
+  {
     "type": "--service",
     "named": false
   },
@@ -1679,6 +1853,10 @@
     "named": false
   },
   {
+    "type": "FOR",
+    "named": false
+  },
+  {
     "type": "FROM",
     "named": false
   },
@@ -1692,6 +1870,10 @@
   },
   {
     "type": "IF",
+    "named": false
+  },
+  {
+    "type": "IN",
     "named": false
   },
   {

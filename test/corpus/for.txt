@@ -1,0 +1,45 @@
+==================
+for command
+==================
+
+foo:
+    FOR v IN 0 $(echo 1 2 3) 4
+      RUN --no-cache echo $v
+    END
+
+---
+
+    (source_file
+      (target
+        name: (identifier)
+        (for_command
+          name: (identifier)
+          value: (unquoted_string)
+          value: (expr)
+          value: (unquoted_string)
+          (run_command
+            option: (no_cache)
+            command: (shell_fragment)))))
+
+==================
+for command with options
+==================
+
+foo:
+    FOR --ssh v IN a b c
+      RUN echo $v
+    END
+
+---
+
+    (source_file
+      (target
+        name: (identifier)
+        (for_command
+          option: (ssh)
+          name: (identifier)
+          value: (unquoted_string)
+          value: (unquoted_string)
+          value: (unquoted_string)
+          (run_command
+            command: (shell_fragment)))))

@@ -131,6 +131,31 @@ module.exports = grammar({
         $._eol
       ),
 
+    for_command: ($) =>
+      seq(
+        "FOR",
+        repeat(
+          field(
+            "option",
+            choice(
+              $.sep,
+              $.privileged,
+              $.ssh,
+              $.no_cache,
+              $.mount,
+              $.secret,
+            )
+          )
+        ),
+        field("name", $.identifier),
+        "IN",
+        repeat(field("value", choice($._string, $.expr))),
+        $._eol,
+        optional($._target_block),
+        "END",
+        $._eol
+      ),
+
     from_dockerfile_command: ($) =>
       seq(
         "FROM DOCKERFILE",
@@ -161,7 +186,8 @@ module.exports = grammar({
 
     if_command: ($) =>
       seq(
-        "IF", $._conditional_block,
+        "IF",
+        $._conditional_block,
         repeat(field("else_if", seq("ELSE IF", $.else_if_block))),
         optional(field("else", seq("ELSE", $.else_block))),
         "END",
@@ -268,6 +294,7 @@ module.exports = grammar({
         choice(
           $.arg_command,
           $.copy_command,
+          $.for_command,
           $.from_command,
           $.from_dockerfile_command,
           $.git_clone_command,
@@ -451,6 +478,12 @@ module.exports = grammar({
     secret: ($) =>
       seq(
         token(prec(5, "--secret")),
+        token.immediate(/[ =]/),
+        field("value", $._string)
+      ),
+    sep: ($) =>
+      seq(
+        token(prec(5, "--sep")),
         token.immediate(/[ =]/),
         field("value", $._string)
       ),
