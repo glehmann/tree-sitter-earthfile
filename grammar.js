@@ -36,13 +36,32 @@ module.exports = grammar({
         $._eol
       ),
 
+    build_command: ($) =>
+      seq(
+        "BUILD",
+        repeat(
+          field(
+            "option",
+            choice($.auto_skip, $.allow_privileged, $.pass_args, $.platform)
+          )
+        ),
+        $.target_ref,
+        repeat($.build_arg),
+        $._eol
+      ),
+
     from_command: ($) =>
       seq(
         "FROM",
         choice(
           $.image_spec,
           seq(
-            repeat(field("option", choice($.platform, $.allow_privileged))),
+            repeat(
+              field(
+                "option",
+                choice($.platform, $.allow_privileged, $.pass_args)
+              )
+            ),
             $.target_ref,
             repeat($.build_arg)
           ),
@@ -63,9 +82,10 @@ module.exports = grammar({
                 $.arg_command,
                 $.copy_command,
                 $.from_command,
+                $.let_command,
                 $.run_command,
                 $.save_artifact_command,
-                $.save_image_command,
+                $.save_image_command
               )
             ),
             $._dedent
@@ -112,6 +132,15 @@ module.exports = grammar({
         $._eol
       ),
 
+    let_command: ($) =>
+      seq(
+        "LET",
+        field("name", $.identifier),
+        token.immediate("="),
+        field("value", $._string),
+        $._eol
+      ),
+
     run_command: ($) =>
       seq(
         "RUN",
@@ -140,7 +169,16 @@ module.exports = grammar({
         "SAVE",
         "ARTIFACT",
         repeat(
-          field("option", choice($.if_exists, $.force, $.keep_own, $.keep_ts, $.symlink_no_follow))
+          field(
+            "option",
+            choice(
+              $.if_exists,
+              $.force,
+              $.keep_own,
+              $.keep_ts,
+              $.symlink_no_follow
+            )
+          )
         ),
         field("src", $.path),
         optional(field("dest", $.path)),
@@ -152,8 +190,11 @@ module.exports = grammar({
         "SAVE",
         "IMAGE",
         choice(
-          seq(repeat(field("option", choice($.cache_from, $.push))), repeat($.image_spec)),
-          field("option", $.cache_hint),
+          seq(
+            repeat(field("option", choice($.cache_from, $.push))),
+            repeat($.image_spec)
+          ),
+          field("option", $.cache_hint)
         )
       ),
 
@@ -206,6 +247,7 @@ module.exports = grammar({
 
     // options
     allow_privileged: ($) => token(prec(5, "--allow-privileged")),
+    auto_skip: ($) => token(prec(5, "--auto-skip")),
     build_arg: ($) =>
       seq(
         token(prec(5, "--")),

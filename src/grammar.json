@@ -107,6 +107,58 @@
         }
       ]
     },
+    "build_command": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "BUILD"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "FIELD",
+            "name": "option",
+            "content": {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "auto_skip"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "allow_privileged"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "pass_args"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "platform"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "target_ref"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "build_arg"
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_eol"
+        }
+      ]
+    },
     "from_command": {
       "type": "SEQ",
       "members": [
@@ -139,6 +191,10 @@
                         {
                           "type": "SYMBOL",
                           "name": "allow_privileged"
+                        },
+                        {
+                          "type": "SYMBOL",
+                          "name": "pass_args"
                         }
                       ]
                     }
@@ -210,6 +266,10 @@
                       {
                         "type": "SYMBOL",
                         "name": "from_command"
+                      },
+                      {
+                        "type": "SYMBOL",
+                        "name": "let_command"
                       },
                       {
                         "type": "SYMBOL",
@@ -360,6 +420,42 @@
           "content": {
             "type": "SYMBOL",
             "name": "path"
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_eol"
+        }
+      ]
+    },
+    "let_command": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "LET"
+        },
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "IMMEDIATE_TOKEN",
+          "content": {
+            "type": "STRING",
+            "value": "="
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "value",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_string"
           }
         },
         {
@@ -818,6 +914,17 @@
         "content": {
           "type": "STRING",
           "value": "--allow-privileged"
+        }
+      }
+    },
+    "auto_skip": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 5,
+        "content": {
+          "type": "STRING",
+          "value": "--auto-skip"
         }
       }
     },

@@ -281,6 +281,10 @@
             "named": true
           },
           {
+            "type": "pass_args",
+            "named": true
+          },
+          {
             "type": "platform",
             "named": true
           }
@@ -352,6 +356,50 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "let_command",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "double_quoted_string",
+            "named": true
+          },
+          {
+            "type": "single_quoted_string",
+            "named": true
+          },
+          {
+            "type": "unquoted_string",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "comment",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -659,6 +707,10 @@
           "named": true
         },
         {
+          "type": "let_command",
+          "named": true
+        },
+        {
           "type": "run_command",
           "named": true
         },
@@ -860,6 +912,10 @@
     "named": false
   },
   {
+    "type": "BUILD",
+    "named": false
+  },
+  {
     "type": "COPY",
     "named": false
   },
@@ -869,6 +925,10 @@
   },
   {
     "type": "IMAGE",
+    "named": false
+  },
+  {
+    "type": "LET",
     "named": false
   },
   {
@@ -889,6 +949,10 @@
   },
   {
     "type": "allow_privileged",
+    "named": true
+  },
+  {
+    "type": "auto_skip",
     "named": true
   },
   {
