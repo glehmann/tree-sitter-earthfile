@@ -68,6 +68,22 @@
     }
   },
   {
+    "type": "branch",
+    "named": true,
+    "fields": {
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "path",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "build_arg",
     "named": true,
     "fields": {
@@ -309,6 +325,56 @@
         },
         {
           "type": "target_ref",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "git_clone_command",
+    "named": true,
+    "fields": {
+      "dest": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "path",
+            "named": true
+          }
+        ]
+      },
+      "option": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "branch",
+            "named": true
+          },
+          {
+            "type": "keep_ts",
+            "named": true
+          }
+        ]
+      },
+      "url": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "path",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "comment",
           "named": true
         }
       ]
@@ -791,6 +857,10 @@
           "named": true
         },
         {
+          "type": "git_clone_command",
+          "named": true
+        },
+        {
           "type": "let_command",
           "named": true
         },
@@ -948,6 +1018,10 @@
     "named": false
   },
   {
+    "type": "--branch",
+    "named": false
+  },
+  {
     "type": "--cache-from",
     "named": false
   },
@@ -1004,11 +1078,19 @@
     "named": false
   },
   {
+    "type": "CLONE",
+    "named": false
+  },
+  {
     "type": "COPY",
     "named": false
   },
   {
     "type": "FROM",
+    "named": false
+  },
+  {
+    "type": "GIT",
     "named": false
   },
   {

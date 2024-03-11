@@ -97,6 +97,7 @@ module.exports = grammar({
                 $.arg_command,
                 $.copy_command,
                 $.from_command,
+                $.git_clone_command,
                 $.let_command,
                 $.run_command,
                 $.save_artifact_command,
@@ -148,7 +149,25 @@ module.exports = grammar({
         $._eol
       ),
 
-    let_command: ($) =>
+    git_clone_command: ($) =>
+      seq(
+        "GIT",
+        "CLONE",
+        repeat(
+          field(
+            "option",
+            choice(
+              $.branch,
+              $.keep_ts
+            )
+          )
+        ),
+        field("url", $.path),
+        field("dest", $.path),
+        $._eol
+      ),
+
+      let_command: ($) =>
       seq(
         "LET",
         field("name", $.identifier),
@@ -273,6 +292,12 @@ module.exports = grammar({
     // options
     allow_privileged: ($) => token(prec(5, "--allow-privileged")),
     auto_skip: ($) => token(prec(5, "--auto-skip")),
+    branch: ($) =>
+      seq(
+        token(prec(5, "--branch")),
+        token.immediate(/[ =]/),
+        field("value", $.path)
+      ),
     build_arg: ($) =>
       seq(
         token(prec(5, "--")),

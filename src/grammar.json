@@ -309,6 +309,10 @@
                       },
                       {
                         "type": "SYMBOL",
+                        "name": "git_clone_command"
+                      },
+                      {
+                        "type": "SYMBOL",
                         "name": "let_command"
                       },
                       {
@@ -456,6 +460,59 @@
                 }
               ]
             }
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "dest",
+          "content": {
+            "type": "SYMBOL",
+            "name": "path"
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_eol"
+        }
+      ]
+    },
+    "git_clone_command": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "GIT"
+        },
+        {
+          "type": "STRING",
+          "value": "CLONE"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "FIELD",
+            "name": "option",
+            "content": {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "branch"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "keep_ts"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "url",
+          "content": {
+            "type": "SYMBOL",
+            "name": "path"
           }
         },
         {
@@ -1007,6 +1064,37 @@
           "value": "--auto-skip"
         }
       }
+    },
+    "branch": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "TOKEN",
+          "content": {
+            "type": "PREC",
+            "value": 5,
+            "content": {
+              "type": "STRING",
+              "value": "--branch"
+            }
+          }
+        },
+        {
+          "type": "IMMEDIATE_TOKEN",
+          "content": {
+            "type": "PATTERN",
+            "value": "[ =]"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "value",
+          "content": {
+            "type": "SYMBOL",
+            "name": "path"
+          }
+        }
+      ]
     },
     "build_arg": {
       "type": "SEQ",
