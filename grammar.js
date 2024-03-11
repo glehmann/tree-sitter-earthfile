@@ -101,6 +101,14 @@ module.exports = grammar({
       ),
 
     // the target commands
+    cache_command: ($) =>
+      seq(
+        "CACHE",
+        repeat(field("option", choice($.chmod, $.id, $.persist, $.sharing))),
+        field("mount_point", $.path),
+        $._eol
+      ),
+
     copy_command: ($) =>
       seq(
         "COPY",
@@ -300,6 +308,7 @@ module.exports = grammar({
       repeat1(
         choice(
           $.arg_command,
+          $.cache_command,
           $.copy_command,
           $.for_command,
           $.from_command,
@@ -443,6 +452,8 @@ module.exports = grammar({
     feature_flag: ($) => /--[a-zA-Z0-9\-]+/,
     force: ($) => token(prec(5, "--force")),
     global: ($) => token(prec(5, "--global")),
+    id: ($) =>
+      seq(token(prec(5, "--id")), token.immediate(/[ =]/), $.identifier),
     if_exists: ($) => token(prec(5, "--if-exists")),
     keep_own: ($) => token(prec(5, "--keep-own")),
     keep_ts: ($) => token(prec(5, "--keep-ts")),
@@ -469,6 +480,7 @@ module.exports = grammar({
     network_none: ($) => token(prec(5, "--network=none")),
     no_cache: ($) => token(prec(5, "--no-cache")),
     pass_args: ($) => token(prec(5, "--pass-args")),
+    persist: ($) => token(prec(5, "--persist")),
     platform: ($) =>
       seq(
         token(prec(5, "--platform")),
@@ -502,6 +514,8 @@ module.exports = grammar({
         token.immediate(/[ =]/),
         field("value", $._string)
       ),
+    sharing: ($) =>
+      seq(token(prec(5, "--sharing")), token.immediate(/[ =]/), $.identifier),
     ssh: ($) => token(prec(5, "--ssh")),
     symlink_no_follow: ($) => token(prec(5, "--symlink-no-follow")),
 

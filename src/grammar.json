@@ -347,6 +347,55 @@
         }
       ]
     },
+    "cache_command": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "CACHE"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "FIELD",
+            "name": "option",
+            "content": {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "chmod"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "id"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "persist"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "sharing"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "mount_point",
+          "content": {
+            "type": "SYMBOL",
+            "name": "path"
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_eol"
+        }
+      ]
+    },
     "copy_command": {
       "type": "SEQ",
       "members": [
@@ -1155,6 +1204,10 @@
           },
           {
             "type": "SYMBOL",
+            "name": "cache_command"
+          },
+          {
+            "type": "SYMBOL",
             "name": "copy_command"
           },
           {
@@ -1886,6 +1939,33 @@
         }
       }
     },
+    "id": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "TOKEN",
+          "content": {
+            "type": "PREC",
+            "value": 5,
+            "content": {
+              "type": "STRING",
+              "value": "--id"
+            }
+          }
+        },
+        {
+          "type": "IMMEDIATE_TOKEN",
+          "content": {
+            "type": "PATTERN",
+            "value": "[ =]"
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
+        }
+      ]
+    },
     "if_exists": {
       "type": "TOKEN",
       "content": {
@@ -2055,6 +2135,17 @@
         "content": {
           "type": "STRING",
           "value": "--pass-args"
+        }
+      }
+    },
+    "persist": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 5,
+        "content": {
+          "type": "STRING",
+          "value": "--persist"
         }
       }
     },
@@ -2243,6 +2334,33 @@
             "type": "SYMBOL",
             "name": "_string"
           }
+        }
+      ]
+    },
+    "sharing": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "TOKEN",
+          "content": {
+            "type": "PREC",
+            "value": 5,
+            "content": {
+              "type": "STRING",
+              "value": "--sharing"
+            }
+          }
+        },
+        {
+          "type": "IMMEDIATE_TOKEN",
+          "content": {
+            "type": "PATTERN",
+            "value": "[ =]"
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "identifier"
         }
       ]
     },
