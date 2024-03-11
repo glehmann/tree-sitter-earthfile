@@ -459,6 +459,10 @@
           "named": true
         },
         {
+          "type": "locally_command",
+          "named": true
+        },
+        {
           "type": "run_command",
           "named": true
         },
@@ -572,6 +576,10 @@
         },
         {
           "type": "let_command",
+          "named": true
+        },
+        {
+          "type": "locally_command",
           "named": true
         },
         {
@@ -714,6 +722,10 @@
         },
         {
           "type": "let_command",
+          "named": true
+        },
+        {
+          "type": "locally_command",
           "named": true
         },
         {
@@ -1020,6 +1032,10 @@
           "named": true
         },
         {
+          "type": "locally_command",
+          "named": true
+        },
+        {
           "type": "run_command",
           "named": true
         },
@@ -1174,6 +1190,21 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "locally_command",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "comment",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -1668,6 +1699,10 @@
           "named": true
         },
         {
+          "type": "locally_command",
+          "named": true
+        },
+        {
           "type": "run_command",
           "named": true
         },
@@ -1816,6 +1851,10 @@
           "named": true
         },
         {
+          "type": "locally_command",
+          "named": true
+        },
+        {
           "type": "run_command",
           "named": true
         },
@@ -1928,6 +1967,10 @@
         },
         {
           "type": "let_command",
+          "named": true
+        },
+        {
+          "type": "locally_command",
           "named": true
         },
         {
@@ -2201,6 +2244,10 @@
   },
   {
     "type": "LET",
+    "named": false
+  },
+  {
+    "type": "LOCALLY",
     "named": false
   },
   {

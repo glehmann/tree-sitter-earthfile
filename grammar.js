@@ -204,6 +204,8 @@ module.exports = grammar({
         $._eol
       ),
 
+    locally_command: ($) => seq("LOCALLY", $._eol),
+
     run_command: ($) =>
       seq(
         "RUN",
@@ -316,6 +318,7 @@ module.exports = grammar({
           $.git_clone_command,
           $.if_command,
           $.let_command,
+          $.locally_command,
           $.run_command,
           $.save_artifact_command,
           $.save_image_command,

@@ -798,6 +798,19 @@
         }
       ]
     },
+    "locally_command": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "LOCALLY"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_eol"
+        }
+      ]
+    },
     "run_command": {
       "type": "SEQ",
       "members": [
@@ -1233,6 +1246,10 @@
           {
             "type": "SYMBOL",
             "name": "let_command"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "locally_command"
           },
           {
             "type": "SYMBOL",
