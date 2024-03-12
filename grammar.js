@@ -14,18 +14,40 @@ module.exports = grammar({
     // main rule, for the whole file
     // it must be the first rule in the list
     source_file: ($) =>
-      repeat(
-        choice(
-          $.arg_command,
-          $.from_command,
-          $.import_command,
-          $.project_command,
-          $.target,
-          $.version_command
-        )
+      seq(
+        optional($.version_command),
+        optional($.project_command),
+        optional($._command_block),
+        repeat($.target)
       ),
 
     // the root commands/elements
+    project_command: ($) =>
+      seq(
+        "PROJECT",
+        field("org_name", $.identifier),
+        token.immediate("/"),
+        field("project_name", $.identifier),
+        $._eol
+      ),
+
+    target: ($) =>
+      seq(
+        field("name", $.identifier),
+        ":",
+        $._eol,
+        optional(seq($._indent, optional($._command_block), $._dedent))
+      ),
+
+    version_command: ($) =>
+      seq(
+        "VERSION",
+        field("option", repeat($.feature_flag)),
+        field("version", $.version_major_minor),
+        $._eol
+      ),
+
+    // the target commands
     arg_command: ($) =>
       seq(
         "ARG",
@@ -57,51 +79,6 @@ module.exports = grammar({
         $._eol
       ),
 
-    from_command: ($) =>
-      seq(
-        "FROM",
-        choice(
-          $.image_spec,
-          seq(
-            repeat(
-              field(
-                "option",
-                choice($.platform, $.allow_privileged, $.pass_args)
-              )
-            ),
-            $.target_ref,
-            repeat($.build_arg)
-          ),
-          $._eol
-        )
-      ),
-
-    project_command: ($) =>
-      seq(
-        "PROJECT",
-        field("org_name", $.identifier),
-        token.immediate("/"),
-        field("project_name", $.identifier),
-        $._eol
-      ),
-
-    target: ($) =>
-      seq(
-        field("name", $.identifier),
-        ":",
-        $._eol,
-        optional(seq($._indent, optional($._target_block), $._dedent))
-      ),
-
-    version_command: ($) =>
-      seq(
-        "VERSION",
-        field("option", repeat($.feature_flag)),
-        field("version", $.version_major_minor),
-        $._eol
-      ),
-
-    // the target commands
     cache_command: ($) =>
       seq(
         "CACHE",
@@ -161,9 +138,28 @@ module.exports = grammar({
         "IN",
         repeat(field("value", choice($._string, $.expr))),
         $._eol,
-        optional($._target_block),
+        optional($._command_block),
         "END",
         $._eol
+      ),
+
+    from_command: ($) =>
+      seq(
+        "FROM",
+        choice(
+          $.image_spec,
+          seq(
+            repeat(
+              field(
+                "option",
+                choice($.platform, $.allow_privileged, $.pass_args)
+              )
+            ),
+            $.target_ref,
+            repeat($.build_arg)
+          ),
+          $._eol
+        )
       ),
 
     from_dockerfile_command: ($) =>
@@ -293,7 +289,7 @@ module.exports = grammar({
       seq(
         "TRY",
         $._eol,
-        optional($._target_block),
+        optional($._command_block),
         "FINALLY",
         $._eol,
         repeat(field("finally", $.save_artifact_command)),
@@ -301,7 +297,7 @@ module.exports = grammar({
         $._eol
       ),
 
-    wait_command: ($) => seq("WAIT", optional($._target_block), "END", $._eol),
+    wait_command: ($) => seq("WAIT", optional($._command_block), "END", $._eol),
 
     with_docker_command: ($) =>
       seq(
@@ -325,7 +321,7 @@ module.exports = grammar({
       ),
 
     // code blocks
-    _target_block: ($) =>
+    _command_block: ($) =>
       repeat1(
         choice(
           $.arg_command,
@@ -360,10 +356,10 @@ module.exports = grammar({
         ),
         field("condition", $.identifier),
         $._eol,
-        optional($._target_block)
+        optional($._command_block)
       ),
     else_if_block: ($) => $._conditional_block,
-    else_block: ($) => $._target_block,
+    else_block: ($) => $._command_block,
 
     // command elements
     earthfile_ref: ($) => $.path,
