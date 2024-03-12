@@ -951,6 +951,26 @@
         }
       ]
     },
+    "label_command": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "LABEL"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "label"
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_eol"
+        }
+      ]
+    },
     "locally_command": {
       "type": "SEQ",
       "members": [
@@ -1427,6 +1447,10 @@
           },
           {
             "type": "SYMBOL",
+            "name": "label_command"
+          },
+          {
+            "type": "SYMBOL",
             "name": "locally_command"
           },
           {
@@ -1658,6 +1682,34 @@
         "type": "PATTERN",
         "value": "[a-zA-Z_]\\w*"
       }
+    },
+    "label": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "FIELD",
+          "name": "label",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "IMMEDIATE_TOKEN",
+          "content": {
+            "type": "PATTERN",
+            "value": "[ =]"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "value",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_string"
+          }
+        }
+      ]
     },
     "path": {
       "type": "PATTERN",

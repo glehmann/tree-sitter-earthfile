@@ -222,6 +222,8 @@ module.exports = grammar({
         $._eol
       ),
 
+    label_command: ($) => seq("LABEL", repeat($.label), $._eol),
+
     locally_command: ($) => seq("LOCALLY", $._eol),
 
     run_command: ($) =>
@@ -340,6 +342,7 @@ module.exports = grammar({
           $.if_command,
           $.import_command,
           $.let_command,
+          $.label_command,
           $.locally_command,
           $.run_command,
           $.save_artifact_command,
@@ -381,6 +384,12 @@ module.exports = grammar({
     image_tag: ($) => token.immediate(/[^@\s\$]+/),
     image_digest: ($) => token.immediate(/[a-zA-Z0-9:]+/),
     immediate_identifier: ($) => token.immediate(/[a-zA-Z_]\w*/),
+    label: ($) =>
+      seq(
+        field("label", $.identifier),
+        token.immediate(/[ =]/),
+        field("value", $._string)
+      ),
     path: ($) => /[^\s()\\]+/,
     shell_fragment: ($) =>
       repeat1(

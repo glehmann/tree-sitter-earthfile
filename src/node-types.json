@@ -543,6 +543,10 @@
           "named": true
         },
         {
+          "type": "label_command",
+          "named": true
+        },
+        {
           "type": "let_command",
           "named": true
         },
@@ -676,6 +680,10 @@
         },
         {
           "type": "import_command",
+          "named": true
+        },
+        {
+          "type": "label_command",
           "named": true
         },
         {
@@ -838,6 +846,10 @@
         },
         {
           "type": "import_command",
+          "named": true
+        },
+        {
+          "type": "label_command",
           "named": true
         },
         {
@@ -1195,6 +1207,10 @@
           "named": true
         },
         {
+          "type": "label_command",
+          "named": true
+        },
+        {
           "type": "let_command",
           "named": true
         },
@@ -1312,6 +1328,59 @@
         },
         {
           "type": "earthfile_ref",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "label",
+    "named": true,
+    "fields": {
+      "label": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "double_quoted_string",
+            "named": true
+          },
+          {
+            "type": "single_quoted_string",
+            "named": true
+          },
+          {
+            "type": "unquoted_string",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "label_command",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "label",
           "named": true
         }
       ]
@@ -1876,6 +1945,10 @@
           "named": true
         },
         {
+          "type": "label_command",
+          "named": true
+        },
+        {
           "type": "let_command",
           "named": true
         },
@@ -2010,6 +2083,10 @@
         },
         {
           "type": "import_command",
+          "named": true
+        },
+        {
+          "type": "label_command",
           "named": true
         },
         {
@@ -2181,6 +2258,10 @@
           "named": true
         },
         {
+          "type": "label_command",
+          "named": true
+        },
+        {
           "type": "let_command",
           "named": true
         },
@@ -2313,6 +2394,10 @@
         },
         {
           "type": "import_command",
+          "named": true
+        },
+        {
+          "type": "label_command",
           "named": true
         },
         {
@@ -2610,6 +2695,10 @@
   },
   {
     "type": "IN",
+    "named": false
+  },
+  {
+    "type": "LABEL",
     "named": false
   },
   {
