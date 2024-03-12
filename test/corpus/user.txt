@@ -1,0 +1,46 @@
+==================
+user command
+==================
+
+foo:
+  USER foo
+
+---
+
+    (source_file
+      (target
+        name: (identifier)
+        (user_command
+          user: (identifier))))
+
+==================
+user command with group
+==================
+
+foo:
+  USER foo:admin
+
+---
+
+    (source_file
+      (target
+        name: (identifier)
+        (user_command
+          user: (identifier)
+          group: (identifier))))
+
+==================
+user command with udi/gid
+==================
+
+foo:
+  USER 10:10
+
+---
+
+    (source_file
+      (target
+        name: (identifier)
+        (user_command
+          user: (number)
+          group: (number))))

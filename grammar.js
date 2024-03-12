@@ -316,6 +316,19 @@ module.exports = grammar({
         $._eol
       ),
 
+    user_command: ($) =>
+      seq(
+        "USER",
+        field("user", choice($.identifier, $.number)),
+        optional(
+          seq(
+            token.immediate(":"),
+            field("group", choice($.identifier, $.number))
+          )
+        ),
+        $._eol
+      ),
+
     volume_command: ($) =>
       seq("VOLUME", choice($.string_array, repeat($.path)), $._eol),
 
@@ -369,6 +382,7 @@ module.exports = grammar({
           $.save_image_command,
           $.set_command,
           $.try_command,
+          $.user_command,
           $.volume_command,
           $.wait_command,
           $.with_docker_command

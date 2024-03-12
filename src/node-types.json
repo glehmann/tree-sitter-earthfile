@@ -587,6 +587,10 @@
           "named": true
         },
         {
+          "type": "user_command",
+          "named": true
+        },
+        {
           "type": "volume_command",
           "named": true
         },
@@ -740,6 +744,10 @@
         },
         {
           "type": "try_command",
+          "named": true
+        },
+        {
+          "type": "user_command",
           "named": true
         },
         {
@@ -1008,6 +1016,10 @@
         },
         {
           "type": "try_command",
+          "named": true
+        },
+        {
+          "type": "user_command",
           "named": true
         },
         {
@@ -1382,6 +1394,10 @@
         },
         {
           "type": "try_command",
+          "named": true
+        },
+        {
+          "type": "user_command",
           "named": true
         },
         {
@@ -2173,6 +2189,10 @@
           "named": true
         },
         {
+          "type": "user_command",
+          "named": true
+        },
+        {
           "type": "version_command",
           "named": true
         },
@@ -2319,6 +2339,10 @@
         },
         {
           "type": "try_command",
+          "named": true
+        },
+        {
+          "type": "user_command",
           "named": true
         },
         {
@@ -2510,6 +2534,10 @@
           "named": true
         },
         {
+          "type": "user_command",
+          "named": true
+        },
+        {
           "type": "volume_command",
           "named": true
         },
@@ -2519,6 +2547,50 @@
         },
         {
           "type": "with_docker_command",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "user_command",
+    "named": true,
+    "fields": {
+      "group": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          }
+        ]
+      },
+      "user": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          },
+          {
+            "type": "number",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "comment",
           "named": true
         }
       ]
@@ -2685,6 +2757,10 @@
         },
         {
           "type": "try_command",
+          "named": true
+        },
+        {
+          "type": "user_command",
           "named": true
         },
         {
@@ -3006,6 +3082,10 @@
   },
   {
     "type": "TRY",
+    "named": false
+  },
+  {
+    "type": "USER",
     "named": false
   },
   {
