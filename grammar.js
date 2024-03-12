@@ -208,6 +208,9 @@ module.exports = grammar({
         $._eol
       ),
 
+    host_command: ($) =>
+      seq("HOST", field("name", $.identifier), field("ip", $._string), $._eol),
+
     if_command: ($) =>
       seq(
         "IF",
@@ -374,6 +377,7 @@ module.exports = grammar({
           $.from_dockerfile_command,
           $.function_command,
           $.git_clone_command,
+          $.host_command,
           $.if_command,
           $.import_command,
           $.let_command,

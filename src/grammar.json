@@ -876,6 +876,35 @@
         }
       ]
     },
+    "host_command": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "HOST"
+        },
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "ip",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_string"
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_eol"
+        }
+      ]
+    },
     "if_command": {
       "type": "SEQ",
       "members": [
@@ -1642,6 +1671,10 @@
           {
             "type": "SYMBOL",
             "name": "git_clone_command"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "host_command"
           },
           {
             "type": "SYMBOL",

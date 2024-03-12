@@ -547,6 +547,10 @@
           "named": true
         },
         {
+          "type": "host_command",
+          "named": true
+        },
+        {
           "type": "if_command",
           "named": true
         },
@@ -708,6 +712,10 @@
         },
         {
           "type": "git_clone_command",
+          "named": true
+        },
+        {
+          "type": "host_command",
           "named": true
         },
         {
@@ -987,6 +995,10 @@
           "named": true
         },
         {
+          "type": "host_command",
+          "named": true
+        },
+        {
           "type": "if_command",
           "named": true
         },
@@ -1225,6 +1237,50 @@
     }
   },
   {
+    "type": "host_command",
+    "named": true,
+    "fields": {
+      "ip": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "double_quoted_string",
+            "named": true
+          },
+          {
+            "type": "single_quoted_string",
+            "named": true
+          },
+          {
+            "type": "unquoted_string",
+            "named": true
+          }
+        ]
+      },
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "comment",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "id",
     "named": true,
     "fields": {},
@@ -1366,6 +1422,10 @@
         },
         {
           "type": "git_clone_command",
+          "named": true
+        },
+        {
+          "type": "host_command",
           "named": true
         },
         {
@@ -2157,6 +2217,10 @@
           "named": true
         },
         {
+          "type": "host_command",
+          "named": true
+        },
+        {
           "type": "if_command",
           "named": true
         },
@@ -2319,6 +2383,10 @@
         },
         {
           "type": "git_clone_command",
+          "named": true
+        },
+        {
+          "type": "host_command",
           "named": true
         },
         {
@@ -2515,6 +2583,10 @@
         },
         {
           "type": "git_clone_command",
+          "named": true
+        },
+        {
+          "type": "host_command",
           "named": true
         },
         {
@@ -2745,6 +2817,10 @@
         },
         {
           "type": "git_clone_command",
+          "named": true
+        },
+        {
+          "type": "host_command",
           "named": true
         },
         {
@@ -3085,6 +3161,10 @@
   },
   {
     "type": "GIT CLONE",
+    "named": false
+  },
+  {
+    "type": "HOST",
     "named": false
   },
   {
