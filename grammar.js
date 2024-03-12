@@ -18,6 +18,7 @@ module.exports = grammar({
         choice(
           $.arg_command,
           $.from_command,
+          $.import_command,
           $.project_command,
           $.target,
           $.version_command
@@ -140,13 +141,9 @@ module.exports = grammar({
       ),
 
     do_command: ($) =>
-      seq("DO",
-        repeat(
-          field(
-            "option",
-            choice($.allow_privileged, $.pass_args)
-          )
-        ),
+      seq(
+        "DO",
+        repeat(field("option", choice($.allow_privileged, $.pass_args))),
         $.function_ref,
         repeat($.build_arg)
       ),
@@ -187,12 +184,11 @@ module.exports = grammar({
         $._eol
       ),
 
-      function_command: ($) => seq("FUNCTION", $._eol),
+    function_command: ($) => seq("FUNCTION", $._eol),
 
-      git_clone_command: ($) =>
+    git_clone_command: ($) =>
       seq(
-        "GIT",
-        "CLONE",
+        "GIT CLONE",
         repeat(field("option", choice($.branch, $.keep_ts))),
         field("url", $.path),
         field("dest", $.path),
@@ -206,6 +202,15 @@ module.exports = grammar({
         repeat(field("else_if", seq("ELSE IF", $.else_if_block))),
         optional(field("else", seq("ELSE", $.else_block))),
         "END",
+        $._eol
+      ),
+
+    import_command: ($) =>
+      seq(
+        "IMPORT",
+        repeat(field("option", choice($.allow_privileged))),
+        $.earthfile_ref,
+        optional(seq("AS", field("alias", $.identifier))),
         $._eol
       ),
 
@@ -333,6 +338,7 @@ module.exports = grammar({
           $.function_command,
           $.git_clone_command,
           $.if_command,
+          $.import_command,
           $.let_command,
           $.locally_command,
           $.run_command,
@@ -360,6 +366,7 @@ module.exports = grammar({
     else_block: ($) => $._target_block,
 
     // command elements
+    earthfile_ref: ($) => $.path,
     expr: ($) => /\$\(.+\)/,
     function_ref: ($) =>
       seq(token(prec(5, "+")), field("name", $.immediate_identifier)),

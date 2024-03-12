@@ -16,6 +16,10 @@
           },
           {
             "type": "SYMBOL",
+            "name": "import_command"
+          },
+          {
+            "type": "SYMBOL",
             "name": "project_command"
           },
           {
@@ -701,11 +705,7 @@
       "members": [
         {
           "type": "STRING",
-          "value": "GIT"
-        },
-        {
-          "type": "STRING",
-          "value": "CLONE"
+          "value": "GIT CLONE"
         },
         {
           "type": "REPEAT",
@@ -808,6 +808,64 @@
         {
           "type": "STRING",
           "value": "END"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_eol"
+        }
+      ]
+    },
+    "import_command": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "IMPORT"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "FIELD",
+            "name": "option",
+            "content": {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "allow_privileged"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "earthfile_ref"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "STRING",
+                  "value": "AS"
+                },
+                {
+                  "type": "FIELD",
+                  "name": "alias",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "identifier"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         },
         {
           "type": "SYMBOL",
@@ -1306,6 +1364,10 @@
           },
           {
             "type": "SYMBOL",
+            "name": "import_command"
+          },
+          {
+            "type": "SYMBOL",
             "name": "let_command"
           },
           {
@@ -1411,6 +1473,10 @@
     "else_block": {
       "type": "SYMBOL",
       "name": "_target_block"
+    },
+    "earthfile_ref": {
+      "type": "SYMBOL",
+      "name": "path"
     },
     "expr": {
       "type": "PATTERN",

@@ -449,6 +449,21 @@
     "fields": {}
   },
   {
+    "type": "earthfile_ref",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "path",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "else_block",
     "named": true,
     "fields": {},
@@ -494,6 +509,10 @@
         },
         {
           "type": "if_command",
+          "named": true
+        },
+        {
+          "type": "import_command",
           "named": true
         },
         {
@@ -622,6 +641,10 @@
         },
         {
           "type": "if_command",
+          "named": true
+        },
+        {
+          "type": "import_command",
           "named": true
         },
         {
@@ -776,6 +799,10 @@
         },
         {
           "type": "if_command",
+          "named": true
+        },
+        {
+          "type": "import_command",
           "named": true
         },
         {
@@ -1125,6 +1152,10 @@
           "named": true
         },
         {
+          "type": "import_command",
+          "named": true
+        },
+        {
           "type": "let_command",
           "named": true
         },
@@ -1205,6 +1236,46 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "import_command",
+    "named": true,
+    "fields": {
+      "alias": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "option": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "allow_privileged",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "earthfile_ref",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -1722,6 +1793,10 @@
           "named": true
         },
         {
+          "type": "import_command",
+          "named": true
+        },
+        {
           "type": "project_command",
           "named": true
         },
@@ -1797,6 +1872,10 @@
         },
         {
           "type": "if_command",
+          "named": true
+        },
+        {
+          "type": "import_command",
           "named": true
         },
         {
@@ -1960,6 +2039,10 @@
           "named": true
         },
         {
+          "type": "import_command",
+          "named": true
+        },
+        {
           "type": "let_command",
           "named": true
         },
@@ -2084,6 +2167,10 @@
         },
         {
           "type": "if_command",
+          "named": true
+        },
+        {
+          "type": "import_command",
           "named": true
         },
         {
@@ -2304,6 +2391,10 @@
     "named": false
   },
   {
+    "type": "AS",
+    "named": false
+  },
+  {
     "type": "AS LOCAL",
     "named": false
   },
@@ -2313,10 +2404,6 @@
   },
   {
     "type": "CACHE",
-    "named": false
-  },
-  {
-    "type": "CLONE",
     "named": false
   },
   {
@@ -2360,11 +2447,15 @@
     "named": false
   },
   {
-    "type": "GIT",
+    "type": "GIT CLONE",
     "named": false
   },
   {
     "type": "IF",
+    "named": false
+  },
+  {
+    "type": "IMPORT",
     "named": false
   },
   {
