@@ -517,6 +517,26 @@
         }
       ]
     },
+    "expose_command": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "EXPOSE"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "port"
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_eol"
+        }
+      ]
+    },
     "for_command": {
       "type": "SEQ",
       "members": [
@@ -1415,6 +1435,10 @@
           },
           {
             "type": "SYMBOL",
+            "name": "expose_command"
+          },
+          {
+            "type": "SYMBOL",
             "name": "for_command"
           },
           {
@@ -1711,9 +1735,50 @@
         }
       ]
     },
+    "number": {
+      "type": "PATTERN",
+      "value": "\\d+"
+    },
     "path": {
       "type": "PATTERN",
       "value": "[^\\s()\\\\]+"
+    },
+    "port": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "SYMBOL",
+          "name": "number"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "IMMEDIATE_TOKEN",
+                  "content": {
+                    "type": "STRING",
+                    "value": "/"
+                  }
+                },
+                {
+                  "type": "FIELD",
+                  "name": "protocol",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "identifier"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        }
+      ]
     },
     "shell_fragment": {
       "type": "REPEAT1",

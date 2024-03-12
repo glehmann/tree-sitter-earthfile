@@ -515,6 +515,10 @@
           "named": true
         },
         {
+          "type": "expose_command",
+          "named": true
+        },
+        {
           "type": "for_command",
           "named": true
         },
@@ -655,6 +659,10 @@
           "named": true
         },
         {
+          "type": "expose_command",
+          "named": true
+        },
+        {
           "type": "for_command",
           "named": true
         },
@@ -720,6 +728,25 @@
         },
         {
           "type": "with_docker_command",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "expose_command",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "port",
           "named": true
         }
       ]
@@ -818,6 +845,10 @@
         },
         {
           "type": "do_command",
+          "named": true
+        },
+        {
+          "type": "expose_command",
           "named": true
         },
         {
@@ -1179,6 +1210,10 @@
           "named": true
         },
         {
+          "type": "expose_command",
+          "named": true
+        },
+        {
           "type": "for_command",
           "named": true
         },
@@ -1529,6 +1564,32 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "port",
+    "named": true,
+    "fields": {
+      "protocol": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "number",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -1917,6 +1978,10 @@
           "named": true
         },
         {
+          "type": "expose_command",
+          "named": true
+        },
+        {
           "type": "for_command",
           "named": true
         },
@@ -2055,6 +2120,10 @@
         },
         {
           "type": "do_command",
+          "named": true
+        },
+        {
+          "type": "expose_command",
           "named": true
         },
         {
@@ -2230,6 +2299,10 @@
           "named": true
         },
         {
+          "type": "expose_command",
+          "named": true
+        },
+        {
           "type": "for_command",
           "named": true
         },
@@ -2366,6 +2439,10 @@
         },
         {
           "type": "do_command",
+          "named": true
+        },
+        {
+          "type": "expose_command",
           "named": true
         },
         {
@@ -2662,6 +2739,10 @@
     "named": false
   },
   {
+    "type": "EXPOSE",
+    "named": false
+  },
+  {
     "type": "FINALLY",
     "named": false
   },
@@ -2839,6 +2920,10 @@
   },
   {
     "type": "no_cache",
+    "named": true
+  },
+  {
+    "type": "number",
     "named": true
   },
   {
