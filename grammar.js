@@ -316,6 +316,9 @@ module.exports = grammar({
         $._eol
       ),
 
+    volume_command: ($) =>
+      seq("VOLUME", choice($.string_array, repeat($.path)), $._eol),
+
     wait_command: ($) => seq("WAIT", optional($._command_block), "END", $._eol),
 
     with_docker_command: ($) =>
@@ -366,6 +369,7 @@ module.exports = grammar({
           $.save_image_command,
           $.set_command,
           $.try_command,
+          $.volume_command,
           $.wait_command,
           $.with_docker_command
         )
@@ -435,10 +439,10 @@ module.exports = grammar({
       ),
     string_array: ($) =>
       choice(
-        seq("[", "]"),
-        seq("[", $.double_quoted_string, "]"),
+        seq(token(prec(5, "[")), "]"),
+        seq(token(prec(5, "[")), $.double_quoted_string, "]"),
         seq(
-          "[",
+          token(prec(5, "[")),
           repeat(seq($.double_quoted_string, ",")),
           $.double_quoted_string,
           "]"
