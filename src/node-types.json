@@ -238,6 +238,29 @@
     }
   },
   {
+    "type": "cmd_command",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "shell_fragment",
+          "named": true
+        },
+        {
+          "type": "string_array",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "compose",
     "named": true,
     "fields": {
@@ -480,6 +503,10 @@
           "named": true
         },
         {
+          "type": "cmd_command",
+          "named": true
+        },
+        {
           "type": "copy_command",
           "named": true
         },
@@ -605,6 +632,10 @@
         },
         {
           "type": "cache_command",
+          "named": true
+        },
+        {
+          "type": "cmd_command",
           "named": true
         },
         {
@@ -763,6 +794,10 @@
         },
         {
           "type": "cache_command",
+          "named": true
+        },
+        {
+          "type": "cmd_command",
           "named": true
         },
         {
@@ -1113,6 +1148,10 @@
         },
         {
           "type": "cache_command",
+          "named": true
+        },
+        {
+          "type": "cmd_command",
           "named": true
         },
         {
@@ -1793,6 +1832,10 @@
           "named": true
         },
         {
+          "type": "cmd_command",
+          "named": true
+        },
+        {
           "type": "copy_command",
           "named": true
         },
@@ -1880,6 +1923,21 @@
     }
   },
   {
+    "type": "string_array",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "double_quoted_string",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "target",
     "named": true,
     "fields": {
@@ -1904,6 +1962,10 @@
         },
         {
           "type": "cache_command",
+          "named": true
+        },
+        {
+          "type": "cmd_command",
           "named": true
         },
         {
@@ -2071,6 +2133,10 @@
           "named": true
         },
         {
+          "type": "cmd_command",
+          "named": true
+        },
+        {
           "type": "comment",
           "named": true
         },
@@ -2199,6 +2265,10 @@
         },
         {
           "type": "cache_command",
+          "named": true
+        },
+        {
+          "type": "cmd_command",
           "named": true
         },
         {
@@ -2367,6 +2437,10 @@
     "named": false
   },
   {
+    "type": ",",
+    "named": false
+  },
+  {
     "type": "--",
     "named": false
   },
@@ -2475,6 +2549,10 @@
     "named": false
   },
   {
+    "type": "CMD",
+    "named": false
+  },
+  {
     "type": "COPY",
     "named": false
   },
@@ -2572,6 +2650,14 @@
   },
   {
     "type": "WITH DOCKER",
+    "named": false
+  },
+  {
+    "type": "[",
+    "named": false
+  },
+  {
+    "type": "]",
     "named": false
   },
   {

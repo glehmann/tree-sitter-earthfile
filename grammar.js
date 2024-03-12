@@ -87,6 +87,9 @@ module.exports = grammar({
         $._eol
       ),
 
+    cmd_command: ($) =>
+      seq("CMD", choice($.shell_fragment, $.string_array), $._eol),
+
     copy_command: ($) =>
       seq(
         "COPY",
@@ -326,6 +329,7 @@ module.exports = grammar({
         choice(
           $.arg_command,
           $.cache_command,
+          $.cmd_command,
           $.copy_command,
           $.do_command,
           $.for_command,
@@ -395,6 +399,17 @@ module.exports = grammar({
           /[,=-]/,
           /[^\\\[\n#\s,=-][^\\\n]*/,
           /\\[^\n,=-]/
+        )
+      ),
+    string_array: ($) =>
+      choice(
+        seq("[", "]"),
+        seq("[", $.double_quoted_string, "]"),
+        seq(
+          "[",
+          repeat(seq($.double_quoted_string, ",")),
+          $.double_quoted_string,
+          "]"
         )
       ),
     target_ref: ($) =>
