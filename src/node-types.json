@@ -601,6 +601,10 @@
         {
           "type": "with_docker_command",
           "named": true
+        },
+        {
+          "type": "workdir_command",
+          "named": true
         }
       ]
     }
@@ -760,6 +764,10 @@
         },
         {
           "type": "with_docker_command",
+          "named": true
+        },
+        {
+          "type": "workdir_command",
           "named": true
         }
       ]
@@ -1032,6 +1040,10 @@
         },
         {
           "type": "with_docker_command",
+          "named": true
+        },
+        {
+          "type": "workdir_command",
           "named": true
         }
       ]
@@ -1410,6 +1422,10 @@
         },
         {
           "type": "with_docker_command",
+          "named": true
+        },
+        {
+          "type": "workdir_command",
           "named": true
         }
       ]
@@ -2207,6 +2223,10 @@
         {
           "type": "with_docker_command",
           "named": true
+        },
+        {
+          "type": "workdir_command",
+          "named": true
         }
       ]
     }
@@ -2355,6 +2375,10 @@
         },
         {
           "type": "with_docker_command",
+          "named": true
+        },
+        {
+          "type": "workdir_command",
           "named": true
         }
       ]
@@ -2547,6 +2571,10 @@
         },
         {
           "type": "with_docker_command",
+          "named": true
+        },
+        {
+          "type": "workdir_command",
           "named": true
         }
       ]
@@ -2774,6 +2802,10 @@
         {
           "type": "with_docker_command",
           "named": true
+        },
+        {
+          "type": "workdir_command",
+          "named": true
         }
       ]
     }
@@ -2823,6 +2855,25 @@
         },
         {
           "type": "run_command",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "workdir_command",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "path",
           "named": true
         }
       ]
@@ -3102,6 +3153,10 @@
   },
   {
     "type": "WITH DOCKER",
+    "named": false
+  },
+  {
+    "type": "WORKDIR",
     "named": false
   },
   {

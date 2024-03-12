@@ -1569,6 +1569,23 @@
         }
       ]
     },
+    "workdir_command": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "WORKDIR"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "path"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_eol"
+        }
+      ]
+    },
     "_command_block": {
       "type": "REPEAT1",
       "content": {
@@ -1681,6 +1698,10 @@
           {
             "type": "SYMBOL",
             "name": "with_docker_command"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "workdir_command"
           }
         ]
       }

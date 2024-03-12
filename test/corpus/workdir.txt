@@ -1,0 +1,14 @@
+==================
+workdir command
+==================
+
+foo:
+  WORKDIR /foo
+
+---
+
+    (source_file
+      (target
+        name: (identifier)
+        (workdir_command
+          (path))))

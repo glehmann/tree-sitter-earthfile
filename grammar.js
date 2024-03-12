@@ -355,6 +355,8 @@ module.exports = grammar({
         $._eol
       ),
 
+    workdir_command: ($) => seq("WORKDIR", $.path, $._eol),
+
     // code blocks
     _command_block: ($) =>
       repeat1(
@@ -385,7 +387,8 @@ module.exports = grammar({
           $.user_command,
           $.volume_command,
           $.wait_command,
-          $.with_docker_command
+          $.with_docker_command,
+          $.workdir_command
         )
       ),
     _conditional_block: ($) =>
