@@ -128,6 +128,9 @@ module.exports = grammar({
         repeat($.build_arg)
       ),
 
+    entrypoint_command: ($) =>
+      seq("ENTRYPOINT", choice($.shell_fragment, $.string_array), $._eol),
+
     env_command: ($) =>
       seq(
         "ENV",
@@ -345,6 +348,7 @@ module.exports = grammar({
           $.cmd_command,
           $.copy_command,
           $.do_command,
+          $.entrypoint_command,
           $.env_command,
           $.expose_command,
           $.for_command,

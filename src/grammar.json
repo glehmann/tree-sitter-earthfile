@@ -517,6 +517,32 @@
         }
       ]
     },
+    "entrypoint_command": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "ENTRYPOINT"
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "shell_fragment"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "string_array"
+            }
+          ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_eol"
+        }
+      ]
+    },
     "env_command": {
       "type": "SEQ",
       "members": [
@@ -1471,6 +1497,10 @@
           {
             "type": "SYMBOL",
             "name": "do_command"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "entrypoint_command"
           },
           {
             "type": "SYMBOL",

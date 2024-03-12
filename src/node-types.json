@@ -515,6 +515,10 @@
           "named": true
         },
         {
+          "type": "entrypoint_command",
+          "named": true
+        },
+        {
           "type": "env_command",
           "named": true
         },
@@ -663,6 +667,10 @@
           "named": true
         },
         {
+          "type": "entrypoint_command",
+          "named": true
+        },
+        {
           "type": "env_command",
           "named": true
         },
@@ -736,6 +744,29 @@
         },
         {
           "type": "with_docker_command",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "entrypoint_command",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "shell_fragment",
+          "named": true
+        },
+        {
+          "type": "string_array",
           "named": true
         }
       ]
@@ -897,6 +928,10 @@
         },
         {
           "type": "do_command",
+          "named": true
+        },
+        {
+          "type": "entrypoint_command",
           "named": true
         },
         {
@@ -1263,6 +1298,10 @@
         },
         {
           "type": "do_command",
+          "named": true
+        },
+        {
+          "type": "entrypoint_command",
           "named": true
         },
         {
@@ -2038,6 +2077,10 @@
           "named": true
         },
         {
+          "type": "entrypoint_command",
+          "named": true
+        },
+        {
           "type": "env_command",
           "named": true
         },
@@ -2184,6 +2227,10 @@
         },
         {
           "type": "do_command",
+          "named": true
+        },
+        {
+          "type": "entrypoint_command",
           "named": true
         },
         {
@@ -2367,6 +2414,10 @@
           "named": true
         },
         {
+          "type": "entrypoint_command",
+          "named": true
+        },
+        {
           "type": "env_command",
           "named": true
         },
@@ -2511,6 +2562,10 @@
         },
         {
           "type": "do_command",
+          "named": true
+        },
+        {
+          "type": "entrypoint_command",
           "named": true
         },
         {
@@ -2812,6 +2867,10 @@
   },
   {
     "type": "END",
+    "named": false
+  },
+  {
+    "type": "ENTRYPOINT",
     "named": false
   },
   {
