@@ -344,6 +344,40 @@
     }
   },
   {
+    "type": "do_command",
+    "named": true,
+    "fields": {
+      "option": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "allow_privileged",
+            "named": true
+          },
+          {
+            "type": "pass_args",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "build_arg",
+          "named": true
+        },
+        {
+          "type": "function_ref",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "docker_build_arg",
     "named": true,
     "fields": {
@@ -432,6 +466,10 @@
         },
         {
           "type": "copy_command",
+          "named": true
+        },
+        {
+          "type": "do_command",
           "named": true
         },
         {
@@ -556,6 +594,10 @@
         },
         {
           "type": "copy_command",
+          "named": true
+        },
+        {
+          "type": "do_command",
           "named": true
         },
         {
@@ -706,6 +748,10 @@
         },
         {
           "type": "copy_command",
+          "named": true
+        },
+        {
+          "type": "do_command",
           "named": true
         },
         {
@@ -881,6 +927,22 @@
     }
   },
   {
+    "type": "function_ref",
+    "named": true,
+    "fields": {
+      "name": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "immediate_identifier",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "git_clone_command",
     "named": true,
     "fields": {
@@ -1032,6 +1094,10 @@
         },
         {
           "type": "copy_command",
+          "named": true
+        },
+        {
+          "type": "do_command",
           "named": true
         },
         {
@@ -1706,6 +1772,10 @@
           "named": true
         },
         {
+          "type": "do_command",
+          "named": true
+        },
+        {
           "type": "for_command",
           "named": true
         },
@@ -1862,6 +1932,10 @@
           "named": true
         },
         {
+          "type": "do_command",
+          "named": true
+        },
+        {
           "type": "for_command",
           "named": true
         },
@@ -1982,6 +2056,10 @@
         },
         {
           "type": "copy_command",
+          "named": true
+        },
+        {
+          "type": "do_command",
           "named": true
         },
         {
@@ -2243,6 +2321,10 @@
   },
   {
     "type": "COPY",
+    "named": false
+  },
+  {
+    "type": "DO",
     "named": false
   },
   {

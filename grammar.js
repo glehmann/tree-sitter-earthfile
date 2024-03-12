@@ -139,6 +139,18 @@ module.exports = grammar({
         $._eol
       ),
 
+    do_command: ($) =>
+      seq("DO",
+        repeat(
+          field(
+            "option",
+            choice($.allow_privileged, $.pass_args)
+          )
+        ),
+        $.function_ref,
+        repeat($.build_arg)
+      ),
+
     for_command: ($) =>
       seq(
         "FOR",
@@ -314,6 +326,7 @@ module.exports = grammar({
           $.arg_command,
           $.cache_command,
           $.copy_command,
+          $.do_command,
           $.for_command,
           $.from_command,
           $.from_dockerfile_command,
@@ -348,6 +361,8 @@ module.exports = grammar({
 
     // command elements
     expr: ($) => /\$\(.+\)/,
+    function_ref: ($) =>
+      seq(token(prec(5, "+")), field("name", $.immediate_identifier)),
     identifier: ($) => /[a-zA-Z_]\w*/,
     image_spec: ($) =>
       seq(

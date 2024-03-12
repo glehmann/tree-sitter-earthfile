@@ -493,6 +493,46 @@
         }
       ]
     },
+    "do_command": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "DO"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "FIELD",
+            "name": "option",
+            "content": {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "allow_privileged"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "pass_args"
+                }
+              ]
+            }
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "function_ref"
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SYMBOL",
+            "name": "build_arg"
+          }
+        }
+      ]
+    },
     "for_command": {
       "type": "SEQ",
       "members": [
@@ -1238,6 +1278,10 @@
           },
           {
             "type": "SYMBOL",
+            "name": "do_command"
+          },
+          {
+            "type": "SYMBOL",
             "name": "for_command"
           },
           {
@@ -1371,6 +1415,30 @@
     "expr": {
       "type": "PATTERN",
       "value": "\\$\\(.+\\)"
+    },
+    "function_ref": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "TOKEN",
+          "content": {
+            "type": "PREC",
+            "value": 5,
+            "content": {
+              "type": "STRING",
+              "value": "+"
+            }
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "SYMBOL",
+            "name": "immediate_identifier"
+          }
+        }
+      ]
     },
     "identifier": {
       "type": "PATTERN",
