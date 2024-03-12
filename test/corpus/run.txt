@@ -30,3 +30,20 @@ foo:
           option: (secret
             value: (unquoted_string))
           command: (shell_fragment))))
+
+==================
+run array
+==================
+
+foo:
+    RUN ["echo", "foo"]
+
+---
+
+    (source_file
+      (target
+        name: (identifier)
+        (run_command
+          command: (string_array
+            (double_quoted_string)
+            (double_quoted_string)))))

@@ -243,7 +243,7 @@ module.exports = grammar({
           )
         ),
         optional(" -- "),
-        field("command", $.shell_fragment),
+        field("command", choice($.string_array, $.shell_fragment)),
         $._eol
       ),
 

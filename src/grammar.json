@@ -1031,8 +1031,17 @@
           "type": "FIELD",
           "name": "command",
           "content": {
-            "type": "SYMBOL",
-            "name": "shell_fragment"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "string_array"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "shell_fragment"
+              }
+            ]
           }
         },
         {

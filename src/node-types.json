@@ -1525,6 +1525,10 @@
           {
             "type": "shell_fragment",
             "named": true
+          },
+          {
+            "type": "string_array",
+            "named": true
           }
         ]
       },
