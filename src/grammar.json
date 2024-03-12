@@ -517,6 +517,45 @@
         }
       ]
     },
+    "env_command": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "ENV"
+        },
+        {
+          "type": "FIELD",
+          "name": "key",
+          "content": {
+            "type": "SYMBOL",
+            "name": "identifier"
+          }
+        },
+        {
+          "type": "IMMEDIATE_TOKEN",
+          "content": {
+            "type": "PATTERN",
+            "value": "[ =]+"
+          }
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "FIELD",
+            "name": "value",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_string"
+            }
+          }
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_eol"
+        }
+      ]
+    },
     "expose_command": {
       "type": "SEQ",
       "members": [
@@ -1432,6 +1471,10 @@
           {
             "type": "SYMBOL",
             "name": "do_command"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "env_command"
           },
           {
             "type": "SYMBOL",

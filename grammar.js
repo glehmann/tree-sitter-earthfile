@@ -128,6 +128,15 @@ module.exports = grammar({
         repeat($.build_arg)
       ),
 
+    env_command: ($) =>
+      seq(
+        "ENV",
+        field("key", $.identifier),
+        token.immediate(/[ =]+/),
+        repeat(field("value", $._string)),
+        $._eol
+      ),
+
     expose_command: ($) => seq("EXPOSE", repeat($.port), $._eol),
 
     for_command: ($) =>
@@ -336,6 +345,7 @@ module.exports = grammar({
           $.cmd_command,
           $.copy_command,
           $.do_command,
+          $.env_command,
           $.expose_command,
           $.for_command,
           $.from_command,
@@ -395,7 +405,11 @@ module.exports = grammar({
       ),
     number: (_) => /\d+/,
     path: ($) => /[^\s()\\]+/,
-    port: ($) => seq($.number, optional(seq(token.immediate("/"), field("protocol", $.identifier)))),
+    port: ($) =>
+      seq(
+        $.number,
+        optional(seq(token.immediate("/"), field("protocol", $.identifier)))
+      ),
     shell_fragment: ($) =>
       repeat1(
         choice(

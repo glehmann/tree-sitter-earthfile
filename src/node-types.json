@@ -515,6 +515,10 @@
           "named": true
         },
         {
+          "type": "env_command",
+          "named": true
+        },
+        {
           "type": "expose_command",
           "named": true
         },
@@ -659,6 +663,10 @@
           "named": true
         },
         {
+          "type": "env_command",
+          "named": true
+        },
+        {
           "type": "expose_command",
           "named": true
         },
@@ -728,6 +736,50 @@
         },
         {
           "type": "with_docker_command",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "env_command",
+    "named": true,
+    "fields": {
+      "key": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "identifier",
+            "named": true
+          }
+        ]
+      },
+      "value": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "double_quoted_string",
+            "named": true
+          },
+          {
+            "type": "single_quoted_string",
+            "named": true
+          },
+          {
+            "type": "unquoted_string",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "comment",
           "named": true
         }
       ]
@@ -845,6 +897,10 @@
         },
         {
           "type": "do_command",
+          "named": true
+        },
+        {
+          "type": "env_command",
           "named": true
         },
         {
@@ -1207,6 +1263,10 @@
         },
         {
           "type": "do_command",
+          "named": true
+        },
+        {
+          "type": "env_command",
           "named": true
         },
         {
@@ -1978,6 +2038,10 @@
           "named": true
         },
         {
+          "type": "env_command",
+          "named": true
+        },
+        {
           "type": "expose_command",
           "named": true
         },
@@ -2120,6 +2184,10 @@
         },
         {
           "type": "do_command",
+          "named": true
+        },
+        {
+          "type": "env_command",
           "named": true
         },
         {
@@ -2299,6 +2367,10 @@
           "named": true
         },
         {
+          "type": "env_command",
+          "named": true
+        },
+        {
           "type": "expose_command",
           "named": true
         },
@@ -2439,6 +2511,10 @@
         },
         {
           "type": "do_command",
+          "named": true
+        },
+        {
+          "type": "env_command",
           "named": true
         },
         {
@@ -2736,6 +2812,10 @@
   },
   {
     "type": "END",
+    "named": false
+  },
+  {
+    "type": "ENV",
     "named": false
   },
   {
