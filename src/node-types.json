@@ -469,7 +469,17 @@
   {
     "type": "double_quoted_string",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "expansion",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "earthfile_ref",
@@ -843,6 +853,21 @@
       "types": [
         {
           "type": "comment",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "expansion",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": false,
+      "required": true,
+      "types": [
+        {
+          "type": "variable",
           "named": true
         }
       ]
@@ -2653,6 +2678,21 @@
     }
   },
   {
+    "type": "unquoted_string",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "expansion",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "user_command",
     "named": true,
     "fields": {
@@ -2973,6 +3013,10 @@
   },
   {
     "type": "\"",
+    "named": false
+  },
+  {
+    "type": "$",
     "named": false
   },
   {
@@ -3372,15 +3416,19 @@
     "named": true
   },
   {
-    "type": "unquoted_string",
-    "named": true
-  },
-  {
     "type": "variable",
     "named": true
   },
   {
     "type": "version_major_minor",
     "named": true
+  },
+  {
+    "type": "{",
+    "named": false
+  },
+  {
+    "type": "}",
+    "named": false
   }
 ]

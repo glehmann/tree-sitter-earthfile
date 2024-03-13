@@ -620,9 +620,59 @@ module.exports = grammar({
     _string: ($) =>
       choice($.double_quoted_string, $.single_quoted_string, $.unquoted_string),
     double_quoted_string: ($) =>
-      seq('"', token.immediate(/[^"\n\\\$()]+/), '"'),
+      seq(
+        '"',
+        repeat(
+          choice(
+            token.immediate(/[^"\\\$]+/),
+            token.immediate(/\\./),
+            alias($._immediate_expansion, $.expansion)
+          )
+        ),
+        '"'
+      ),
+
     single_quoted_string: ($) => seq("'", token.immediate(/[^'\n\\]+/), "'"),
-    unquoted_string: ($) => /[^\s\n\"'\\\$)]+/,
+    unquoted_string: ($) =>
+      seq(
+        choice(/[^"'\s\\\$)]+/, $.expansion),
+        repeat(
+          choice(
+            token.immediate(/[^"'\s\\\$)]+/),
+            token.immediate(/\\./),
+            // token.immediate(")"),
+            alias($._immediate_expansion, $.expansion)
+          )
+        )
+      ),
+
+    // expansion/variable stuff
+    // expansion: ($) => seq(token("$"), $.variable),
+    expansion: ($) =>
+      seq(
+        "$",
+        choice(
+          alias($._immediate_variable, $.variable),
+          seq(
+            token.immediate("{"),
+            alias($._immediate_variable, $.variable),
+            "}"
+          )
+        )
+      ),
+    _immediate_expansion: ($) =>
+      seq(
+        token.immediate("$"),
+        choice(
+          alias($._immediate_variable, $.variable),
+          seq(
+            token.immediate("{"),
+            alias($._immediate_variable, $.variable),
+            token.immediate("}")
+          )
+        )
+      ),
+    _immediate_variable: ($) => token.immediate(/[a-zA-Z_][a-zA-Z0-9_]*/),
 
     // extra tokens, eol, …
     line_continuation: (_) => token(prec(10, "\\\n")),
