@@ -711,6 +711,30 @@
           "value": "FROM"
         },
         {
+          "type": "REPEAT",
+          "content": {
+            "type": "FIELD",
+            "name": "option",
+            "content": {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "platform"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "allow_privileged"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "pass_args"
+                }
+              ]
+            }
+          }
+        },
+        {
           "type": "CHOICE",
           "members": [
             {
@@ -720,30 +744,6 @@
             {
               "type": "SEQ",
               "members": [
-                {
-                  "type": "REPEAT",
-                  "content": {
-                    "type": "FIELD",
-                    "name": "option",
-                    "content": {
-                      "type": "CHOICE",
-                      "members": [
-                        {
-                          "type": "SYMBOL",
-                          "name": "platform"
-                        },
-                        {
-                          "type": "SYMBOL",
-                          "name": "allow_privileged"
-                        },
-                        {
-                          "type": "SYMBOL",
-                          "name": "pass_args"
-                        }
-                      ]
-                    }
-                  }
-                },
                 {
                   "type": "SYMBOL",
                   "name": "target_ref"
@@ -1808,35 +1808,85 @@
       "type": "SYMBOL",
       "name": "_command_block"
     },
+    "_immediate_identifier": {
+      "type": "IMMEDIATE_TOKEN",
+      "content": {
+        "type": "PATTERN",
+        "value": "[a-zA-Z_][a-zA-Z0-9_\\-]*"
+      }
+    },
     "earthfile_ref": {
-      "type": "SYMBOL",
-      "name": "path"
+      "type": "PATTERN",
+      "value": "[^\\s+]+"
     },
     "expr": {
       "type": "PATTERN",
       "value": "\\$\\(.+\\)"
     },
     "function_ref": {
-      "type": "SEQ",
+      "type": "CHOICE",
       "members": [
         {
-          "type": "TOKEN",
-          "content": {
-            "type": "PREC",
-            "value": 5,
-            "content": {
-              "type": "STRING",
-              "value": "+"
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "TOKEN",
+              "content": {
+                "type": "PREC",
+                "value": 5,
+                "content": {
+                  "type": "STRING",
+                  "value": "+"
+                }
+              }
+            },
+            {
+              "type": "FIELD",
+              "name": "name",
+              "content": {
+                "type": "ALIAS",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "_immediate_identifier"
+                },
+                "named": true,
+                "value": "identifier"
+              }
             }
-          }
+          ]
         },
         {
-          "type": "FIELD",
-          "name": "name",
-          "content": {
-            "type": "SYMBOL",
-            "name": "immediate_identifier"
-          }
+          "type": "SEQ",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "earthfile_ref"
+            },
+            {
+              "type": "IMMEDIATE_TOKEN",
+              "content": {
+                "type": "PREC",
+                "value": 5,
+                "content": {
+                  "type": "STRING",
+                  "value": "+"
+                }
+              }
+            },
+            {
+              "type": "FIELD",
+              "name": "name",
+              "content": {
+                "type": "ALIAS",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "_immediate_identifier"
+                },
+                "named": true,
+                "value": "identifier"
+              }
+            }
+          ]
         }
       ]
     },
@@ -1929,13 +1979,6 @@
       "content": {
         "type": "PATTERN",
         "value": "[a-zA-Z0-9:]+"
-      }
-    },
-    "immediate_identifier": {
-      "type": "IMMEDIATE_TOKEN",
-      "content": {
-        "type": "PATTERN",
-        "value": "[a-zA-Z_]\\w*"
       }
     },
     "label": {
@@ -2138,8 +2181,13 @@
           "type": "FIELD",
           "name": "name",
           "content": {
-            "type": "SYMBOL",
-            "name": "immediate_identifier"
+            "type": "ALIAS",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_immediate_identifier"
+            },
+            "named": true,
+            "value": "identifier"
           }
         }
       ]
@@ -2278,8 +2326,13 @@
           "type": "FIELD",
           "name": "name",
           "content": {
-            "type": "SYMBOL",
-            "name": "immediate_identifier"
+            "type": "ALIAS",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_immediate_variable"
+            },
+            "named": true,
+            "value": "variable"
           }
         },
         {

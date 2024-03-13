@@ -51,7 +51,7 @@ FROM +build
 (source_file
     (from_command
         (target_ref
-            name: (immediate_identifier))))
+            name: (identifier))))
 
 ==================
 from target with build arg
@@ -64,9 +64,9 @@ FROM +build --foo=bar
 (source_file
     (from_command
         (target_ref
-            name: (immediate_identifier))
+            name: (identifier))
         (build_arg
-            name: (immediate_identifier)
+            name: (variable)
             value: (unquoted_string))))
 
 ==================
@@ -80,9 +80,9 @@ FROM +build --foo bar
 (source_file
     (from_command
         (target_ref
-            name: (immediate_identifier))
+            name: (identifier))
         (build_arg
-            name: (immediate_identifier)
+            name: (variable)
             value: (unquoted_string))))
 
 ==================
@@ -97,7 +97,7 @@ FROM --platform=linux/arm64 +build
         option: (platform
           value: (unquoted_string))
         (target_ref
-          name: (immediate_identifier))))
+          name: (identifier))))
 
 ==================
 from target with space platform
@@ -111,7 +111,7 @@ FROM --platform linux/arm64 +build
         option: (platform
           value: (unquoted_string))
         (target_ref
-          name: (immediate_identifier))))
+          name: (identifier))))
 
 ==================
 from target with allow privileged
@@ -124,4 +124,4 @@ FROM --allow-privileged +build
       (from_command
         option: (allow_privileged)
         (target_ref
-          name: (immediate_identifier))))
+          name: (identifier))))

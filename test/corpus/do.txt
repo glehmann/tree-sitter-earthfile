@@ -12,7 +12,7 @@ foo:
         name: (identifier)
         (do_command
           (function_ref
-            name: (immediate_identifier))
+            name: (identifier))
           (build_arg
-            name: (immediate_identifier)
+            name: (variable)
             value: (unquoted_string)))))

@@ -163,20 +163,10 @@ module.exports = grammar({
     from_command: ($) =>
       seq(
         "FROM",
-        choice(
-          $.image_spec,
-          seq(
-            repeat(
-              field(
-                "option",
-                choice($.platform, $.allow_privileged, $.pass_args)
-              )
-            ),
-            $.target_ref,
-            repeat($.build_arg)
-          ),
-          $._eol
-        )
+        repeat(
+          field("option", choice($.platform, $.allow_privileged, $.pass_args))
+        ),
+        choice($.image_spec, seq($.target_ref, repeat($.build_arg)), $._eol)
       ),
 
     from_dockerfile_command: ($) =>
@@ -411,10 +401,18 @@ module.exports = grammar({
     else_block: ($) => $._command_block,
 
     // command elements
-    earthfile_ref: ($) => $.path,
+    _immediate_identifier: ($) => token.immediate(/[a-zA-Z_][a-zA-Z0-9_\-]*/),
+    earthfile_ref: ($) => /[^\s+]+/,
     expr: ($) => /\$\(.+\)/,
     function_ref: ($) =>
-      seq(token(prec(5, "+")), field("name", $.immediate_identifier)),
+      choice(
+        seq(token(prec(5, "+")), field("name", alias($._immediate_identifier, $.identifier))),
+        seq(
+          $.earthfile_ref,
+          token.immediate(prec(5, "+")),
+          field("name", alias($._immediate_identifier, $.identifier))
+        )
+      ),
     identifier: ($) => /[a-zA-Z_][a-zA-Z0-9_\-]*/,
     image_spec: ($) =>
       seq(
@@ -425,7 +423,6 @@ module.exports = grammar({
     image_name: ($) => /[a-zA-Z0-9\-./]+/,
     image_tag: ($) => token.immediate(/[^@\s\$]+/),
     image_digest: ($) => token.immediate(/[a-zA-Z0-9:]+/),
-    immediate_identifier: ($) => token.immediate(/[a-zA-Z_]\w*/),
     label: ($) =>
       seq(
         field("label", $.identifier),
@@ -470,7 +467,7 @@ module.exports = grammar({
         )
       ),
     target_ref: ($) =>
-      seq(token(prec(5, "+")), field("name", $.immediate_identifier)),
+      seq(token(prec(5, "+")), field("name", alias($._immediate_identifier, $.identifier))),
     target_artifact: ($) => seq($.target_ref, token.immediate("/"), $.path),
     target_artifact_build_args: ($) =>
       seq(
@@ -496,7 +493,7 @@ module.exports = grammar({
     build_arg: ($) =>
       seq(
         token(prec(5, "--")),
-        field("name", $.immediate_identifier),
+        field("name", alias($._immediate_variable, $.variable)),
         optional(seq(token.immediate(/[ =]/), field("value", $._string)))
       ),
     cache_from: ($) =>

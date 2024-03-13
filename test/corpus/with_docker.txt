@@ -46,15 +46,15 @@ foo:
             image: (image_spec
               name: (image_name))
             target: (target_ref
-              name: (immediate_identifier)))
+              name: (identifier)))
           (line_continuation)
           option: (load
             image: (image_spec
               name: (image_name))
             target: (target_ref
-              name: (immediate_identifier))
+              name: (identifier))
             target: (build_arg
-              name: (immediate_identifier)
+              name: (variable)
               value: (unquoted_string)))
           (line_continuation)
           option: (compose
