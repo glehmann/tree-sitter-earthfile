@@ -52,7 +52,7 @@ module.exports = grammar({
       seq(
         "ARG",
         repeat(field("option", choice($.required, $.global))),
-        field("name", $.identifier),
+        field("name", $.variable),
         optional(
           seq(
             token.immediate("="),
@@ -134,7 +134,7 @@ module.exports = grammar({
     env_command: ($) =>
       seq(
         "ENV",
-        field("key", $.identifier),
+        field("key", $.variable),
         token.immediate(/[ =]+/),
         repeat(field("value", $._string)),
         $._eol
@@ -151,7 +151,7 @@ module.exports = grammar({
             choice($.sep, $.privileged, $.ssh, $.no_cache, $.mount, $.secret)
           )
         ),
-        field("name", $.identifier),
+        field("name", $.variable),
         "IN",
         repeat(field("value", choice($._string, $.expr))),
         $._eol,
@@ -233,7 +233,7 @@ module.exports = grammar({
     let_command: ($) =>
       seq(
         "LET",
-        field("name", $.identifier),
+        field("name", $.variable),
         token.immediate("="),
         field("value", $._string),
         $._eol
@@ -301,7 +301,7 @@ module.exports = grammar({
     set_command: ($) =>
       seq(
         "SET",
-        field("name", $.identifier),
+        field("name", $.variable),
         token.immediate("="),
         field("value", $._string),
         $._eol
@@ -415,7 +415,7 @@ module.exports = grammar({
     expr: ($) => /\$\(.+\)/,
     function_ref: ($) =>
       seq(token(prec(5, "+")), field("name", $.immediate_identifier)),
-    identifier: ($) => /[a-zA-Z_]\w*/,
+    identifier: ($) => /[a-zA-Z_][a-zA-Z0-9_\-]*/,
     image_spec: ($) =>
       seq(
         field("name", $.image_name),
@@ -481,6 +481,7 @@ module.exports = grammar({
         repeat($.build_arg),
         ")"
       ),
+    variable: ($) => /[a-zA-Z_][a-zA-Z0-9_]*/,
     version_major_minor: ($) => /[0-9]+\.[0-9]+/,
 
     // options

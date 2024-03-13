@@ -36,7 +36,7 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "variable",
             "named": true
           }
         ]
@@ -813,7 +813,7 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "variable",
             "named": true
           }
         ]
@@ -876,7 +876,7 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "variable",
             "named": true
           }
         ]
@@ -1637,7 +1637,7 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "variable",
             "named": true
           }
         ]
@@ -2096,7 +2096,7 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "variable",
             "named": true
           }
         ]
@@ -3373,6 +3373,10 @@
   },
   {
     "type": "unquoted_string",
+    "named": true
+  },
+  {
+    "type": "variable",
     "named": true
   },
   {

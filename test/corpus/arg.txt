@@ -8,7 +8,7 @@ ARG foo
 
 (source_file
   (arg_command
-    name: (identifier)))
+    name: (variable)))
 
 ==================
 arg command required
@@ -21,7 +21,7 @@ ARG --required foo
 (source_file
   (arg_command
     option: (required)
-    name: (identifier)))
+    name: (variable)))
 
 ==================
 arg command global
@@ -34,7 +34,7 @@ ARG --global foo
 (source_file
   (arg_command
     option: (global)
-    name: (identifier)))
+    name: (variable)))
 
 ==================
 arg command default value
@@ -46,7 +46,7 @@ ARG foo=aaa
 
 (source_file
   (arg_command
-    name: (identifier)
+    name: (variable)
     default_value: (unquoted_string)))
 
 ==================
@@ -59,7 +59,7 @@ ARG foo='auie tsrn'
 
 (source_file
   (arg_command
-    name: (identifier)
+    name: (variable)
     default_value: (single_quoted_string)))
 
 ==================
@@ -72,7 +72,7 @@ ARG foo="it's ok"
 
 (source_file
   (arg_command
-    name: (identifier)
+    name: (variable)
     default_value: (double_quoted_string)))
 
 ==================
@@ -85,5 +85,5 @@ ARG foo=$(echo $(echo hop))
 
 (source_file
   (arg_command
-    name: (identifier)
+    name: (variable)
     default_value_expr: (expr)))

@@ -36,4 +36,4 @@ foo:
   (target
     name: (identifier)
     (arg_command
-        name: (identifier))))
+        name: (variable))))

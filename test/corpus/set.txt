@@ -11,5 +11,5 @@ foo:
       (target
         name: (identifier)
         (set_command
-          name: (identifier)
+          name: (variable)
           value: (unquoted_string))))

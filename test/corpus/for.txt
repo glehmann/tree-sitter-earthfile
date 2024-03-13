@@ -13,7 +13,7 @@ foo:
       (target
         name: (identifier)
         (for_command
-          name: (identifier)
+          name: (variable)
           value: (unquoted_string)
           value: (expr)
           value: (unquoted_string)
@@ -37,7 +37,7 @@ foo:
         name: (identifier)
         (for_command
           option: (ssh)
-          name: (identifier)
+          name: (variable)
           value: (unquoted_string)
           value: (unquoted_string)
           value: (unquoted_string)
