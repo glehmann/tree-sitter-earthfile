@@ -95,7 +95,7 @@ static bool handle_eof(TSLexer *lexer, Scanner *state,
 
   lexer->mark_end(lexer);
 
-  if (valid_symbols[DEDENT]) {
+  if (valid_symbols[DEDENT] && state->prev_indent != 0) {
     dbg_print("handle_eof: DEDENT\n");
     lexer->result_symbol = DEDENT;
     state->has_seen_eof = true;
