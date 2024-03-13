@@ -393,7 +393,7 @@ module.exports = grammar({
             choice($.ssh, $.privileged, $.no_cache, $.mount, $.secret)
           )
         ),
-        field("condition", $.identifier),
+        field("condition", $.shell_fragment),
         $._eol,
         optional($._command_block)
       ),
@@ -451,7 +451,7 @@ module.exports = grammar({
           //                              |--shell_command--|
           //
           /[,=-]/,
-          /[^\\\[\n#\s,=-][^\\\n]*/,
+          /[^\\\n#\s,=-][^\\\n]*/,
           /\\[^\n,=-]/
         )
       ),

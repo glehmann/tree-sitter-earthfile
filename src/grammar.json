@@ -1779,7 +1779,7 @@
           "name": "condition",
           "content": {
             "type": "SYMBOL",
-            "name": "identifier"
+            "name": "shell_fragment"
           }
         },
         {
@@ -2065,7 +2065,7 @@
           },
           {
             "type": "PATTERN",
-            "value": "[^\\\\\\[\\n#\\s,=-][^\\\\\\n]*"
+            "value": "[^\\\\\\n#\\s,=-][^\\\\\\n]*"
           },
           {
             "type": "PATTERN",

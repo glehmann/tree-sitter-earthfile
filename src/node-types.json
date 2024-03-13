@@ -617,7 +617,7 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "shell_fragment",
             "named": true
           }
         ]
@@ -1324,7 +1324,7 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "shell_fragment",
             "named": true
           }
         ]

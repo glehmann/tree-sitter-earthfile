@@ -13,7 +13,7 @@ foo:
       (target
         name: (identifier)
         (if_command
-          condition: (identifier)
+          condition: (shell_fragment)
           (run_command
             command: (shell_fragment)))))
 
@@ -34,7 +34,7 @@ foo:
       (target
         name: (identifier)
         (if_command
-          condition: (identifier)
+          condition: (shell_fragment)
           (run_command
             command: (shell_fragment))
           else: (else_block
@@ -63,16 +63,16 @@ foo:
         name: (identifier)
         (if_command
           option: (ssh)
-          condition: (identifier)
+          condition: (shell_fragment)
           (run_command
             command: (shell_fragment))
           else_if: (else_if_block
-            condition: (identifier)
+            condition: (shell_fragment)
             (run_command
               command: (shell_fragment)))
           else_if: (else_if_block
             option: (no_cache)
-            condition: (identifier)
+            condition: (shell_fragment)
             (run_command
               command: (shell_fragment)))
           else: (else_block
