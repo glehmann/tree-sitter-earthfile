@@ -355,6 +355,7 @@ module.exports = grammar({
       repeat1(
         choice(
           $.arg_command,
+          $.build_command,
           $.cache_command,
           $.cmd_command,
           $.copy_command,
@@ -401,28 +402,58 @@ module.exports = grammar({
     else_block: ($) => $._command_block,
 
     // command elements
-    _immediate_identifier: ($) => token.immediate(/[a-zA-Z_][a-zA-Z0-9_\-]*/),
+    _immediate_identifier: ($) => token.immediate(/[a-zA-Z_][a-zA-Z0-9_\-.]*/),
     earthfile_ref: ($) => /[^\s+]+/,
     expr: ($) => /\$\(.+\)/,
     function_ref: ($) =>
       choice(
-        seq(token(prec(5, "+")), field("name", alias($._immediate_identifier, $.identifier))),
+        seq(
+          token(prec(5, "+")),
+          field("name", alias($._immediate_identifier, $.identifier))
+        ),
         seq(
           $.earthfile_ref,
           token.immediate(prec(5, "+")),
           field("name", alias($._immediate_identifier, $.identifier))
         )
       ),
-    identifier: ($) => /[a-zA-Z_][a-zA-Z0-9_\-]*/,
+    identifier: ($) => /[a-zA-Z_][a-zA-Z0-9_\-.]*/,
     image_spec: ($) =>
       seq(
         field("name", $.image_name),
-        field("tag", optional(seq(token.immediate(":"), $.image_tag))),
-        field("digest", optional(seq(token.immediate("@"), $.image_digest)))
+        field("tag", optional($.image_tag)),
+        field("digest", optional($.image_digest))
       ),
-    image_name: ($) => /[a-zA-Z0-9\-./]+/,
-    image_tag: ($) => token.immediate(/[^@\s\$]+/),
-    image_digest: ($) => token.immediate(/[a-zA-Z0-9:]+/),
+    image_name: ($) =>
+      seq(
+        choice(/[^@:\s\$-=]/, $.expansion),
+        repeat(
+          choice(
+            token.immediate(/[^@:\s\$=]+/),
+            alias($._immediate_expansion, $.expansion)
+          )
+        )
+      ),
+    image_tag: ($) =>
+      seq(
+        token.immediate(":"),
+        repeat1(
+          choice(
+            token.immediate(/[^@\s\$]+/),
+            alias($._immediate_expansion, $.expansion)
+          )
+        )
+      ),
+    image_digest: ($) =>
+      seq(
+        token.immediate("@"),
+        repeat1(
+          choice(
+            token.immediate(/[a-zA-Z0-9:]+/),
+            alias($._immediate_expansion, $.expansion)
+          )
+        )
+      ),
     label: ($) =>
       seq(
         field("label", $.identifier),
@@ -467,7 +498,10 @@ module.exports = grammar({
         )
       ),
     target_ref: ($) =>
-      seq(token(prec(5, "+")), field("name", alias($._immediate_identifier, $.identifier))),
+      seq(
+        token(prec(5, "+")),
+        field("name", alias($._immediate_identifier, $.identifier))
+      ),
     target_artifact: ($) => seq($.target_ref, token.immediate("/"), $.path),
     target_artifact_build_args: ($) =>
       seq(

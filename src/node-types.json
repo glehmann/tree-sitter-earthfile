@@ -118,6 +118,52 @@
     }
   },
   {
+    "type": "build_command",
+    "named": true,
+    "fields": {
+      "option": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "allow_privileged",
+            "named": true
+          },
+          {
+            "type": "auto_skip",
+            "named": true
+          },
+          {
+            "type": "pass_args",
+            "named": true
+          },
+          {
+            "type": "platform",
+            "named": true
+          }
+        ]
+      }
+    },
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "build_arg",
+          "named": true
+        },
+        {
+          "type": "comment",
+          "named": true
+        },
+        {
+          "type": "target_ref",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "cache_command",
     "named": true,
     "fields": {
@@ -494,6 +540,10 @@
           "named": true
         },
         {
+          "type": "build_command",
+          "named": true
+        },
+        {
           "type": "cache_command",
           "named": true
         },
@@ -655,6 +705,10 @@
       "types": [
         {
           "type": "arg_command",
+          "named": true
+        },
+        {
+          "type": "build_command",
           "named": true
         },
         {
@@ -950,6 +1004,10 @@
       "types": [
         {
           "type": "arg_command",
+          "named": true
+        },
+        {
+          "type": "build_command",
           "named": true
         },
         {
@@ -1393,6 +1451,10 @@
           "named": true
         },
         {
+          "type": "build_command",
+          "named": true
+        },
+        {
           "type": "cache_command",
           "named": true
         },
@@ -1512,17 +1574,43 @@
     }
   },
   {
+    "type": "image_digest",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "expansion",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "image_name",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "expansion",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "image_spec",
     "named": true,
     "fields": {
       "digest": {
-        "multiple": true,
+        "multiple": false,
         "required": false,
         "types": [
-          {
-            "type": "@",
-            "named": false
-          },
           {
             "type": "image_digest",
             "named": true
@@ -1540,19 +1628,30 @@
         ]
       },
       "tag": {
-        "multiple": true,
+        "multiple": false,
         "required": false,
         "types": [
-          {
-            "type": ":",
-            "named": false
-          },
           {
             "type": "image_tag",
             "named": true
           }
         ]
       }
+    }
+  },
+  {
+    "type": "image_tag",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "expansion",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -2189,6 +2288,10 @@
           "named": true
         },
         {
+          "type": "build_command",
+          "named": true
+        },
+        {
           "type": "cache_command",
           "named": true
         },
@@ -2351,6 +2454,10 @@
       "types": [
         {
           "type": "arg_command",
+          "named": true
+        },
+        {
+          "type": "build_command",
           "named": true
         },
         {
@@ -2551,6 +2658,10 @@
       "types": [
         {
           "type": "arg_command",
+          "named": true
+        },
+        {
+          "type": "build_command",
           "named": true
         },
         {
@@ -2800,6 +2911,10 @@
       "types": [
         {
           "type": "arg_command",
+          "named": true
+        },
+        {
+          "type": "build_command",
           "named": true
         },
         {
@@ -3336,18 +3451,6 @@
   },
   {
     "type": "if_exists",
-    "named": true
-  },
-  {
-    "type": "image_digest",
-    "named": true
-  },
-  {
-    "type": "image_name",
-    "named": true
-  },
-  {
-    "type": "image_tag",
     "named": true
   },
   {
