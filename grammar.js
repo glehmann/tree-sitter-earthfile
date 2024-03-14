@@ -1,3 +1,5 @@
+const string_base_regex = /[^"'\s\\\$()+:@=]+/;
+
 module.exports = grammar({
   name: "earthfile",
 
@@ -8,6 +10,13 @@ module.exports = grammar({
     $.line_continuation,
     $.comment,
     $.line_continuation_comment,
+  ],
+
+  conflicts: ($) => [
+    [$.earthfile_ref, $.unquoted_string],
+    [$.earthfile_ref, $.load],
+    [$.image_name, $.earthfile_ref, $.unquoted_string],
+    [$.image_name, $.unquoted_string],
   ],
 
   rules: {
@@ -166,7 +175,9 @@ module.exports = grammar({
         repeat(
           field("option", choice($.platform, $.allow_privileged, $.pass_args))
         ),
-        choice($.image_spec, seq($.target_ref, repeat($.build_arg)), $._eol)
+        choice($.image_spec, $.target_ref, $._string),
+        repeat($.build_arg),
+        $._eol
       ),
 
     from_dockerfile_command: ($) =>
@@ -403,7 +414,23 @@ module.exports = grammar({
 
     // command elements
     _immediate_identifier: ($) => token.immediate(/[a-zA-Z_][a-zA-Z0-9_\-.]*/),
-    earthfile_ref: ($) => /[^\s+]+/,
+    earthfile_ref: ($) =>
+      seq(
+        choice($._string_base, $.expansion, "(", ")", ":", "@", "="),
+        repeat(
+          choice(
+            $._immediate_string_base,
+            token.immediate(/\\./),
+            token.immediate("("),
+            token.immediate(")"),
+            // token.immediate("+"),
+            token.immediate(":"),
+            token.immediate("@"),
+            token.immediate("="),
+            alias($._immediate_expansion, $.expansion)
+          )
+        )
+      ),
     expr: ($) => /\$\(.+\)/,
     function_ref: ($) =>
       choice(
@@ -426,10 +453,17 @@ module.exports = grammar({
       ),
     image_name: ($) =>
       seq(
-        choice(/[^@:\s\$-=]/, $.expansion),
+        choice($._string_base, $.expansion),
         repeat(
           choice(
-            token.immediate(/[^@:\s\$=]+/),
+            $._immediate_string_base,
+            // token.immediate(/\\./),
+            // token.immediate("("),
+            // token.immediate(")"),
+            // token.immediate("+"),
+            // token.immediate(":"),
+            // token.immediate("@"),
+            // token.immediate("="),
             alias($._immediate_expansion, $.expansion)
           )
         )
@@ -461,7 +495,7 @@ module.exports = grammar({
         field("value", $._string)
       ),
     number: (_) => /\d+/,
-    path: ($) => /[^\s()\\]+/,
+    path: ($) => /[^\s()\\+]+/,
     port: ($) =>
       seq(
         $.number,
@@ -499,13 +533,14 @@ module.exports = grammar({
       ),
     target_ref: ($) =>
       seq(
+        optional($.earthfile_ref),
         token(prec(5, "+")),
         field("name", alias($._immediate_identifier, $.identifier))
       ),
     target_artifact: ($) => seq($.target_ref, token.immediate("/"), $.path),
     target_artifact_build_args: ($) =>
       seq(
-        "(",
+        token(prec(5, "(")),
         $.target_ref,
         token.immediate("/"),
         $.path,
@@ -595,7 +630,7 @@ module.exports = grammar({
           "target",
           choice(
             $.target_ref,
-            seq("(", $.target_ref, repeat1($.build_arg), ")")
+            seq("(", $.target_ref, repeat1($.build_arg), token(prec(5, ")")))
           )
         )
       ),
@@ -650,6 +685,8 @@ module.exports = grammar({
     // string stuff
     _string: ($) =>
       choice($.double_quoted_string, $.single_quoted_string, $.unquoted_string),
+    _string_base: ($) => string_base_regex,
+    _immediate_string_base: ($) => token.immediate(string_base_regex),
     double_quoted_string: ($) =>
       seq(
         '"',
@@ -662,16 +699,20 @@ module.exports = grammar({
         ),
         '"'
       ),
-
     single_quoted_string: ($) => seq("'", token.immediate(/[^'\n\\]+/), "'"),
     unquoted_string: ($) =>
       seq(
-        choice(/[^"'\s\\\$)]+/, $.expansion),
+        choice($._string_base, $.expansion, "(", ")", "+", ":", "@", "="),
         repeat(
           choice(
-            token.immediate(/[^"'\s\\\$)]+/),
+            $._immediate_string_base,
             token.immediate(/\\./),
-            // token.immediate(")"),
+            token.immediate("("),
+            token.immediate(")"),
+            token.immediate("+"),
+            token.immediate(":"),
+            token.immediate("@"),
+            token.immediate("="),
             alias($._immediate_expansion, $.expansion)
           )
         )

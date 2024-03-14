@@ -528,6 +528,21 @@
     }
   },
   {
+    "type": "earthfile_ref",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "expansion",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "else_block",
     "named": true,
     "fields": {},
@@ -1154,7 +1169,7 @@
     },
     "children": {
       "multiple": true,
-      "required": false,
+      "required": true,
       "types": [
         {
           "type": "build_arg",
@@ -1165,11 +1180,23 @@
           "named": true
         },
         {
+          "type": "double_quoted_string",
+          "named": true
+        },
+        {
           "type": "image_spec",
           "named": true
         },
         {
+          "type": "single_quoted_string",
+          "named": true
+        },
+        {
           "type": "target_ref",
+          "named": true
+        },
+        {
+          "type": "unquoted_string",
           "named": true
         }
       ]
@@ -2635,6 +2662,16 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "earthfile_ref",
+          "named": true
+        }
+      ]
     }
   },
   {
@@ -3419,10 +3456,6 @@
   },
   {
     "type": "dir",
-    "named": true
-  },
-  {
-    "type": "earthfile_ref",
     "named": true
   },
   {
