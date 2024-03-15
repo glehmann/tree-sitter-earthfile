@@ -1401,6 +1401,21 @@
     }
   },
   {
+    "type": "identifier",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "expansion",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "if_command",
     "named": true,
     "fields": {
@@ -3476,10 +3491,6 @@
   },
   {
     "type": "global",
-    "named": true
-  },
-  {
-    "type": "identifier",
     "named": true
   },
   {

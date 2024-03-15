@@ -48,7 +48,7 @@ foo:
   BUILD \
     --platform=linux/$arch \
     --platform $os/arm64 \
-    +build
+    +build-$bar
 
 ---
 
@@ -68,4 +68,6 @@ foo:
                 (variable))))
           (line_continuation)
           (target_ref
-            name: (identifier)))))
+            name: (identifier
+              (expansion
+                (variable)))))))

@@ -413,7 +413,16 @@ module.exports = grammar({
     else_block: ($) => $._command_block,
 
     // command elements
-    _immediate_identifier: ($) => token.immediate(/[a-zA-Z_][a-zA-Z0-9_\-.]*/),
+    _immediate_identifier: ($) =>
+      seq(
+        choice(token.immediate(/[a-zA-Z_]+/), $.expansion),
+        repeat(
+          choice(
+            token.immediate(/[a-zA-Z0-9_\-.]+/),
+            alias($._immediate_expansion, $.expansion)
+          )
+        )
+      ),
     earthfile_ref: ($) =>
       seq(
         choice($._string_base, $.expansion, "(", ")", ":", "@", "="),
@@ -433,16 +442,10 @@ module.exports = grammar({
       ),
     expr: ($) => /\$\(.+\)/,
     function_ref: ($) =>
-      choice(
-        seq(
-          token(prec(5, "+")),
-          field("name", alias($._immediate_identifier, $.identifier))
-        ),
-        seq(
-          $.earthfile_ref,
-          token.immediate(prec(5, "+")),
-          field("name", alias($._immediate_identifier, $.identifier))
-        )
+      seq(
+        optional($.earthfile_ref),
+        token(prec(5, "+")),
+        field("name", alias($._immediate_identifier, $.identifier))
       ),
     identifier: ($) => /[a-zA-Z_][a-zA-Z0-9_\-.]*/,
     image_spec: ($) =>
