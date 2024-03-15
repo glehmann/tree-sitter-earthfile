@@ -71,3 +71,52 @@ foo:
             name: (identifier
               (expansion
                 (variable)))))))
+
+==================
+build command with bracket expansions
+==================
+
+foo:
+  BUILD \
+    --platform=linux/${arch}64 \
+    --platform ${os_arch}64 \
+    +${bar}
+
+---
+
+    (source_file
+      (target
+        name: (identifier)
+        (build_command
+          (line_continuation)
+          option: (platform
+            value: (unquoted_string
+              (expansion
+                (variable))))
+          (line_continuation)
+          option: (platform
+            value: (unquoted_string
+              (expansion
+                (variable))))
+          (line_continuation)
+          (target_ref
+            name: (identifier
+              (expansion
+                (variable)))))))
+
+==================
+build command with target expansion
+==================
+
+foo:
+  BUILD ${target}
+
+---
+
+    (source_file
+      (target
+        name: (identifier)
+        (build_command
+          (unquoted_string
+            (expansion
+              (variable))))))

@@ -76,3 +76,70 @@ foo:
               name: (identifier))
             (path))
           dest: (path))))
+
+==================
+copy target artifacts with expansions
+==================
+
+foo:
+    COPY \
+        +build/${foo} \
+        +${target}/foo \
+        ${target}/foo \
+        ${artifact} \
+        (+$target/$foo --from=bar) \
+        ($target/$foo --from=bar) \
+        /
+
+---
+
+    (source_file
+      (target
+        name: (identifier)
+        (copy_command
+          (line_continuation)
+          src: (target_artifact
+            (target_ref
+              name: (identifier))
+            (path
+              (expansion
+                (variable))))
+          (line_continuation)
+          src: (target_artifact
+            (target_ref
+              name: (identifier
+                (expansion
+                  (variable))))
+            (path))
+          (line_continuation)
+          src: (path
+            (expansion
+              (variable)))
+          (line_continuation)
+          src: (path
+            (expansion
+              (variable)))
+          (line_continuation)
+          src: (target_artifact_build_args
+            (target_ref
+              name: (identifier
+                (expansion
+                  (variable))))
+            (path
+              (expansion
+                (variable)))
+            (build_arg
+              name: (variable)
+              value: (unquoted_string)))
+          (line_continuation)
+          src: (target_artifact_build_args
+            (unquoted_string
+              (expansion
+                (variable))
+              (expansion
+                (variable)))
+            (build_arg
+              name: (variable)
+              value: (unquoted_string)))
+          (line_continuation)
+          dest: (path))))

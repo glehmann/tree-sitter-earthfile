@@ -13,9 +13,10 @@ module.exports = grammar({
   ],
 
   conflicts: ($) => [
-    [$.earthfile_ref, $.unquoted_string],
+    [$.earthfile_ref, $.image_name, $.unquoted_string],
     [$.earthfile_ref, $.load],
-    [$.image_name, $.earthfile_ref, $.unquoted_string],
+    [$.earthfile_ref, $.path],
+    [$.earthfile_ref, $.unquoted_string],
     [$.image_name, $.unquoted_string],
   ],
 
@@ -83,7 +84,7 @@ module.exports = grammar({
             choice($.auto_skip, $.allow_privileged, $.pass_args, $.platform)
           )
         ),
-        $.target_ref,
+        choice($.target_ref, $._string),
         repeat($.build_arg),
         $._eol
       ),
@@ -498,7 +499,23 @@ module.exports = grammar({
         field("value", $._string)
       ),
     number: (_) => /\d+/,
-    path: ($) => /[^\s()\\+]+/,
+    path: ($) =>
+      seq(
+        choice($._string_base, $.expansion, "(", ")", "+", ":", "@", "="),
+        repeat(
+          choice(
+            $._immediate_string_base,
+            token.immediate(/\\./),
+            token.immediate("("),
+            token.immediate(")"),
+            // token.immediate("+"),
+            token.immediate(":"),
+            token.immediate("@"),
+            token.immediate("="),
+            alias($._immediate_expansion, $.expansion)
+          )
+        )
+      ),
     port: ($) =>
       seq(
         $.number,
@@ -544,9 +561,7 @@ module.exports = grammar({
     target_artifact_build_args: ($) =>
       seq(
         token(prec(5, "(")),
-        $.target_ref,
-        token.immediate("/"),
-        $.path,
+        choice(seq($.target_ref, token.immediate("/"), $.path), $._string),
         repeat($.build_arg),
         token(prec(5, ")"))
       ),
