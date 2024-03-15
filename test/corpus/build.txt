@@ -1,0 +1,71 @@
+==================
+build command
+==================
+
+foo:
+  BUILD +build
+
+---
+
+    (source_file
+      (target
+        name: (identifier)
+        (build_command
+          (target_ref
+            name: (identifier)))))
+
+==================
+build command with options
+==================
+
+foo:
+  BUILD \
+    --platform=linux/amd64 \
+    --platform linux/arm64 \
+    +build
+
+---
+
+    (source_file
+      (target
+        name: (identifier)
+        (build_command
+          (line_continuation)
+          option: (platform
+            value: (unquoted_string))
+          (line_continuation)
+          option: (platform
+            value: (unquoted_string))
+          (line_continuation)
+          (target_ref
+            name: (identifier)))))
+
+==================
+build command with expansions
+==================
+
+foo:
+  BUILD \
+    --platform=linux/$arch \
+    --platform $os/arm64 \
+    +build
+
+---
+
+    (source_file
+      (target
+        name: (identifier)
+        (build_command
+          (line_continuation)
+          option: (platform
+            value: (unquoted_string
+              (expansion
+                (variable))))
+          (line_continuation)
+          option: (platform
+            value: (unquoted_string
+              (expansion
+                (variable))))
+          (line_continuation)
+          (target_ref
+            name: (identifier)))))
