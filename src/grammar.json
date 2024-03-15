@@ -2430,8 +2430,15 @@
           }
         },
         {
-          "type": "STRING",
-          "value": ")"
+          "type": "TOKEN",
+          "content": {
+            "type": "PREC",
+            "value": 5,
+            "content": {
+              "type": "STRING",
+              "value": ")"
+            }
+          }
         }
       ]
     },

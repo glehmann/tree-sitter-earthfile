@@ -50,3 +50,29 @@ foo:
             value: (unquoted_string))
           src: (path)
           dest: (path))))
+
+==================
+copy target artifacts
+==================
+
+foo:
+    COPY (+build/foo --from=+debian) +build/bar /
+
+---
+
+    (source_file
+      (target
+        name: (identifier)
+        (copy_command
+          src: (target_artifact_build_args
+            (target_ref
+              name: (identifier))
+            (path)
+            (build_arg
+              name: (variable)
+              value: (unquoted_string)))
+          src: (target_artifact
+            (target_ref
+              name: (identifier))
+            (path))
+          dest: (path))))

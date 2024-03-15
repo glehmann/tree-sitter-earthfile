@@ -545,7 +545,7 @@ module.exports = grammar({
         token.immediate("/"),
         $.path,
         repeat($.build_arg),
-        ")"
+        token(prec(5, ")"))
       ),
     variable: ($) => /[a-zA-Z_][a-zA-Z0-9_]*/,
     version_major_minor: ($) => /[0-9]+\.[0-9]+/,
