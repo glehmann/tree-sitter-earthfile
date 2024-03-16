@@ -42,7 +42,8 @@
       "file-types": [
         "Earthfile"
       ],
-      "injection-regex": "earthfile"
+      "injection-regex": "earthfile",
+      "highlights": "queries/highlights.scm"
     }
   ]
 }
