@@ -69,8 +69,13 @@
   (single_quoted_string)
 ] @string
 
-(expansion) @attribute
+(expansion) @constant
+(expansion ["$" "{" "}"] @punctuation.special)
 
 [
     option: (_)
 ] @type
+
+
+;; option: (_ "=" @operator)
+;; (build_arg "=" @operator)
