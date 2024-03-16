@@ -43,6 +43,7 @@
         "Earthfile"
       ],
       "injection-regex": "earthfile",
+      "injections": "queries/injections.scm",
       "highlights": "queries/highlights.scm"
     }
   ]
