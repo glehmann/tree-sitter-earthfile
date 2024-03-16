@@ -489,7 +489,7 @@ module.exports = grammar({
     label: ($) =>
       seq(
         field("label", $.identifier),
-        token.immediate(/[ =]/),
+        choice(token.immediate(" "), token.immediate("=")),
         field("value", $._string)
       ),
     number: (_) => /\d+/,
@@ -568,59 +568,64 @@ module.exports = grammar({
     branch: ($) =>
       seq(
         token(prec(5, "--branch")),
-        token.immediate(/[ =]/),
+        choice(token.immediate(" "), token.immediate("=")),
         field("value", $.path)
       ),
     build_arg: ($) =>
       seq(
         token(prec(5, "--")),
         field("name", alias($._immediate_variable, $.variable)),
-        optional(seq(token.immediate(/[ =]/), field("value", $._string)))
+        optional(
+          seq(
+            choice(token.immediate(" "), token.immediate("=")),
+            field("value", $._string)
+          )
+        )
       ),
     cache_from: ($) =>
       seq(
         token(prec(5, "--cache-from")),
-        token.immediate(/[ =]/),
+        choice(token.immediate(" "), token.immediate("=")),
         field("value", $._string)
       ),
     cache_hint: ($) => token(prec(5, "--cache-hint")),
     chmod: ($) =>
       seq(
         token(prec(5, "--chmod")),
-        token.immediate(/[ =]/),
+        choice(token.immediate(" "), token.immediate("=")),
         field("value", $._string)
       ),
     chown: ($) =>
       seq(
         token(prec(5, "--chown")),
-        token.immediate(/[ =]/),
+        choice(token.immediate(" "), token.immediate("=")),
         field("value", $._string)
       ),
     compose: ($) =>
       seq(
         token(prec(5, "--compose")),
-        token.immediate(/[ =]/),
+        choice(token.immediate(" "), token.immediate("=")),
         field("value", $.path)
       ),
     dir: ($) => token(prec(5, "--dir")),
     docker_build_arg: ($) =>
       seq(
         token(prec(5, "--build-arg")),
-        token.immediate(/[ =]/),
+        choice(token.immediate(" "), token.immediate("=")),
         field("key", $.identifier),
-        token.immediate(/[ =]/),
+        choice(token.immediate(" "), token.immediate("=")),
         field("value", $._string)
       ),
     docker_file: ($) =>
       seq(
         token(prec(5, "-f")),
-        token.immediate(/[ =]/),
+        choice(token.immediate(" "), token.immediate("=")),
         field("value", $.path)
       ),
     docker_target: ($) =>
       seq(
         token(prec(5, "--target")),
-        token.immediate(/[ =]/),
+        choice(token.immediate(" "), token.immediate("=")),
         field("value", $.identifier)
       ),
     entrypoint: ($) => token(prec(5, "--entrypoint")),
@@ -628,14 +633,18 @@ module.exports = grammar({
     force: ($) => token(prec(5, "--force")),
     global: ($) => token(prec(5, "--global")),
     id: ($) =>
-      seq(token(prec(5, "--id")), token.immediate(/[ =]/), $.identifier),
+      seq(
+        token(prec(5, "--id")),
+        choice(token.immediate(" "), token.immediate("=")),
+        $.identifier
+      ),
     if_exists: ($) => token(prec(5, "--if-exists")),
     keep_own: ($) => token(prec(5, "--keep-own")),
     keep_ts: ($) => token(prec(5, "--keep-ts")),
     load: ($) =>
       seq(
         token(prec(5, "--load")),
-        token.immediate(/[ =]/),
+        choice(token.immediate(" "), token.immediate("=")),
         field("image", $.image_spec),
         token.immediate("="),
         field(
@@ -649,7 +658,7 @@ module.exports = grammar({
     mount: ($) =>
       seq(
         token(prec(5, "--mount")),
-        token.immediate(/[ =]/),
+        choice(token.immediate(" "), token.immediate("=")),
         field("value", $._string)
       ),
     network_none: ($) => token(prec(5, "--network=none")),
@@ -659,14 +668,14 @@ module.exports = grammar({
     platform: ($) =>
       seq(
         token(prec(5, "--platform")),
-        token.immediate(/[ =]/),
+        choice(token.immediate(" "), token.immediate("=")),
         field("value", $._string)
       ),
     privileged: ($) => token(prec(5, "--privileged")),
     pull: ($) =>
       seq(
         token(prec(5, "--pull")),
-        token.immediate(/[ =]/),
+        choice(token.immediate(" "), token.immediate("=")),
         field("value", $.image_spec)
       ),
     push: ($) => token(prec(5, "--push")),
@@ -674,23 +683,27 @@ module.exports = grammar({
     secret: ($) =>
       seq(
         token(prec(5, "--secret")),
-        token.immediate(/[ =]/),
+        choice(token.immediate(" "), token.immediate("=")),
         field("value", $._string)
       ),
     sep: ($) =>
       seq(
         token(prec(5, "--sep")),
-        token.immediate(/[ =]/),
+        choice(token.immediate(" "), token.immediate("=")),
         field("value", $._string)
       ),
     service: ($) =>
       seq(
         token(prec(5, "--service")),
-        token.immediate(/[ =]/),
+        choice(token.immediate(" "), token.immediate("=")),
         field("value", $._string)
       ),
     sharing: ($) =>
-      seq(token(prec(5, "--sharing")), token.immediate(/[ =]/), $.identifier),
+      seq(
+        token(prec(5, "--sharing")),
+        choice(token.immediate(" "), token.immediate("=")),
+        $.identifier
+      ),
     ssh: ($) => token(prec(5, "--ssh")),
     symlink_no_follow: ($) => token(prec(5, "--symlink-no-follow")),
 
