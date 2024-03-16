@@ -13,6 +13,7 @@
     "AS LOCAL"
     "BUILD"
     "CACHE"
+    "CMD"
     "COPY"
     "DO"
     "ENTRYPOINT"
@@ -21,6 +22,7 @@
     "FROM DOCKERFILE"
     "FUNCTION"
     "GIT CLONE"
+    "HOST"
     "IMPORT"
     "LABEL"
     "LET"
@@ -31,6 +33,7 @@
     "SET"
     "USER"
     "VERSION"
+    "VOLUME"
     "WITH DOCKER"
     "WORKDIR"
 ] @keyword
