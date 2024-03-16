@@ -452,8 +452,8 @@ module.exports = grammar({
     image_spec: ($) =>
       seq(
         field("name", $.image_name),
-        field("tag", optional($.image_tag)),
-        field("digest", optional($.image_digest))
+        optional(seq(token.immediate(":"), field("tag", $.image_tag))),
+        optional(seq(token.immediate("@"), field("digest", $.image_digest)))
       ),
     image_name: ($) =>
       seq(
@@ -473,23 +473,17 @@ module.exports = grammar({
         )
       ),
     image_tag: ($) =>
-      seq(
-        token.immediate(":"),
-        repeat1(
-          choice(
-            token.immediate(/[^@\s\$]+/),
-            alias($._immediate_expansion, $.expansion)
-          )
+      repeat1(
+        choice(
+          token.immediate(/[^@\s\$]+/),
+          alias($._immediate_expansion, $.expansion)
         )
       ),
     image_digest: ($) =>
-      seq(
-        token.immediate("@"),
-        repeat1(
-          choice(
-            token.immediate(/[a-zA-Z0-9:]+/),
-            alias($._immediate_expansion, $.expansion)
-          )
+      repeat1(
+        choice(
+          token.immediate(/[a-zA-Z0-9:]+/),
+          alias($._immediate_expansion, $.expansion)
         )
       ),
     label: ($) =>
