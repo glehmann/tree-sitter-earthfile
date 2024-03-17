@@ -69,6 +69,7 @@
 
 (variable) @variable
 (expansion ["$" "{" "}"] @punctuation.special)
+(build_arg) @variable
 
 [
     option: (_)
