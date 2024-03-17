@@ -475,6 +475,14 @@
                 {
                   "type": "SYMBOL",
                   "name": "path"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "double_quoted_string"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "single_quoted_string"
                 }
               ]
             }

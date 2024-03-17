@@ -19,7 +19,7 @@ copy multi sources
 ==================
 
 foo:
-    COPY foo bar hop
+    COPY "foo" bar hop
 
 ---
 
@@ -27,7 +27,7 @@ foo:
       (target
         name: (identifier)
         (copy_command
-          src: (path)
+          src: (double_quoted_string)
           src: (path)
           dest: (path))))
 

@@ -399,7 +399,15 @@
         "required": true,
         "types": [
           {
+            "type": "double_quoted_string",
+            "named": true
+          },
+          {
             "type": "path",
+            "named": true
+          },
+          {
+            "type": "single_quoted_string",
             "named": true
           },
           {

@@ -123,7 +123,13 @@ module.exports = grammar({
         repeat1(
           field(
             "src",
-            choice($.target_artifact, $.target_artifact_build_args, $.path)
+            choice(
+              $.target_artifact,
+              $.target_artifact_build_args,
+              $.path,
+              $.double_quoted_string,
+              $.single_quoted_string
+            )
           )
         ),
         field("dest", $.path),
