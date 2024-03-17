@@ -67,7 +67,7 @@ module.exports = grammar({
           seq(
             token.immediate("="),
             choice(
-              field("default_value", $._string),
+              field("default_value", optional($._string)),
               field("default_value_expr", $.expr)
             )
           )

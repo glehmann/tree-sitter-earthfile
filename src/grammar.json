@@ -226,8 +226,16 @@
                       "type": "FIELD",
                       "name": "default_value",
                       "content": {
-                        "type": "SYMBOL",
-                        "name": "_string"
+                        "type": "CHOICE",
+                        "members": [
+                          {
+                            "type": "SYMBOL",
+                            "name": "_string"
+                          },
+                          {
+                            "type": "BLANK"
+                          }
+                        ]
                       }
                     },
                     {
