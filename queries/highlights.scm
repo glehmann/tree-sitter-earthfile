@@ -1,11 +1,5 @@
-[
-    ","
-] @punctuation.delimiter
-
-[
-    "["
-    "]"
-] @punctuation.bracket
+(string_array "," @punctuation.delimiter)
+(string_array ["[" "]"] @punctuation.bracket)
 
 [
     "ARG"
@@ -71,8 +65,9 @@
   (double_quoted_string)
   (single_quoted_string)
 ] @string
+(unquoted_string) @string.special
 
-(expansion) @constant
+(variable) @variable
 (expansion ["$" "{" "}"] @punctuation.special)
 
 [
@@ -80,5 +75,10 @@
 ] @type
 
 
-;; option: (_ "=" @operator)
-;; (build_arg "=" @operator)
+option: (_ "=" @operator)
+(build_arg "=" @operator)
+(arg_command "=" @operator)
+(env_command "=" @operator)
+(label "=" @operator)
+(set_command "=" @operator)
+(let_command "=" @operator)

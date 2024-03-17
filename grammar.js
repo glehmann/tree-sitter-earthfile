@@ -145,7 +145,7 @@ module.exports = grammar({
       seq(
         "ENV",
         field("key", $.variable),
-        token.immediate(/[ =]+/),
+        choice(token.immediate(" "), token.immediate("=")),
         repeat(field("value", $._string)),
         $._eol
       ),
