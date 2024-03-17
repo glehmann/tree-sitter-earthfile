@@ -89,7 +89,7 @@
     "fields": {
       "name": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "variable",
@@ -99,7 +99,7 @@
       },
       "value": {
         "multiple": false,
-        "required": false,
+        "required": true,
         "types": [
           {
             "type": "double_quoted_string",
@@ -184,7 +184,15 @@
         "required": true,
         "types": [
           {
+            "type": "double_quoted_string",
+            "named": true
+          },
+          {
             "type": "path",
+            "named": true
+          },
+          {
+            "type": "single_quoted_string",
             "named": true
           }
         ]
@@ -2124,7 +2132,15 @@
         "required": false,
         "types": [
           {
+            "type": "double_quoted_string",
+            "named": true
+          },
+          {
             "type": "path",
+            "named": true
+          },
+          {
+            "type": "single_quoted_string",
             "named": true
           }
         ]
@@ -2134,7 +2150,15 @@
         "required": false,
         "types": [
           {
+            "type": "double_quoted_string",
+            "named": true
+          },
+          {
             "type": "path",
+            "named": true
+          },
+          {
+            "type": "single_quoted_string",
             "named": true
           }
         ]
@@ -2170,7 +2194,15 @@
         "required": true,
         "types": [
           {
+            "type": "double_quoted_string",
+            "named": true
+          },
+          {
             "type": "path",
+            "named": true
+          },
+          {
+            "type": "single_quoted_string",
             "named": true
           }
         ]
@@ -3362,6 +3394,10 @@
   },
   {
     "type": "CMD",
+    "named": false
+  },
+  {
+    "type": "COMMAND",
     "named": false
   },
   {

@@ -3,8 +3,8 @@
 
 [
     "ARG"
-    "AS"
     "AS LOCAL"
+    "AS"
     "BUILD"
     "CACHE"
     "CMD"

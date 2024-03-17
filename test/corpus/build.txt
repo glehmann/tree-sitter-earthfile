@@ -120,3 +120,21 @@ foo:
           (unquoted_string
             (expansion
               (variable))))))
+
+==================
+build command deprecated build arg
+==================
+
+foo:
+  BUILD +foo --build-arg foo=bar
+
+---
+
+    (source_file
+      (target
+        name: (identifier)
+        (build_command
+          (target_ref
+            name: (identifier))
+          (build_arg
+            value: (unquoted_string)))))

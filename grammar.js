@@ -93,7 +93,10 @@ module.exports = grammar({
       seq(
         "CACHE",
         repeat(field("option", choice($.chmod, $.id, $.persist, $.sharing))),
-        field("mount_point", $.path),
+        field(
+          "mount_point",
+          choice($.path, $.double_quoted_string, $.single_quoted_string)
+        ),
         $._eol
       ),
 
@@ -205,7 +208,7 @@ module.exports = grammar({
         $._eol
       ),
 
-    function_command: ($) => seq("FUNCTION", $._eol),
+    function_command: ($) => seq(choice("FUNCTION", "COMMAND"), $._eol),
 
     git_clone_command: ($) =>
       seq(
@@ -289,9 +292,25 @@ module.exports = grammar({
             )
           )
         ),
-        field("src", $.path),
-        optional(field("dest", $.path)),
-        optional(seq("AS LOCAL", field("local_dest", $.path)))
+        field(
+          "src",
+          choice($.path, $.double_quoted_string, $.single_quoted_string)
+        ),
+        optional(
+          field(
+            "dest",
+            choice($.path, $.double_quoted_string, $.single_quoted_string)
+          )
+        ),
+        optional(
+          seq(
+            "AS LOCAL",
+            field(
+              "local_dest",
+              choice($.path, $.double_quoted_string, $.single_quoted_string)
+            )
+          )
+        )
       ),
 
     save_image_command: ($) =>
@@ -481,7 +500,7 @@ module.exports = grammar({
     image_tag: ($) =>
       repeat1(
         choice(
-          token.immediate(/[^@\s\$]+/),
+          token.immediate(/[^@\s\$=]+/),
           alias($._immediate_expansion, $.expansion)
         )
       ),
@@ -579,14 +598,15 @@ module.exports = grammar({
       ),
     build_arg: ($) =>
       seq(
-        token(prec(5, "--")),
-        field("name", alias($._immediate_variable, $.variable)),
-        optional(
+        choice(
           seq(
-            choice(token.immediate(" "), token.immediate("=")),
-            field("value", $._string)
-          )
-        )
+            token(prec(5, "--")),
+            field("name", alias($._immediate_variable, $.variable))
+          ),
+          token(prec(5, "--build-arg"))
+        ),
+        choice(token.immediate(" "), token.immediate("=")),
+        field("value", $._string)
       ),
     cache_from: ($) =>
       seq(
