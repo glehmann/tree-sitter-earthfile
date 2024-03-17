@@ -75,6 +75,7 @@
     option: (_)
 ] @type
 
+(path) @function.parameter
 
 option: (_ "=" @operator)
 (build_arg "=" @operator)
