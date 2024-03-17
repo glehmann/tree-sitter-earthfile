@@ -81,7 +81,13 @@ module.exports = grammar({
         repeat(
           field(
             "option",
-            choice($.auto_skip, $.allow_privileged, $.pass_args, $.platform)
+            choice(
+              $.auto_skip,
+              $.allow_privileged,
+              $.build_arg_deprecated,
+              $.pass_args,
+              $.platform
+            )
           )
         ),
         choice($.target_ref, $._string),
@@ -598,13 +604,14 @@ module.exports = grammar({
       ),
     build_arg: ($) =>
       seq(
-        choice(
-          seq(
-            token(prec(5, "--")),
-            field("name", alias($._immediate_variable, $.variable))
-          ),
-          token(prec(5, "--build-arg"))
-        ),
+        token(prec(5, "--")),
+        field("name", alias($._immediate_variable, $.variable)),
+        choice(token.immediate(" "), token.immediate("=")),
+        field("value", $._string)
+      ),
+    build_arg_deprecated: ($) =>
+      seq(
+        token(prec(5, "--build-arg")),
         choice(token.immediate(" "), token.immediate("=")),
         field("value", $._string)
       ),

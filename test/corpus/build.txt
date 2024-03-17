@@ -126,7 +126,7 @@ build command deprecated build arg
 ==================
 
 foo:
-  BUILD +foo --build-arg foo=bar
+  BUILD --build-arg foo=bar +foo
 
 ---
 
@@ -134,7 +134,7 @@ foo:
       (target
         name: (identifier)
         (build_command
+          option: (build_arg_deprecated
+            value: (unquoted_string))
           (target_ref
-            name: (identifier))
-          (build_arg
-            value: (unquoted_string)))))
+            name: (identifier)))))

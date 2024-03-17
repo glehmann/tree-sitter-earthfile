@@ -286,6 +286,10 @@
                 },
                 {
                   "type": "SYMBOL",
+                  "name": "build_arg_deprecated"
+                },
+                {
+                  "type": "SYMBOL",
                   "name": "pass_args"
                 },
                 {
@@ -2756,49 +2760,71 @@
       "type": "SEQ",
       "members": [
         {
+          "type": "TOKEN",
+          "content": {
+            "type": "PREC",
+            "value": 5,
+            "content": {
+              "type": "STRING",
+              "value": "--"
+            }
+          }
+        },
+        {
+          "type": "FIELD",
+          "name": "name",
+          "content": {
+            "type": "ALIAS",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_immediate_variable"
+            },
+            "named": true,
+            "value": "variable"
+          }
+        },
+        {
           "type": "CHOICE",
           "members": [
             {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "TOKEN",
-                  "content": {
-                    "type": "PREC",
-                    "value": 5,
-                    "content": {
-                      "type": "STRING",
-                      "value": "--"
-                    }
-                  }
-                },
-                {
-                  "type": "FIELD",
-                  "name": "name",
-                  "content": {
-                    "type": "ALIAS",
-                    "content": {
-                      "type": "SYMBOL",
-                      "name": "_immediate_variable"
-                    },
-                    "named": true,
-                    "value": "variable"
-                  }
-                }
-              ]
+              "type": "IMMEDIATE_TOKEN",
+              "content": {
+                "type": "STRING",
+                "value": " "
+              }
             },
             {
-              "type": "TOKEN",
+              "type": "IMMEDIATE_TOKEN",
               "content": {
-                "type": "PREC",
-                "value": 5,
-                "content": {
-                  "type": "STRING",
-                  "value": "--build-arg"
-                }
+                "type": "STRING",
+                "value": "="
               }
             }
           ]
+        },
+        {
+          "type": "FIELD",
+          "name": "value",
+          "content": {
+            "type": "SYMBOL",
+            "name": "_string"
+          }
+        }
+      ]
+    },
+    "build_arg_deprecated": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "TOKEN",
+          "content": {
+            "type": "PREC",
+            "value": 5,
+            "content": {
+              "type": "STRING",
+              "value": "--build-arg"
+            }
+          }
         },
         {
           "type": "CHOICE",

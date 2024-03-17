@@ -89,7 +89,7 @@
     "fields": {
       "name": {
         "multiple": false,
-        "required": false,
+        "required": true,
         "types": [
           {
             "type": "variable",
@@ -97,6 +97,30 @@
           }
         ]
       },
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "double_quoted_string",
+            "named": true
+          },
+          {
+            "type": "single_quoted_string",
+            "named": true
+          },
+          {
+            "type": "unquoted_string",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
+    "type": "build_arg_deprecated",
+    "named": true,
+    "fields": {
       "value": {
         "multiple": false,
         "required": true,
@@ -131,6 +155,10 @@
           },
           {
             "type": "auto_skip",
+            "named": true
+          },
+          {
+            "type": "build_arg_deprecated",
             "named": true
           },
           {
