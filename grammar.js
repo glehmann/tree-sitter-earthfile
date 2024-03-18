@@ -726,7 +726,12 @@ module.exports = grammar({
         ),
         '"'
       ),
-    single_quoted_string: ($) => seq("'", token.immediate(/[^'\n\\]+/), "'"),
+    single_quoted_string: ($) =>
+      seq(
+        "'",
+        repeat(choice(token.immediate(/[^'\n\\]+/), token.immediate(/\\./))),
+        "'"
+      ),
     unquoted_string: ($) =>
       seq(
         choice($._string_base, $.expansion, "(", ")", "+", ":", "@", "="),

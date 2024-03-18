@@ -3782,10 +3782,25 @@
           "value": "'"
         },
         {
-          "type": "IMMEDIATE_TOKEN",
+          "type": "REPEAT",
           "content": {
-            "type": "PATTERN",
-            "value": "[^'\\n\\\\]+"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "IMMEDIATE_TOKEN",
+                "content": {
+                  "type": "PATTERN",
+                  "value": "[^'\\n\\\\]+"
+                }
+              },
+              {
+                "type": "IMMEDIATE_TOKEN",
+                "content": {
+                  "type": "PATTERN",
+                  "value": "\\\\."
+                }
+              }
+            ]
           }
         },
         {
