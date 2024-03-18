@@ -4044,7 +4044,7 @@
         "value": 10,
         "content": {
           "type": "PATTERN",
-          "value": "\\\\\\s*#.*(\\n|\\r\\n|\\f)"
+          "value": "\\\\(\\s*#.*\\n)+"
         }
       }
     },

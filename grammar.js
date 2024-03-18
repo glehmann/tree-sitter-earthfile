@@ -776,7 +776,7 @@ module.exports = grammar({
     // extra tokens, eol, …
     line_continuation: (_) => token(prec(10, "\\\n")),
     comment: (_) => token(prec(10, /#[^\n]*(\n|\r\n|\f)/)),
-    line_continuation_comment: (_) => token(prec(10, /\\\s*#.*(\n|\r\n|\f)/)),
+    line_continuation_comment: (_) => token(prec(10, /\\(\s*#.*\n)+/)),
     _eol: ($) => choice("\n", "\rn", "\f", $.comment),
   },
 });

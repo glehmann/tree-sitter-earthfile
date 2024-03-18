@@ -47,3 +47,23 @@ foo:
           command: (string_array
             (double_quoted_string)
             (double_quoted_string)))))
+
+==================
+run with comments
+==================
+
+foo:
+    RUN echo \
+    # some comments
+    # some more comments
+    # and again more comments
+    foo
+
+---
+
+    (source_file
+      (target
+        name: (identifier)
+        (run_command
+          command: (shell_fragment
+            (line_continuation_comment)))))
