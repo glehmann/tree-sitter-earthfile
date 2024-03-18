@@ -519,8 +519,18 @@ module.exports = grammar({
           //                              |--shell_command--|
           //
           /[,=-]/,
-          /[^\\\n#\s,=-][^\\\n]*/,
-          /\\[^\n,=-]/
+          /[^"\\\n#\s,=-][^"\\\n]*/,
+          /\\[^"\n,=-]/,
+          seq(
+            '"',
+            repeat(
+              choice(
+                token.immediate(prec(15, /[^"\\]+/)),
+                token.immediate(/\\./)
+              )
+            ),
+            '"'
+          )
         )
       ),
     string_array: ($) =>

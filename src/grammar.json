@@ -2285,11 +2285,50 @@
           },
           {
             "type": "PATTERN",
-            "value": "[^\\\\\\n#\\s,=-][^\\\\\\n]*"
+            "value": "[^\"\\\\\\n#\\s,=-][^\"\\\\\\n]*"
           },
           {
             "type": "PATTERN",
-            "value": "\\\\[^\\n,=-]"
+            "value": "\\\\[^\"\\n,=-]"
+          },
+          {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "\""
+              },
+              {
+                "type": "REPEAT",
+                "content": {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "IMMEDIATE_TOKEN",
+                      "content": {
+                        "type": "PREC",
+                        "value": 15,
+                        "content": {
+                          "type": "PATTERN",
+                          "value": "[^\"\\\\]+"
+                        }
+                      }
+                    },
+                    {
+                      "type": "IMMEDIATE_TOKEN",
+                      "content": {
+                        "type": "PATTERN",
+                        "value": "\\\\."
+                      }
+                    }
+                  ]
+                }
+              },
+              {
+                "type": "STRING",
+                "value": "\""
+              }
+            ]
           }
         ]
       }
