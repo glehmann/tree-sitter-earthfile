@@ -43,19 +43,19 @@ foo:
               name: (image_name)))
           (line_continuation)
           option: (load
-            image: (image_spec
-              name: (image_name))
             target: (target_ref
+              (earthfile_ref)
               name: (identifier)))
           (line_continuation)
           option: (load
             image: (image_spec
               name: (image_name))
-            target: (target_ref
-              name: (identifier))
-            target: (build_arg
-              name: (variable)
-              value: (unquoted_string)))
+            target: (target_ref_with_build_args
+              (target_ref
+                name: (identifier))
+              (build_arg
+                name: (variable)
+                value: (unquoted_string))))
           (line_continuation)
           option: (compose
             value: (unquoted_string))

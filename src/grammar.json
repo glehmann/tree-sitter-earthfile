@@ -2432,6 +2432,37 @@
         }
       ]
     },
+    "target_ref_with_build_args": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "("
+        },
+        {
+          "type": "SYMBOL",
+          "name": "target_ref"
+        },
+        {
+          "type": "REPEAT1",
+          "content": {
+            "type": "SYMBOL",
+            "name": "build_arg"
+          }
+        },
+        {
+          "type": "TOKEN",
+          "content": {
+            "type": "PREC",
+            "value": 5,
+            "content": {
+              "type": "STRING",
+              "value": ")"
+            }
+          }
+        }
+      ]
+    },
     "target_artifact": {
       "type": "SEQ",
       "members": [
@@ -3194,19 +3225,32 @@
           ]
         },
         {
-          "type": "FIELD",
-          "name": "image",
-          "content": {
-            "type": "SYMBOL",
-            "name": "image_spec"
-          }
-        },
-        {
-          "type": "IMMEDIATE_TOKEN",
-          "content": {
-            "type": "STRING",
-            "value": "="
-          }
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "FIELD",
+                  "name": "image",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "image_spec"
+                  }
+                },
+                {
+                  "type": "IMMEDIATE_TOKEN",
+                  "content": {
+                    "type": "STRING",
+                    "value": "="
+                  }
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         },
         {
           "type": "FIELD",
@@ -3219,35 +3263,8 @@
                 "name": "target_ref"
               },
               {
-                "type": "SEQ",
-                "members": [
-                  {
-                    "type": "STRING",
-                    "value": "("
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "target_ref"
-                  },
-                  {
-                    "type": "REPEAT1",
-                    "content": {
-                      "type": "SYMBOL",
-                      "name": "build_arg"
-                    }
-                  },
-                  {
-                    "type": "TOKEN",
-                    "content": {
-                      "type": "PREC",
-                      "value": 5,
-                      "content": {
-                        "type": "STRING",
-                        "value": ")"
-                      }
-                    }
-                  }
-                ]
+                "type": "SYMBOL",
+                "name": "target_ref_with_build_args"
               }
             ]
           }
@@ -4043,12 +4060,16 @@
   "conflicts": [
     [
       "earthfile_ref",
+      "image_name"
+    ],
+    [
+      "earthfile_ref",
       "image_name",
       "unquoted_string"
     ],
     [
       "earthfile_ref",
-      "load"
+      "target_ref_with_build_args"
     ],
     [
       "earthfile_ref",

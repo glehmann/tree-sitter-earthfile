@@ -13,8 +13,9 @@ module.exports = grammar({
   ],
 
   conflicts: ($) => [
+    [$.earthfile_ref, $.image_name],
     [$.earthfile_ref, $.image_name, $.unquoted_string],
-    [$.earthfile_ref, $.load],
+    [$.earthfile_ref, $.target_ref_with_build_args],
     [$.earthfile_ref, $.unquoted_string],
     [$.image_name, $.unquoted_string],
   ],
@@ -539,6 +540,8 @@ module.exports = grammar({
         token(prec(5, "+")),
         field("name", alias($._immediate_identifier, $.identifier))
       ),
+    target_ref_with_build_args: ($) =>
+      seq("(", $.target_ref, repeat1($.build_arg), token(prec(5, ")"))),
     target_artifact: ($) =>
       seq($.target_ref, token.immediate("/"), $.unquoted_string),
     target_artifact_build_args: ($) =>
@@ -641,15 +644,8 @@ module.exports = grammar({
       seq(
         token(prec(5, "--load")),
         choice(token.immediate(" "), token.immediate("=")),
-        field("image", $.image_spec),
-        token.immediate("="),
-        field(
-          "target",
-          choice(
-            $.target_ref,
-            seq("(", $.target_ref, repeat1($.build_arg), token(prec(5, ")")))
-          )
-        )
+        optional(seq(field("image", $.image_spec), token.immediate("="))),
+        field("target", choice($.target_ref, $.target_ref_with_build_args))
       ),
     mount: ($) =>
       seq(
