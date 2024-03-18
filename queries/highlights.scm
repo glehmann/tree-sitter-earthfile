@@ -12,6 +12,7 @@
     "DO"
     "ENTRYPOINT"
     "ENV"
+    "EXPOSE"
     "FROM"
     "FROM DOCKERFILE"
     "FUNCTION"
