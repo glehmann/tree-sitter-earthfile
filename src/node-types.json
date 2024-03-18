@@ -1980,11 +1980,23 @@
         "required": true,
         "types": [
           {
+            "type": "double_quoted_string",
+            "named": true
+          },
+          {
+            "type": "single_quoted_string",
+            "named": true
+          },
+          {
             "type": "target_ref",
             "named": true
           },
           {
             "type": "target_ref_with_build_args",
+            "named": true
+          },
+          {
+            "type": "unquoted_string",
             "named": true
           }
         ]

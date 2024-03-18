@@ -658,7 +658,7 @@ module.exports = grammar({
         token(prec(5, "--load")),
         choice(token.immediate(" "), token.immediate("=")),
         optional(seq(field("image", $.image_spec), token.immediate("="))),
-        field("target", choice($.target_ref, $.target_ref_with_build_args))
+        field("target", choice($.target_ref, $.target_ref_with_build_args, $._string))
       ),
     mount: ($) =>
       seq(

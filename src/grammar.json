@@ -3308,6 +3308,10 @@
               {
                 "type": "SYMBOL",
                 "name": "target_ref_with_build_args"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "_string"
               }
             ]
           }
