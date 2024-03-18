@@ -138,3 +138,21 @@ foo:
             value: (unquoted_string))
           (target_ref
             name: (identifier)))))
+
+==================
+build command with empty build arg
+==================
+
+foo:
+  BUILD +build --foo=
+
+---
+
+    (source_file
+      (target
+        name: (identifier)
+        (build_command
+          (target_ref
+            name: (identifier))
+          (build_arg
+            name: (variable)))))

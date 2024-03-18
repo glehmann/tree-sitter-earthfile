@@ -98,10 +98,7 @@ module.exports = grammar({
       seq(
         "CACHE",
         repeat(field("option", choice($.chmod, $.id, $.persist, $.sharing))),
-        field(
-          "mount_point",
-          $._string
-        ),
+        field("mount_point", $._string),
         $._eol
       ),
 
@@ -131,11 +128,7 @@ module.exports = grammar({
         repeat1(
           field(
             "src",
-            choice(
-              $.target_artifact,
-              $.target_artifact_build_args,
-              $._string
-            )
+            choice($.target_artifact, $.target_artifact_build_args, $._string)
           )
         ),
         field("dest", $._string),
@@ -295,25 +288,9 @@ module.exports = grammar({
             )
           )
         ),
-        field(
-          "src",
-          $._string
-        ),
-        optional(
-          field(
-            "dest",
-            $._string
-          )
-        ),
-        optional(
-          seq(
-            "AS LOCAL",
-            field(
-              "local_dest",
-              $._string
-            )
-          )
-        )
+        field("src", $._string),
+        optional(field("dest", $._string)),
+        optional(seq("AS LOCAL", field("local_dest", $._string)))
       ),
 
     save_image_command: ($) =>
@@ -562,11 +539,15 @@ module.exports = grammar({
         token(prec(5, "+")),
         field("name", alias($._immediate_identifier, $.identifier))
       ),
-    target_artifact: ($) => seq($.target_ref, token.immediate("/"), $.unquoted_string),
+    target_artifact: ($) =>
+      seq($.target_ref, token.immediate("/"), $.unquoted_string),
     target_artifact_build_args: ($) =>
       seq(
         token(prec(5, "(")),
-        choice(seq($.target_ref, token.immediate("/"), $.unquoted_string), $._string),
+        choice(
+          seq($.target_ref, token.immediate("/"), $.unquoted_string),
+          $._string
+        ),
         repeat($.build_arg),
         token(prec(5, ")"))
       ),
@@ -586,8 +567,10 @@ module.exports = grammar({
       seq(
         token(prec(5, "--")),
         field("name", alias($._immediate_variable, $.variable)),
-        choice(token.immediate(" "), token.immediate("=")),
-        field("value", $._string)
+        choice(
+          seq(token.immediate("="), optional(field("value", $._string))),
+          field("value", $._string)
+        )
       ),
     build_arg_deprecated: ($) =>
       seq(
