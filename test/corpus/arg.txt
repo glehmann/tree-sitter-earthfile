@@ -112,3 +112,16 @@ ARG foo = bar
       (arg_command
         name: (variable)
         default_value: (unquoted_string)))
+
+==================
+arg command with value starting with a sharp
+==================
+
+ARG foo="#123456"
+
+---
+
+    (source_file
+      (arg_command
+        name: (variable)
+        default_value: (double_quoted_string)))

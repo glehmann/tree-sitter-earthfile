@@ -730,7 +730,7 @@ module.exports = grammar({
         '"',
         repeat(
           choice(
-            token.immediate(/[^"\\\$]+/),
+            token.immediate(prec(15, /[^"\\\$]+/)),
             token.immediate(/\\./),
             alias($._immediate_expansion, $.expansion)
           )
