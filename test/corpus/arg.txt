@@ -99,3 +99,16 @@ ARG foo=
 (source_file
   (arg_command
     name: (variable)))
+
+==================
+arg command with spaces around =
+==================
+
+ARG foo = bar
+
+---
+
+    (source_file
+      (arg_command
+        name: (variable)
+        default_value: (unquoted_string)))

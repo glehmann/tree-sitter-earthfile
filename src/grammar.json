@@ -213,11 +213,8 @@
               "type": "SEQ",
               "members": [
                 {
-                  "type": "IMMEDIATE_TOKEN",
-                  "content": {
-                    "type": "STRING",
-                    "value": "="
-                  }
+                  "type": "STRING",
+                  "value": "="
                 },
                 {
                   "type": "CHOICE",
@@ -604,18 +601,18 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "IMMEDIATE_TOKEN",
+              "type": "TOKEN",
               "content": {
-                "type": "STRING",
-                "value": " "
+                "type": "PREC",
+                "value": 5,
+                "content": {
+                  "type": "STRING",
+                  "value": "="
+                }
               }
             },
             {
-              "type": "IMMEDIATE_TOKEN",
-              "content": {
-                "type": "STRING",
-                "value": "="
-              }
+              "type": "BLANK"
             }
           ]
         },

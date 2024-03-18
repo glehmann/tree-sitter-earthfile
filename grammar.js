@@ -65,7 +65,7 @@ module.exports = grammar({
         field("name", $.variable),
         optional(
           seq(
-            token.immediate("="),
+            "=",
             choice(
               field("default_value", optional($._string)),
               field("default_value_expr", $.expr)
@@ -160,7 +160,7 @@ module.exports = grammar({
       seq(
         "ENV",
         field("key", $.variable),
-        choice(token.immediate(" "), token.immediate("=")),
+        optional(token(prec(5, "="))),
         repeat(field("value", $._string)),
         $._eol
       ),
