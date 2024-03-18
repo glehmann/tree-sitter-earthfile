@@ -578,7 +578,10 @@ module.exports = grammar({
       ),
     build_arg: ($) =>
       seq(
-        token(prec(5, "--")),
+        choice(
+          token(prec(5, "--")),
+          token(/-/) // use a regex here so it has the same precedence as the other tokens
+        ),
         field("name", alias($._immediate_variable, $.variable)),
         choice(
           seq(token.immediate("="), optional(field("value", $._string))),
