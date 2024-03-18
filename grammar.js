@@ -26,7 +26,6 @@ module.exports = grammar({
     source_file: ($) =>
       seq(
         optional($.version_command),
-        optional($.project_command),
         optional($._command_block),
         repeat($.target)
       ),
@@ -392,6 +391,7 @@ module.exports = grammar({
           $.let_command,
           $.label_command,
           $.locally_command,
+          $.project_command,
           $.run_command,
           $.save_artifact_command,
           $.save_image_command,

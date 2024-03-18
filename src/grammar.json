@@ -21,18 +21,6 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "project_command"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
               "name": "_command_block"
             },
             {
@@ -1737,6 +1725,10 @@
           {
             "type": "SYMBOL",
             "name": "locally_command"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "project_command"
           },
           {
             "type": "SYMBOL",

@@ -719,6 +719,10 @@
           "named": true
         },
         {
+          "type": "project_command",
+          "named": true
+        },
+        {
           "type": "run_command",
           "named": true
         },
@@ -888,6 +892,10 @@
         },
         {
           "type": "locally_command",
+          "named": true
+        },
+        {
+          "type": "project_command",
           "named": true
         },
         {
@@ -1187,6 +1195,10 @@
         },
         {
           "type": "locally_command",
+          "named": true
+        },
+        {
+          "type": "project_command",
           "named": true
         },
         {
@@ -1682,6 +1694,10 @@
         },
         {
           "type": "locally_command",
+          "named": true
+        },
+        {
+          "type": "project_command",
           "named": true
         },
         {
@@ -2707,6 +2723,10 @@
           "named": true
         },
         {
+          "type": "project_command",
+          "named": true
+        },
+        {
           "type": "run_command",
           "named": true
         },
@@ -2945,6 +2965,10 @@
         },
         {
           "type": "locally_command",
+          "named": true
+        },
+        {
+          "type": "project_command",
           "named": true
         },
         {
@@ -3206,6 +3230,10 @@
         },
         {
           "type": "locally_command",
+          "named": true
+        },
+        {
+          "type": "project_command",
           "named": true
         },
         {
