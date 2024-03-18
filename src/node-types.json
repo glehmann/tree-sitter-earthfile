@@ -76,7 +76,15 @@
         "required": true,
         "types": [
           {
-            "type": "path",
+            "type": "double_quoted_string",
+            "named": true
+          },
+          {
+            "type": "single_quoted_string",
+            "named": true
+          },
+          {
+            "type": "unquoted_string",
             "named": true
           }
         ]
@@ -216,11 +224,11 @@
             "named": true
           },
           {
-            "type": "path",
+            "type": "single_quoted_string",
             "named": true
           },
           {
-            "type": "single_quoted_string",
+            "type": "unquoted_string",
             "named": true
           }
         ]
@@ -363,7 +371,15 @@
         "required": true,
         "types": [
           {
-            "type": "path",
+            "type": "double_quoted_string",
+            "named": true
+          },
+          {
+            "type": "single_quoted_string",
+            "named": true
+          },
+          {
+            "type": "unquoted_string",
             "named": true
           }
         ]
@@ -379,7 +395,15 @@
         "required": true,
         "types": [
           {
-            "type": "path",
+            "type": "double_quoted_string",
+            "named": true
+          },
+          {
+            "type": "single_quoted_string",
+            "named": true
+          },
+          {
+            "type": "unquoted_string",
             "named": true
           }
         ]
@@ -439,10 +463,6 @@
             "named": true
           },
           {
-            "type": "path",
-            "named": true
-          },
-          {
             "type": "single_quoted_string",
             "named": true
           },
@@ -452,6 +472,10 @@
           },
           {
             "type": "target_artifact_build_args",
+            "named": true
+          },
+          {
+            "type": "unquoted_string",
             "named": true
           }
         ]
@@ -545,7 +569,15 @@
         "required": true,
         "types": [
           {
-            "type": "path",
+            "type": "double_quoted_string",
+            "named": true
+          },
+          {
+            "type": "single_quoted_string",
+            "named": true
+          },
+          {
+            "type": "unquoted_string",
             "named": true
           }
         ]
@@ -1267,7 +1299,15 @@
         "required": true,
         "types": [
           {
-            "type": "path",
+            "type": "double_quoted_string",
+            "named": true
+          },
+          {
+            "type": "single_quoted_string",
+            "named": true
+          },
+          {
+            "type": "unquoted_string",
             "named": true
           }
         ]
@@ -1356,7 +1396,15 @@
         "required": true,
         "types": [
           {
-            "type": "path",
+            "type": "double_quoted_string",
+            "named": true
+          },
+          {
+            "type": "single_quoted_string",
+            "named": true
+          },
+          {
+            "type": "unquoted_string",
             "named": true
           }
         ]
@@ -1380,7 +1428,15 @@
         "required": true,
         "types": [
           {
-            "type": "path",
+            "type": "double_quoted_string",
+            "named": true
+          },
+          {
+            "type": "single_quoted_string",
+            "named": true
+          },
+          {
+            "type": "unquoted_string",
             "named": true
           }
         ]
@@ -1967,21 +2023,6 @@
     }
   },
   {
-    "type": "path",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "expansion",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "platform",
     "named": true,
     "fields": {
@@ -2164,11 +2205,11 @@
             "named": true
           },
           {
-            "type": "path",
+            "type": "single_quoted_string",
             "named": true
           },
           {
-            "type": "single_quoted_string",
+            "type": "unquoted_string",
             "named": true
           }
         ]
@@ -2182,11 +2223,11 @@
             "named": true
           },
           {
-            "type": "path",
+            "type": "single_quoted_string",
             "named": true
           },
           {
-            "type": "single_quoted_string",
+            "type": "unquoted_string",
             "named": true
           }
         ]
@@ -2226,11 +2267,11 @@
             "named": true
           },
           {
-            "type": "path",
+            "type": "single_quoted_string",
             "named": true
           },
           {
-            "type": "single_quoted_string",
+            "type": "unquoted_string",
             "named": true
           }
         ]
@@ -2725,11 +2766,11 @@
       "required": true,
       "types": [
         {
-          "type": "path",
+          "type": "target_ref",
           "named": true
         },
         {
-          "type": "target_ref",
+          "type": "unquoted_string",
           "named": true
         }
       ]
@@ -2749,10 +2790,6 @@
         },
         {
           "type": "double_quoted_string",
-          "named": true
-        },
-        {
-          "type": "path",
           "named": true
         },
         {
@@ -3050,11 +3087,19 @@
           "named": true
         },
         {
-          "type": "path",
+          "type": "double_quoted_string",
+          "named": true
+        },
+        {
+          "type": "single_quoted_string",
           "named": true
         },
         {
           "type": "string_array",
+          "named": true
+        },
+        {
+          "type": "unquoted_string",
           "named": true
         }
       ]
@@ -3258,7 +3303,15 @@
           "named": true
         },
         {
-          "type": "path",
+          "type": "double_quoted_string",
+          "named": true
+        },
+        {
+          "type": "single_quoted_string",
+          "named": true
+        },
+        {
+          "type": "unquoted_string",
           "named": true
         }
       ]

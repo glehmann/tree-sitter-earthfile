@@ -15,7 +15,6 @@ module.exports = grammar({
   conflicts: ($) => [
     [$.earthfile_ref, $.image_name, $.unquoted_string],
     [$.earthfile_ref, $.load],
-    [$.earthfile_ref, $.path],
     [$.earthfile_ref, $.unquoted_string],
     [$.image_name, $.unquoted_string],
   ],
@@ -101,7 +100,7 @@ module.exports = grammar({
         repeat(field("option", choice($.chmod, $.id, $.persist, $.sharing))),
         field(
           "mount_point",
-          choice($.path, $.double_quoted_string, $.single_quoted_string)
+          $._string
         ),
         $._eol
       ),
@@ -135,13 +134,11 @@ module.exports = grammar({
             choice(
               $.target_artifact,
               $.target_artifact_build_args,
-              $.path,
-              $.double_quoted_string,
-              $.single_quoted_string
+              $._string
             )
           )
         ),
-        field("dest", $.path),
+        field("dest", $._string),
         $._eol
       ),
 
@@ -210,7 +207,7 @@ module.exports = grammar({
             )
           )
         ),
-        field("context", $.path),
+        field("context", $._string),
         $._eol
       ),
 
@@ -220,8 +217,8 @@ module.exports = grammar({
       seq(
         "GIT CLONE",
         repeat(field("option", choice($.branch, $.keep_ts))),
-        field("url", $.path),
-        field("dest", $.path),
+        field("url", $._string),
+        field("dest", $._string),
         $._eol
       ),
 
@@ -300,12 +297,12 @@ module.exports = grammar({
         ),
         field(
           "src",
-          choice($.path, $.double_quoted_string, $.single_quoted_string)
+          $._string
         ),
         optional(
           field(
             "dest",
-            choice($.path, $.double_quoted_string, $.single_quoted_string)
+            $._string
           )
         ),
         optional(
@@ -313,7 +310,7 @@ module.exports = grammar({
             "AS LOCAL",
             field(
               "local_dest",
-              choice($.path, $.double_quoted_string, $.single_quoted_string)
+              $._string
             )
           )
         )
@@ -366,7 +363,7 @@ module.exports = grammar({
       ),
 
     volume_command: ($) =>
-      seq("VOLUME", choice($.string_array, repeat($.path)), $._eol),
+      seq("VOLUME", choice($.string_array, repeat($._string)), $._eol),
 
     wait_command: ($) => seq("WAIT", optional($._command_block), "END", $._eol),
 
@@ -391,7 +388,7 @@ module.exports = grammar({
         $._eol
       ),
 
-    workdir_command: ($) => seq("WORKDIR", $.path, $._eol),
+    workdir_command: ($) => seq("WORKDIR", $._string, $._eol),
 
     // code blocks
     _command_block: ($) =>
@@ -524,23 +521,6 @@ module.exports = grammar({
         field("value", $._string)
       ),
     number: (_) => /\d+/,
-    path: ($) =>
-      seq(
-        choice($._string_base, $.expansion, "(", ")", "+", ":", "@", "="),
-        repeat(
-          choice(
-            $._immediate_string_base,
-            token.immediate(/\\./),
-            token.immediate("("),
-            token.immediate(")"),
-            // token.immediate("+"),
-            token.immediate(":"),
-            token.immediate("@"),
-            token.immediate("="),
-            alias($._immediate_expansion, $.expansion)
-          )
-        )
-      ),
     port: ($) =>
       seq(
         $.number,
@@ -582,11 +562,11 @@ module.exports = grammar({
         token(prec(5, "+")),
         field("name", alias($._immediate_identifier, $.identifier))
       ),
-    target_artifact: ($) => seq($.target_ref, token.immediate("/"), $.path),
+    target_artifact: ($) => seq($.target_ref, token.immediate("/"), $.unquoted_string),
     target_artifact_build_args: ($) =>
       seq(
         token(prec(5, "(")),
-        choice(seq($.target_ref, token.immediate("/"), $.path), $._string),
+        choice(seq($.target_ref, token.immediate("/"), $.unquoted_string), $._string),
         repeat($.build_arg),
         token(prec(5, ")"))
       ),
@@ -600,7 +580,7 @@ module.exports = grammar({
       seq(
         token(prec(5, "--branch")),
         choice(token.immediate(" "), token.immediate("=")),
-        field("value", $.path)
+        field("value", $._string)
       ),
     build_arg: ($) =>
       seq(
@@ -638,7 +618,7 @@ module.exports = grammar({
       seq(
         token(prec(5, "--compose")),
         choice(token.immediate(" "), token.immediate("=")),
-        field("value", $.path)
+        field("value", $._string)
       ),
     dir: ($) => token(prec(5, "--dir")),
     docker_build_arg: ($) =>
@@ -653,7 +633,7 @@ module.exports = grammar({
       seq(
         token(prec(5, "-f")),
         choice(token.immediate(" "), token.immediate("=")),
-        field("value", $.path)
+        field("value", $._string)
       ),
     docker_target: ($) =>
       seq(

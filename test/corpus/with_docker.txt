@@ -58,7 +58,7 @@ foo:
               value: (unquoted_string)))
           (line_continuation)
           option: (compose
-            value: (path))
+            value: (unquoted_string))
           (line_continuation)
           option: (allow_privileged)
           (line_continuation)

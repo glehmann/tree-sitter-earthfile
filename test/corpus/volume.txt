@@ -11,8 +11,8 @@ foo:
       (target
         name: (identifier)
         (volume_command
-          (path)
-          (path))))
+          (unquoted_string)
+          (unquoted_string))))
 
 ==================
 volume command array variant

@@ -11,4 +11,4 @@ foo:
       (target
         name: (identifier)
         (workdir_command
-          (path))))
+          (unquoted_string))))

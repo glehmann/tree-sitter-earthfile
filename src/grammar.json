@@ -362,21 +362,8 @@
           "type": "FIELD",
           "name": "mount_point",
           "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "path"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "double_quoted_string"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "single_quoted_string"
-              }
-            ]
+            "type": "SYMBOL",
+            "name": "_string"
           }
         },
         {
@@ -488,15 +475,7 @@
                 },
                 {
                   "type": "SYMBOL",
-                  "name": "path"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "double_quoted_string"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "single_quoted_string"
+                  "name": "_string"
                 }
               ]
             }
@@ -507,7 +486,7 @@
           "name": "dest",
           "content": {
             "type": "SYMBOL",
-            "name": "path"
+            "name": "_string"
           }
         },
         {
@@ -855,7 +834,7 @@
           "name": "context",
           "content": {
             "type": "SYMBOL",
-            "name": "path"
+            "name": "_string"
           }
         },
         {
@@ -918,7 +897,7 @@
           "name": "url",
           "content": {
             "type": "SYMBOL",
-            "name": "path"
+            "name": "_string"
           }
         },
         {
@@ -926,7 +905,7 @@
           "name": "dest",
           "content": {
             "type": "SYMBOL",
-            "name": "path"
+            "name": "_string"
           }
         },
         {
@@ -1286,21 +1265,8 @@
           "type": "FIELD",
           "name": "src",
           "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "path"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "double_quoted_string"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "single_quoted_string"
-              }
-            ]
+            "type": "SYMBOL",
+            "name": "_string"
           }
         },
         {
@@ -1310,21 +1276,8 @@
               "type": "FIELD",
               "name": "dest",
               "content": {
-                "type": "CHOICE",
-                "members": [
-                  {
-                    "type": "SYMBOL",
-                    "name": "path"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "double_quoted_string"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "single_quoted_string"
-                  }
-                ]
+                "type": "SYMBOL",
+                "name": "_string"
               }
             },
             {
@@ -1346,21 +1299,8 @@
                   "type": "FIELD",
                   "name": "local_dest",
                   "content": {
-                    "type": "CHOICE",
-                    "members": [
-                      {
-                        "type": "SYMBOL",
-                        "name": "path"
-                      },
-                      {
-                        "type": "SYMBOL",
-                        "name": "double_quoted_string"
-                      },
-                      {
-                        "type": "SYMBOL",
-                        "name": "single_quoted_string"
-                      }
-                    ]
+                    "type": "SYMBOL",
+                    "name": "_string"
                   }
                 }
               ]
@@ -1599,7 +1539,7 @@
               "type": "REPEAT",
               "content": {
                 "type": "SYMBOL",
-                "name": "path"
+                "name": "_string"
               }
             }
           ]
@@ -1705,7 +1645,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "path"
+          "name": "_string"
         },
         {
           "type": "SYMBOL",
@@ -2305,111 +2245,6 @@
       "type": "PATTERN",
       "value": "\\d+"
     },
-    "path": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "_string_base"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "expansion"
-            },
-            {
-              "type": "STRING",
-              "value": "("
-            },
-            {
-              "type": "STRING",
-              "value": ")"
-            },
-            {
-              "type": "STRING",
-              "value": "+"
-            },
-            {
-              "type": "STRING",
-              "value": ":"
-            },
-            {
-              "type": "STRING",
-              "value": "@"
-            },
-            {
-              "type": "STRING",
-              "value": "="
-            }
-          ]
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "_immediate_string_base"
-              },
-              {
-                "type": "IMMEDIATE_TOKEN",
-                "content": {
-                  "type": "PATTERN",
-                  "value": "\\\\."
-                }
-              },
-              {
-                "type": "IMMEDIATE_TOKEN",
-                "content": {
-                  "type": "STRING",
-                  "value": "("
-                }
-              },
-              {
-                "type": "IMMEDIATE_TOKEN",
-                "content": {
-                  "type": "STRING",
-                  "value": ")"
-                }
-              },
-              {
-                "type": "IMMEDIATE_TOKEN",
-                "content": {
-                  "type": "STRING",
-                  "value": ":"
-                }
-              },
-              {
-                "type": "IMMEDIATE_TOKEN",
-                "content": {
-                  "type": "STRING",
-                  "value": "@"
-                }
-              },
-              {
-                "type": "IMMEDIATE_TOKEN",
-                "content": {
-                  "type": "STRING",
-                  "value": "="
-                }
-              },
-              {
-                "type": "ALIAS",
-                "content": {
-                  "type": "SYMBOL",
-                  "name": "_immediate_expansion"
-                },
-                "named": true,
-                "value": "expansion"
-              }
-            ]
-          }
-        }
-      ]
-    },
     "port": {
       "type": "SEQ",
       "members": [
@@ -2613,7 +2448,7 @@
         },
         {
           "type": "SYMBOL",
-          "name": "path"
+          "name": "unquoted_string"
         }
       ]
     },
@@ -2650,7 +2485,7 @@
                 },
                 {
                   "type": "SYMBOL",
-                  "name": "path"
+                  "name": "unquoted_string"
                 }
               ]
             },
@@ -2748,7 +2583,7 @@
           "name": "value",
           "content": {
             "type": "SYMBOL",
-            "name": "path"
+            "name": "_string"
           }
         }
       ]
@@ -3030,7 +2865,7 @@
           "name": "value",
           "content": {
             "type": "SYMBOL",
-            "name": "path"
+            "name": "_string"
           }
         }
       ]
@@ -3154,7 +2989,7 @@
           "name": "value",
           "content": {
             "type": "SYMBOL",
-            "name": "path"
+            "name": "_string"
           }
         }
       ]
@@ -4196,10 +4031,6 @@
     [
       "earthfile_ref",
       "load"
-    ],
-    [
-      "earthfile_ref",
-      "path"
     ],
     [
       "earthfile_ref",

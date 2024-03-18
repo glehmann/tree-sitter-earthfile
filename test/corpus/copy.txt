@@ -11,8 +11,8 @@ foo:
       (target
         name: (identifier)
         (copy_command
-          src: (path)
-          dest: (path))))
+          src: (unquoted_string)
+          dest: (unquoted_string))))
 
 ==================
 copy multi sources
@@ -28,8 +28,8 @@ foo:
         name: (identifier)
         (copy_command
           src: (double_quoted_string)
-          src: (path)
-          dest: (path))))
+          src: (unquoted_string)
+          dest: (unquoted_string))))
 
 ==================
 copy with options
@@ -48,8 +48,8 @@ foo:
           option: (keep_ts)
           option: (platform
             value: (unquoted_string))
-          src: (path)
-          dest: (path))))
+          src: (unquoted_string)
+          dest: (unquoted_string))))
 
 ==================
 copy target artifacts
@@ -67,15 +67,15 @@ foo:
           src: (target_artifact_build_args
             (target_ref
               name: (identifier))
-            (path)
+            (unquoted_string)
             (build_arg
               name: (variable)
               value: (unquoted_string)))
           src: (target_artifact
             (target_ref
               name: (identifier))
-            (path))
-          dest: (path))))
+            (unquoted_string))
+          dest: (unquoted_string))))
 
 ==================
 copy target artifacts with expansions
@@ -101,7 +101,7 @@ foo:
           src: (target_artifact
             (target_ref
               name: (identifier))
-            (path
+            (unquoted_string
               (expansion
                 (variable))))
           (line_continuation)
@@ -110,13 +110,13 @@ foo:
               name: (identifier
                 (expansion
                   (variable))))
-            (path))
+            (unquoted_string))
           (line_continuation)
-          src: (path
+          src: (unquoted_string
             (expansion
               (variable)))
           (line_continuation)
-          src: (path
+          src: (unquoted_string
             (expansion
               (variable)))
           (line_continuation)
@@ -125,7 +125,7 @@ foo:
               name: (identifier
                 (expansion
                   (variable))))
-            (path
+            (unquoted_string
               (expansion
                 (variable)))
             (build_arg
@@ -142,4 +142,4 @@ foo:
               name: (variable)
               value: (unquoted_string)))
           (line_continuation)
-          dest: (path))))
+          dest: (unquoted_string))))
