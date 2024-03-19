@@ -443,7 +443,7 @@ module.exports = grammar({
         repeat(
           choice(
             $._immediate_string_base,
-            token.immediate(/\\./),
+            alias($._immediate_escape_sequence, $.escape_sequence),
             token.immediate("("),
             token.immediate(")"),
             // token.immediate("+"),
@@ -474,7 +474,7 @@ module.exports = grammar({
         repeat(
           choice(
             $._immediate_string_base,
-            // token.immediate(/\\./),
+            // alias($._immediate_escape_sequence, $.escape_sequence),
             // token.immediate("("),
             // token.immediate(")"),
             // token.immediate("+"),
@@ -533,7 +533,7 @@ module.exports = grammar({
             repeat(
               choice(
                 token.immediate(prec(15, /[^"\\]+/)),
-                token.immediate(/\\./)
+                alias($._immediate_escape_sequence, $.escape_sequence)
               )
             ),
             '"'
@@ -731,7 +731,7 @@ module.exports = grammar({
         repeat(
           choice(
             token.immediate(prec(15, /[^"\\\$]+/)),
-            token.immediate(/\\./),
+            alias($._immediate_escape_sequence, $.escape_sequence),
             alias($._immediate_expansion, $.expansion)
           )
         ),
@@ -743,7 +743,7 @@ module.exports = grammar({
         repeat(
           choice(
             token.immediate(prec(15, /[^"\\\$]+/)),
-            token.immediate(/\\./),
+            alias($._immediate_escape_sequence, $.escape_sequence),
             alias($._immediate_expansion, $.expansion)
           )
         ),
@@ -752,13 +752,13 @@ module.exports = grammar({
     single_quoted_string: ($) =>
       seq(
         token.immediate("'"),
-        repeat(choice(token.immediate(/[^'\n\\]+/), token.immediate(/\\./))),
+        repeat(choice(token.immediate(/[^'\n\\]+/), alias($._immediate_escape_sequence, $.escape_sequence))),
         token.immediate("'")
       ),
     _immediate_single_quoted_string: ($) =>
       seq(
         "'",
-        repeat(choice(token.immediate(/[^'\n\\]+/), token.immediate(/\\./))),
+        repeat(choice(token.immediate(/[^'\n\\]+/), alias($._immediate_escape_sequence, $.escape_sequence))),
         "'"
       ),
     unquoted_string: ($) =>
@@ -770,7 +770,7 @@ module.exports = grammar({
       repeat1(
         choice(
           $._immediate_string_base,
-          token.immediate(/\\./),
+          alias($._immediate_escape_sequence, $.escape_sequence),
           token.immediate("("),
           token.immediate(")"),
           token.immediate("+"),
@@ -786,7 +786,7 @@ module.exports = grammar({
         repeat(
           choice(
             $._immediate_string_base,
-            token.immediate(/\\./),
+            alias($._immediate_escape_sequence, $.escape_sequence),
             token.immediate("("),
             token.immediate(")"),
             token.immediate("+"),
@@ -858,6 +858,8 @@ module.exports = grammar({
     _immediate_variable: ($) => token.immediate(/[a-zA-Z_][a-zA-Z0-9_]*/),
 
     // extra tokens, eol, …
+    _immediate_escape_sequence: (_) => /\\./,
+    escape_sequence: (_) => /\\./,
     line_continuation: (_) => token(prec(10, "\\\n")),
     comment: (_) => token(prec(10, /#[^\n]*(\n|\r\n|\f)/)),
     line_continuation_comment: (_) => token(prec(10, /\\(\s*#.*\n)+/)),

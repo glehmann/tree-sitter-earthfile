@@ -497,6 +497,10 @@
       "required": false,
       "types": [
         {
+          "type": "escape_sequence",
+          "named": true
+        },
+        {
           "type": "expansion",
           "named": true
         }
@@ -511,6 +515,10 @@
       "multiple": true,
       "required": false,
       "types": [
+        {
+          "type": "escape_sequence",
+          "named": true
+        },
         {
           "type": "expansion",
           "named": true
@@ -887,6 +895,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "escape_sequence",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "expansion",
@@ -2202,7 +2215,17 @@
   {
     "type": "shell_fragment",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "escape_sequence",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "single_quoted_string",
@@ -2212,6 +2235,10 @@
       "multiple": true,
       "required": false,
       "types": [
+        {
+          "type": "escape_sequence",
+          "named": true
+        },
         {
           "type": "expansion",
           "named": true
@@ -2799,6 +2826,10 @@
       "multiple": true,
       "required": false,
       "types": [
+        {
+          "type": "escape_sequence",
+          "named": true
+        },
         {
           "type": "expansion",
           "named": true

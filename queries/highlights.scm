@@ -57,6 +57,7 @@
   (single_quoted_string)
 ] @string
 (unquoted_string) @string.special
+(escape_sequence) @string.escape
 
 (variable) @variable
 (expansion ["$" "{" "}"] @punctuation.special)
