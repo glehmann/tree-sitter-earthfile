@@ -18,4 +18,5 @@ foo:
           (run_command
             command: (shell_fragment))
           finally: (save_artifact_command
-            src: (unquoted_string)))))
+            src: (string
+              (unquoted_string))))))

@@ -12,4 +12,5 @@ foo:
         name: (identifier)
         (cache_command
           option: (persist)
-          mount_point: (unquoted_string))))
+          mount_point: (string
+            (unquoted_string)))))

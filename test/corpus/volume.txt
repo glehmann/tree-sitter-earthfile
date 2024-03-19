@@ -11,8 +11,10 @@ foo:
       (target
         name: (identifier)
         (volume_command
-          (unquoted_string)
-          (unquoted_string))))
+          (string
+            (unquoted_string))
+          (string
+            (unquoted_string)))))
 
 ==================
 volume command array variant

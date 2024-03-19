@@ -32,10 +32,12 @@ foo:
         (build_command
           (line_continuation)
           option: (platform
-            value: (unquoted_string))
+            value: (string
+              (unquoted_string)))
           (line_continuation)
           option: (platform
-            value: (unquoted_string))
+            value: (string
+              (unquoted_string)))
           (line_continuation)
           (target_ref
             name: (identifier)))))
@@ -58,14 +60,16 @@ foo:
         (build_command
           (line_continuation)
           option: (platform
-            value: (unquoted_string
-              (expansion
-                (variable))))
+            value: (string
+              (unquoted_string
+                (expansion
+                  (variable)))))
           (line_continuation)
           option: (platform
-            value: (unquoted_string
-              (expansion
-                (variable))))
+            value: (string
+              (unquoted_string
+                (expansion
+                  (variable)))))
           (line_continuation)
           (target_ref
             name: (identifier
@@ -90,14 +94,16 @@ foo:
         (build_command
           (line_continuation)
           option: (platform
-            value: (unquoted_string
-              (expansion
-                (variable))))
+            value: (string
+              (unquoted_string
+                (expansion
+                  (variable)))))
           (line_continuation)
           option: (platform
-            value: (unquoted_string
-              (expansion
-                (variable))))
+            value: (string
+              (unquoted_string
+                (expansion
+                  (variable)))))
           (line_continuation)
           (target_ref
             name: (identifier
@@ -117,9 +123,10 @@ foo:
       (target
         name: (identifier)
         (build_command
-          (unquoted_string
-            (expansion
-              (variable))))))
+          (string
+            (unquoted_string
+              (expansion
+                (variable)))))))
 
 ==================
 build command deprecated build arg
@@ -135,7 +142,8 @@ foo:
         name: (identifier)
         (build_command
           option: (build_arg_deprecated
-            value: (unquoted_string))
+            value: (string
+              (unquoted_string)))
           (target_ref
             name: (identifier)))))
 

@@ -15,12 +15,15 @@ foo:
         (label_command
           (label
             label: (identifier)
-            value: (unquoted_string))
+            value: (string
+              (unquoted_string)))
           (line_continuation)
           (label
             label: (identifier)
-            value: (single_quoted_string))
+            value: (string
+              (single_quoted_string)))
           (line_continuation)
           (label
             label: (identifier)
-            value: (double_quoted_string)))))
+            value: (string
+              (double_quoted_string))))))

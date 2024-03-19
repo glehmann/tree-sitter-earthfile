@@ -6,18 +6,22 @@ module.exports = grammar({
   externals: ($) => [$._indent, $._dedent],
 
   extras: ($) => [
-    /\s+/,
+    /[ \t]+/,
+    "\n",
+    "\rn",
+    "\f",
     $.line_continuation,
     $.comment,
     $.line_continuation_comment,
   ],
 
   conflicts: ($) => [
-    [$.earthfile_ref, $.image_name],
     [$.earthfile_ref, $.image_name, $.unquoted_string],
     [$.earthfile_ref, $.target_ref_with_build_args],
     [$.earthfile_ref, $.unquoted_string],
     [$.image_name, $.unquoted_string],
+    [$.string],
+    [$.unquoted_string],
   ],
 
   rules: {
@@ -66,7 +70,10 @@ module.exports = grammar({
           seq(
             "=",
             choice(
-              field("default_value", optional($._string)),
+              field(
+                "default_value",
+                optional(alias($.string_with_spaces, $.string))
+              ),
               field("default_value_expr", $.expr)
             )
           )
@@ -89,7 +96,7 @@ module.exports = grammar({
             )
           )
         ),
-        choice($.target_ref, $._string),
+        choice($.target_ref, $.string),
         repeat($.build_arg),
         $._eol
       ),
@@ -98,7 +105,7 @@ module.exports = grammar({
       seq(
         "CACHE",
         repeat(field("option", choice($.chmod, $.id, $.persist, $.sharing))),
-        field("mount_point", $._string),
+        field("mount_point", $.string),
         $._eol
       ),
 
@@ -128,10 +135,10 @@ module.exports = grammar({
         repeat1(
           field(
             "src",
-            choice($.target_artifact, $.target_artifact_build_args, $._string)
+            choice($.target_artifact, $.target_artifact_build_args, $.string)
           )
         ),
-        field("dest", $._string),
+        field("dest", $.string),
         $._eol
       ),
 
@@ -151,7 +158,7 @@ module.exports = grammar({
         "ENV",
         field("key", $.variable),
         optional(token(prec(5, "="))),
-        repeat(field("value", $._string)),
+        repeat(field("value", $.string)),
         $._eol
       ),
 
@@ -168,7 +175,7 @@ module.exports = grammar({
         ),
         field("name", $.variable),
         "IN",
-        repeat(field("value", choice($._string, $.expr))),
+        repeat(field("value", choice($.string, $.expr))),
         $._eol,
         optional($._command_block),
         "END",
@@ -181,7 +188,7 @@ module.exports = grammar({
         repeat(
           field("option", choice($.platform, $.allow_privileged, $.pass_args))
         ),
-        choice($.image_spec, $.target_ref, $._string),
+        choice($.image_spec, $.target_ref, $.string),
         repeat($.build_arg),
         $._eol
       ),
@@ -200,7 +207,7 @@ module.exports = grammar({
             )
           )
         ),
-        field("context", $._string),
+        field("context", $.string),
         $._eol
       ),
 
@@ -210,13 +217,13 @@ module.exports = grammar({
       seq(
         "GIT CLONE",
         repeat(field("option", choice($.branch, $.keep_ts))),
-        field("url", $._string),
-        field("dest", $._string),
+        field("url", $.string),
+        field("dest", $.string),
         $._eol
       ),
 
     host_command: ($) =>
-      seq("HOST", field("name", $.identifier), field("ip", $._string), $._eol),
+      seq("HOST", field("name", $.identifier), field("ip", $.string), $._eol),
 
     if_command: ($) =>
       seq(
@@ -242,7 +249,7 @@ module.exports = grammar({
         "LET",
         field("name", $.variable),
         token.immediate("="),
-        field("value", $._string),
+        field("value", alias($.string_with_spaces, $.string)),
         $._eol
       ),
 
@@ -288,9 +295,9 @@ module.exports = grammar({
             )
           )
         ),
-        field("src", $._string),
-        optional(field("dest", $._string)),
-        optional(seq("AS LOCAL", field("local_dest", $._string)))
+        field("src", $.string),
+        optional(field("dest", $.string)),
+        optional(seq("AS LOCAL", field("local_dest", $.string)))
       ),
 
     save_image_command: ($) =>
@@ -310,7 +317,7 @@ module.exports = grammar({
         "SET",
         field("name", $.variable),
         token.immediate("="),
-        field("value", $._string),
+        field("value", alias($.string_with_spaces, $.string)),
         $._eol
       ),
 
@@ -340,7 +347,7 @@ module.exports = grammar({
       ),
 
     volume_command: ($) =>
-      seq("VOLUME", choice($.string_array, repeat($._string)), $._eol),
+      seq("VOLUME", choice($.string_array, repeat($.string)), $._eol),
 
     wait_command: ($) => seq("WAIT", optional($._command_block), "END", $._eol),
 
@@ -365,7 +372,7 @@ module.exports = grammar({
         $._eol
       ),
 
-    workdir_command: ($) => seq("WORKDIR", $._string, $._eol),
+    workdir_command: ($) => seq("WORKDIR", $.string, $._eol),
 
     // code blocks
     _command_block: ($) =>
@@ -496,7 +503,7 @@ module.exports = grammar({
       seq(
         field("label", $.identifier),
         choice(token.immediate(" "), token.immediate("=")),
-        field("value", $._string)
+        field("value", $.string)
       ),
     number: (_) => /\d+/,
     port: ($) =>
@@ -559,7 +566,7 @@ module.exports = grammar({
         token(prec(5, "(")),
         choice(
           seq($.target_ref, token.immediate("/"), $.unquoted_string),
-          $._string
+          $.string
         ),
         repeat($.build_arg),
         token(prec(5, ")"))
@@ -574,7 +581,7 @@ module.exports = grammar({
       seq(
         token(prec(5, "--branch")),
         choice(token.immediate(" "), token.immediate("=")),
-        field("value", $._string)
+        field("value", $.string)
       ),
     build_arg: ($) =>
       seq(
@@ -584,40 +591,40 @@ module.exports = grammar({
         ),
         field("name", alias($._immediate_variable, $.variable)),
         choice(
-          seq(token.immediate("="), optional(field("value", $._string))),
-          field("value", $._string)
+          seq(token.immediate("="), optional(field("value", $.string))),
+          field("value", $.string)
         )
       ),
     build_arg_deprecated: ($) =>
       seq(
         token(prec(5, "--build-arg")),
         choice(token.immediate(" "), token.immediate("=")),
-        field("value", $._string)
+        field("value", $.string)
       ),
     cache_from: ($) =>
       seq(
         token(prec(5, "--cache-from")),
         choice(token.immediate(" "), token.immediate("=")),
-        field("value", $._string)
+        field("value", $.string)
       ),
     cache_hint: ($) => token(prec(5, "--cache-hint")),
     chmod: ($) =>
       seq(
         token(prec(5, "--chmod")),
         choice(token.immediate(" "), token.immediate("=")),
-        field("value", $._string)
+        field("value", $.string)
       ),
     chown: ($) =>
       seq(
         token(prec(5, "--chown")),
         choice(token.immediate(" "), token.immediate("=")),
-        field("value", $._string)
+        field("value", $.string)
       ),
     compose: ($) =>
       seq(
         token(prec(5, "--compose")),
         choice(token.immediate(" "), token.immediate("=")),
-        field("value", $._string)
+        field("value", $.string)
       ),
     dir: ($) => token(prec(5, "--dir")),
     docker_build_arg: ($) =>
@@ -626,13 +633,13 @@ module.exports = grammar({
         choice(token.immediate(" "), token.immediate("=")),
         field("key", $.identifier),
         choice(token.immediate(" "), token.immediate("=")),
-        field("value", $._string)
+        field("value", $.string)
       ),
     docker_file: ($) =>
       seq(
         token(prec(5, "-f")),
         choice(token.immediate(" "), token.immediate("=")),
-        field("value", $._string)
+        field("value", $.string)
       ),
     docker_target: ($) =>
       seq(
@@ -658,13 +665,16 @@ module.exports = grammar({
         token(prec(5, "--load")),
         choice(token.immediate(" "), token.immediate("=")),
         optional(seq(field("image", $.image_spec), token.immediate("="))),
-        field("target", choice($.target_ref, $.target_ref_with_build_args, $._string))
+        field(
+          "target",
+          choice($.target_ref, $.target_ref_with_build_args, $.string)
+        )
       ),
     mount: ($) =>
       seq(
         token(prec(5, "--mount")),
         choice(token.immediate(" "), token.immediate("=")),
-        field("value", $._string)
+        field("value", $.string)
       ),
     network_none: ($) => token(prec(5, "--network=none")),
     no_cache: ($) => token(prec(5, "--no-cache")),
@@ -674,7 +684,7 @@ module.exports = grammar({
       seq(
         token(prec(5, "--platform")),
         choice(token.immediate(" "), token.immediate("=")),
-        field("value", $._string)
+        field("value", $.string)
       ),
     privileged: ($) => token(prec(5, "--privileged")),
     pull: ($) =>
@@ -689,19 +699,19 @@ module.exports = grammar({
       seq(
         token(prec(5, "--secret")),
         choice(token.immediate(" "), token.immediate("=")),
-        field("value", $._string)
+        field("value", $.string)
       ),
     sep: ($) =>
       seq(
         token(prec(5, "--sep")),
         choice(token.immediate(" "), token.immediate("=")),
-        field("value", $._string)
+        field("value", $.string)
       ),
     service: ($) =>
       seq(
         token(prec(5, "--service")),
         choice(token.immediate(" "), token.immediate("=")),
-        field("value", $._string)
+        field("value", $.string)
       ),
     sharing: ($) =>
       seq(
@@ -713,8 +723,6 @@ module.exports = grammar({
     symlink_no_follow: ($) => token(prec(5, "--symlink-no-follow")),
 
     // string stuff
-    _string: ($) =>
-      choice($.double_quoted_string, $.single_quoted_string, $.unquoted_string),
     _string_base: ($) => string_base_regex,
     _immediate_string_base: ($) => token.immediate(string_base_regex),
     double_quoted_string: ($) =>
@@ -729,13 +737,50 @@ module.exports = grammar({
         ),
         '"'
       ),
+    _immediate_double_quoted_string: ($) =>
+      seq(
+        token.immediate('"'),
+        repeat(
+          choice(
+            token.immediate(prec(15, /[^"\\\$]+/)),
+            token.immediate(/\\./),
+            alias($._immediate_expansion, $.expansion)
+          )
+        ),
+        token.immediate('"')
+      ),
     single_quoted_string: ($) =>
+      seq(
+        token.immediate("'"),
+        repeat(choice(token.immediate(/[^'\n\\]+/), token.immediate(/\\./))),
+        token.immediate("'")
+      ),
+    _immediate_single_quoted_string: ($) =>
       seq(
         "'",
         repeat(choice(token.immediate(/[^'\n\\]+/), token.immediate(/\\./))),
         "'"
       ),
     unquoted_string: ($) =>
+      seq(
+        choice($._string_base, $.expansion, "(", ")", "+", ":", "@", "="),
+        optional($._immediate_unquoted_string)
+      ),
+    _immediate_unquoted_string: ($) =>
+      repeat1(
+        choice(
+          $._immediate_string_base,
+          token.immediate(/\\./),
+          token.immediate("("),
+          token.immediate(")"),
+          token.immediate("+"),
+          token.immediate(":"),
+          token.immediate("@"),
+          token.immediate("="),
+          alias($._immediate_expansion, $.expansion)
+        )
+      ),
+    unquoted_string_with_spaces: ($) =>
       seq(
         choice($._string_base, $.expansion, "(", ")", "+", ":", "@", "="),
         repeat(
@@ -748,7 +793,38 @@ module.exports = grammar({
             token.immediate(":"),
             token.immediate("@"),
             token.immediate("="),
+            token.immediate(/[ \t]+/),
             alias($._immediate_expansion, $.expansion)
+          )
+        )
+      ),
+    string_with_spaces: ($) =>
+      seq(
+        choice(
+          alias($.unquoted_string_with_spaces, $.unquoted_string),
+          $.double_quoted_string,
+          $.single_quoted_string
+        ),
+        repeat(
+          choice(
+            alias($.unquoted_string_with_spaces, $.unquoted_string),
+            $.double_quoted_string,
+            $.single_quoted_string
+          )
+        )
+      ),
+    string: ($) =>
+      seq(
+        choice(
+          $.unquoted_string,
+          $.double_quoted_string,
+          $.single_quoted_string
+        ),
+        repeat(
+          choice(
+            alias($._immediate_unquoted_string, $.unquoted_string),
+            alias($._immediate_double_quoted_string, $.double_quoted_string),
+            alias($._immediate_double_quoted_string, $.single_quoted_string)
           )
         )
       ),

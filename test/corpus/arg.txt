@@ -47,7 +47,8 @@ ARG foo=aaa
 (source_file
   (arg_command
     name: (variable)
-    default_value: (unquoted_string)))
+        default_value: (string
+          (unquoted_string))))
 
 ==================
 arg command default value single quoted
@@ -60,7 +61,8 @@ ARG foo='auie tsrn'
 (source_file
   (arg_command
     name: (variable)
-    default_value: (single_quoted_string)))
+        default_value: (string
+          (single_quoted_string))))
 
 ==================
 arg command default value double quoted
@@ -73,7 +75,8 @@ ARG foo="it's ok"
 (source_file
   (arg_command
     name: (variable)
-    default_value: (double_quoted_string)))
+        default_value: (string
+          (double_quoted_string))))
 
 ==================
 arg command default value expr
@@ -111,7 +114,8 @@ ARG foo = bar
     (source_file
       (arg_command
         name: (variable)
-        default_value: (unquoted_string)))
+        default_value: (string
+          (unquoted_string))))
 
 ==================
 arg command with value starting with a sharp
@@ -124,4 +128,20 @@ ARG foo="#123456"
     (source_file
       (arg_command
         name: (variable)
-        default_value: (double_quoted_string)))
+        default_value: (string
+          (double_quoted_string))))
+
+==================
+arg command unquoted with spaces
+==================
+
+ARG foo=a bb  ccc   dddd    # comment
+
+---
+
+    (source_file
+      (arg_command
+        name: (variable)
+        default_value: (string
+          (unquoted_string))
+        (comment)))

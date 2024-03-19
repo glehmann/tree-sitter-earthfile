@@ -11,8 +11,10 @@ foo:
       (target
         name: (identifier)
         (copy_command
-          src: (unquoted_string)
-          dest: (unquoted_string))))
+          src: (string
+            (unquoted_string))
+          dest: (string
+            (unquoted_string)))))
 
 ==================
 copy multi sources
@@ -27,9 +29,12 @@ foo:
       (target
         name: (identifier)
         (copy_command
-          src: (double_quoted_string)
-          src: (unquoted_string)
-          dest: (unquoted_string))))
+          src: (string
+            (double_quoted_string))
+          src: (string
+            (unquoted_string))
+          dest: (string
+            (unquoted_string)))))
 
 ==================
 copy with options
@@ -47,9 +52,12 @@ foo:
           option: (dir)
           option: (keep_ts)
           option: (platform
-            value: (unquoted_string))
-          src: (unquoted_string)
-          dest: (unquoted_string))))
+            value: (string
+              (unquoted_string)))
+          src: (string
+            (unquoted_string))
+          dest: (string
+            (unquoted_string)))))
 
 ==================
 copy target artifacts
@@ -70,12 +78,14 @@ foo:
             (unquoted_string)
             (build_arg
               name: (variable)
-              value: (unquoted_string)))
+              value: (string
+                (unquoted_string))))
           src: (target_artifact
             (target_ref
               name: (identifier))
             (unquoted_string))
-          dest: (unquoted_string))))
+          dest: (string
+            (unquoted_string)))))
 
 ==================
 copy target artifacts with expansions
@@ -112,13 +122,15 @@ foo:
                   (variable))))
             (unquoted_string))
           (line_continuation)
-          src: (unquoted_string
-            (expansion
-              (variable)))
+          src: (string
+            (unquoted_string
+              (expansion
+                (variable))))
           (line_continuation)
-          src: (unquoted_string
-            (expansion
-              (variable)))
+          src: (string
+            (unquoted_string
+              (expansion
+                (variable))))
           (line_continuation)
           src: (target_artifact_build_args
             (target_ref
@@ -130,16 +142,20 @@ foo:
                 (variable)))
             (build_arg
               name: (variable)
-              value: (unquoted_string)))
+              value: (string
+                (unquoted_string))))
           (line_continuation)
           src: (target_artifact_build_args
-            (unquoted_string
-              (expansion
-                (variable))
-              (expansion
-                (variable)))
+            (string
+              (unquoted_string
+                (expansion
+                  (variable))
+                (expansion
+                  (variable))))
             (build_arg
               name: (variable)
-              value: (unquoted_string)))
+              value: (string
+                (unquoted_string))))
           (line_continuation)
-          dest: (unquoted_string))))
+          dest: (string
+            (unquoted_string)))))

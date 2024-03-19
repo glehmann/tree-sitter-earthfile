@@ -12,4 +12,5 @@ foo:
         name: (identifier)
         (host_command
           name: (identifier)
-          ip: (unquoted_string))))
+          ip: (string
+            (unquoted_string)))))

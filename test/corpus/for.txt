@@ -14,9 +14,11 @@ foo:
         name: (identifier)
         (for_command
           name: (variable)
-          value: (unquoted_string)
+          value: (string
+            (unquoted_string))
           value: (expr)
-          value: (unquoted_string)
+          value: (string
+            (unquoted_string))
           (run_command
             option: (no_cache)
             command: (shell_fragment)))))
@@ -38,8 +40,11 @@ foo:
         (for_command
           option: (ssh)
           name: (variable)
-          value: (unquoted_string)
-          value: (unquoted_string)
-          value: (unquoted_string)
+          value: (string
+            (unquoted_string))
+          value: (string
+            (unquoted_string))
+          value: (string
+            (unquoted_string))
           (run_command
             command: (shell_fragment)))))

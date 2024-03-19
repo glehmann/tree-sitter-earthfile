@@ -11,7 +11,8 @@ foo:
       (target
         name: (identifier)
         (save_artifact_command
-          src: (unquoted_string))))
+          src: (string
+            (unquoted_string)))))
 
 ==================
 save artifact with dest
@@ -26,8 +27,10 @@ foo:
       (target
         name: (identifier)
         (save_artifact_command
-          src: (unquoted_string)
-          dest: (unquoted_string))))
+          src: (string
+            (unquoted_string))
+          dest: (string
+            (unquoted_string)))))
 
 ==================
 save artifact with dest as local
@@ -42,9 +45,12 @@ foo:
       (target
         name: (identifier)
         (save_artifact_command
-          src: (unquoted_string)
-          dest: (unquoted_string)
-          local_dest: (unquoted_string))))
+          src: (string
+            (unquoted_string))
+          dest: (string
+            (unquoted_string))
+          local_dest: (string
+            (unquoted_string)))))
 
 ==================
 save artifact with options
@@ -61,4 +67,5 @@ foo:
         (save_artifact_command
           option: (keep_ts)
           option: (force)
-          src: (unquoted_string))))
+          src: (string
+            (unquoted_string)))))

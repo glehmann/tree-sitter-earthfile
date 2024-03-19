@@ -11,8 +11,10 @@ foo:
       (target
         name: (identifier)
         (git_clone_command
-          url: (unquoted_string)
-          dest: (unquoted_string))))
+          url: (string
+            (unquoted_string))
+          dest: (string
+            (unquoted_string)))))
 
 ==================
 git clone command with options
@@ -29,6 +31,9 @@ foo:
         (git_clone_command
           option: (keep_ts)
           option: (branch
-            value: (unquoted_string))
-          url: (unquoted_string)
-          dest: (unquoted_string))))
+            value: (string
+              (unquoted_string)))
+          url: (string
+            (unquoted_string))
+          dest: (string
+            (unquoted_string)))))

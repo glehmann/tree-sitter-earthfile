@@ -55,14 +55,17 @@ foo:
                 name: (identifier))
               (build_arg
                 name: (variable)
-                value: (unquoted_string))))
+                value: (string
+                  (unquoted_string)))))
           (line_continuation)
           option: (compose
-            value: (unquoted_string))
+            value: (string
+              (unquoted_string)))
           (line_continuation)
           option: (allow_privileged)
           (line_continuation)
           option: (service
-            value: (unquoted_string))
+            value: (string
+              (unquoted_string)))
           (run_command
             command: (shell_fragment)))))

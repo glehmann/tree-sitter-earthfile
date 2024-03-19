@@ -12,4 +12,5 @@ foo:
         name: (identifier)
         (let_command
           name: (variable)
-          value: (unquoted_string))))
+          value: (string
+            (unquoted_string)))))

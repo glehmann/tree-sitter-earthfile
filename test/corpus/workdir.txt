@@ -11,4 +11,5 @@ foo:
       (target
         name: (identifier)
         (workdir_command
-          (unquoted_string))))
+          (string
+            (unquoted_string)))))

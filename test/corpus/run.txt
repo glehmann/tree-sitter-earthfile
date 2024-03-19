@@ -28,7 +28,8 @@ foo:
         (run_command
           option: (push)
           option: (secret
-            value: (unquoted_string))
+            value: (string
+              (unquoted_string)))
           command: (shell_fragment))))
 
 ==================

@@ -67,7 +67,8 @@ FROM +build --foo=bar
             name: (identifier))
         (build_arg
             name: (variable)
-            value: (unquoted_string))))
+          value: (string
+            (unquoted_string)))))
 
 ==================
 from target with space build arg
@@ -83,7 +84,8 @@ FROM +build --foo bar
             name: (identifier))
         (build_arg
             name: (variable)
-            value: (unquoted_string))))
+          value: (string
+            (unquoted_string)))))
 
 ==================
 from target with platform
@@ -95,7 +97,8 @@ FROM --platform=linux/arm64 +build
     (source_file
       (from_command
         option: (platform
-          value: (unquoted_string))
+          value: (string
+            (unquoted_string)))
         (target_ref
           name: (identifier))))
 
@@ -109,7 +112,8 @@ FROM --platform linux/arm64 +build
     (source_file
       (from_command
         option: (platform
-          value: (unquoted_string))
+          value: (string
+            (unquoted_string)))
         (target_ref
           name: (identifier))))
 

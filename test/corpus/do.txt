@@ -15,4 +15,5 @@ foo:
             name: (identifier))
           (build_arg
             name: (variable)
-            value: (unquoted_string)))))
+            value: (string
+              (unquoted_string))))))
