@@ -17,3 +17,4 @@ jobs:
     - run: npm install tree-sitter-cli -g
     - run: tree-sitter generate
     - run: tree-sitter test
+    - run: find test/earthly/ -name Earthfile | xargs tree-sitter parse
