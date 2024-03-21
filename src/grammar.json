@@ -2138,6 +2138,14 @@
               {
                 "type": "SYMBOL",
                 "name": "expansion"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "double_quoted_string"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "single_quoted_string"
               }
             ]
           },
@@ -2149,6 +2157,24 @@
                 {
                   "type": "SYMBOL",
                   "name": "_immediate_string_base"
+                },
+                {
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "_immediate_double_quoted_string"
+                  },
+                  "named": true,
+                  "value": "double_quoted_string"
+                },
+                {
+                  "type": "ALIAS",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "_immediate_double_quoted_string"
+                  },
+                  "named": true,
+                  "value": "single_quoted_string"
                 },
                 {
                   "type": "ALIAS",
@@ -2181,6 +2207,24 @@
             "type": "ALIAS",
             "content": {
               "type": "SYMBOL",
+              "name": "_immediate_double_quoted_string"
+            },
+            "named": true,
+            "value": "double_quoted_string"
+          },
+          {
+            "type": "ALIAS",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_immediate_double_quoted_string"
+            },
+            "named": true,
+            "value": "single_quoted_string"
+          },
+          {
+            "type": "ALIAS",
+            "content": {
+              "type": "SYMBOL",
               "name": "_immediate_expansion"
             },
             "named": true,
@@ -2194,6 +2238,24 @@
       "content": {
         "type": "CHOICE",
         "members": [
+          {
+            "type": "ALIAS",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_immediate_double_quoted_string"
+            },
+            "named": true,
+            "value": "double_quoted_string"
+          },
+          {
+            "type": "ALIAS",
+            "content": {
+              "type": "SYMBOL",
+              "name": "_immediate_double_quoted_string"
+            },
+            "named": true,
+            "value": "single_quoted_string"
+          },
           {
             "type": "IMMEDIATE_TOKEN",
             "content": {
@@ -4557,8 +4619,21 @@
       "unquoted_string"
     ],
     [
+      "image_digest"
+    ],
+    [
+      "image_name"
+    ],
+    [
+      "image_name",
+      "string"
+    ],
+    [
       "image_name",
       "unquoted_string"
+    ],
+    [
+      "image_tag"
     ],
     [
       "shell_fragment"
