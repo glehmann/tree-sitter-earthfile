@@ -11,7 +11,7 @@ foo:
       (target
         name: (identifier)
         (save_image_command
-          (image_spec
+          image: (image_spec
             name: (image_name)))))
 
 ==================
@@ -28,10 +28,10 @@ foo:
         name: (identifier)
         (save_image_command
           option: (push)
-          (image_spec
+          image: (image_spec
             name: (image_name)
             tag: (image_tag))
-          (image_spec
+          image: (image_spec
             name: (image_name)
             tag: (image_tag)))))
 
@@ -49,3 +49,21 @@ foo:
         name: (identifier)
         (save_image_command
           option: (cache_hint))))
+
+==================
+save image with quoted string
+==================
+
+foo:
+    SAVE IMAGE "ghcr.io/$org/foo"
+
+---
+
+    (source_file
+      (target
+        name: (identifier)
+        (save_image_command
+          image: (string
+            (double_quoted_string
+              (expansion
+                (variable)))))))

@@ -295,7 +295,8 @@ module.exports = grammar({
         ),
         field("src", $.string),
         optional(field("dest", $.string)),
-        optional(seq("AS LOCAL", field("local_dest", $.string)))
+        optional(seq("AS LOCAL", field("local_dest", $.string))),
+        $._eol
       ),
 
     save_image_command: ($) =>
@@ -304,10 +305,11 @@ module.exports = grammar({
         choice(
           seq(
             repeat(field("option", choice($.cache_from, $.push))),
-            repeat($.image_spec)
+            repeat(field("image", choice($.string, $.image_spec)))
           ),
           field("option", $.cache_hint)
-        )
+        ),
+        $._eol
       ),
 
     set_command: ($) =>
@@ -467,19 +469,23 @@ module.exports = grammar({
         optional(seq(token.immediate("@"), field("digest", $.image_digest)))
       ),
     image_name: ($) =>
-      seq(
-        choice($._string_base, $.expansion),
-        repeat(
-          choice(
-            $._immediate_string_base,
-            // alias($._immediate_escape_sequence, $.escape_sequence),
-            // token.immediate("("),
-            // token.immediate(")"),
-            // token.immediate("+"),
-            // token.immediate(":"),
-            // token.immediate("@"),
-            // token.immediate("="),
-            alias($._immediate_expansion, $.expansion)
+      prec(
+        // higher precedence than the string rules
+        10,
+        seq(
+          choice($._string_base, $.expansion),
+          repeat(
+            choice(
+              $._immediate_string_base,
+              // alias($._immediate_escape_sequence, $.escape_sequence),
+              // token.immediate("("),
+              // token.immediate(")"),
+              // token.immediate("+"),
+              // token.immediate(":"),
+              // token.immediate("@"),
+              // token.immediate("="),
+              alias($._immediate_expansion, $.expansion)
+            )
           )
         )
       ),

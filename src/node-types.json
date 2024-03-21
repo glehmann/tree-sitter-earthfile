@@ -2067,12 +2067,36 @@
           }
         ]
       }
+    },
+    "children": {
+      "multiple": false,
+      "required": false,
+      "types": [
+        {
+          "type": "comment",
+          "named": true
+        }
+      ]
     }
   },
   {
     "type": "save_image_command",
     "named": true,
     "fields": {
+      "image": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "image_spec",
+            "named": true
+          },
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      },
       "option": {
         "multiple": true,
         "required": false,
@@ -2093,11 +2117,11 @@
       }
     },
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": false,
       "types": [
         {
-          "type": "image_spec",
+          "type": "comment",
           "named": true
         }
       ]

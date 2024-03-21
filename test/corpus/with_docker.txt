@@ -43,8 +43,9 @@ foo:
               name: (image_name)))
           (line_continuation)
           option: (load
+            image: (image_spec
+              name: (image_name))
             target: (target_ref
-              (earthfile_ref)
               name: (identifier)))
           (line_continuation)
           option: (load
