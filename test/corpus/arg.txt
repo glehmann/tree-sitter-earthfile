@@ -86,10 +86,13 @@ ARG foo=$(echo $(echo hop))
 
 ---
 
-(source_file
-  (arg_command
-    name: (variable)
-    default_value_expr: (expr)))
+  (source_file
+    (arg_command
+      name: (variable)
+        default_value: (string
+          (unquoted_string
+            (expansion
+              (shell_fragment))))))
 
 ==================
 arg command without values

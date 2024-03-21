@@ -16,7 +16,10 @@ foo:
           name: (variable)
           value: (string
             (unquoted_string))
-          value: (expr)
+          value: (string
+            (unquoted_string
+              (expansion
+                (shell_fragment))))
           value: (string
             (unquoted_string))
           (run_command

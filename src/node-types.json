@@ -13,16 +13,6 @@
           }
         ]
       },
-      "default_value_expr": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "expr",
-            "named": true
-          }
-        ]
-      },
       "name": {
         "multiple": false,
         "required": true,
@@ -910,6 +900,10 @@
       "required": true,
       "types": [
         {
+          "type": "shell_fragment",
+          "named": true
+        },
+        {
           "type": "variable",
           "named": true
         }
@@ -983,10 +977,6 @@
         "multiple": true,
         "required": false,
         "types": [
-          {
-            "type": "expr",
-            "named": true
-          },
           {
             "type": "string",
             "named": true
@@ -3474,10 +3464,6 @@
   },
   {
     "type": "entrypoint",
-    "named": true
-  },
-  {
-    "type": "expr",
     "named": true
   },
   {

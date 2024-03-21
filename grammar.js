@@ -20,6 +20,7 @@ module.exports = grammar({
     [$.earthfile_ref, $.target_ref_with_build_args],
     [$.earthfile_ref, $.unquoted_string],
     [$.image_name, $.unquoted_string],
+    [$.shell_fragment],
     [$.string],
     [$.unquoted_string],
   ],
@@ -69,12 +70,9 @@ module.exports = grammar({
         optional(
           seq(
             "=",
-            choice(
-              field(
-                "default_value",
-                optional(alias($.string_with_spaces, $.string))
-              ),
-              field("default_value_expr", $.expr)
+            field(
+              "default_value",
+              optional(alias($.string_with_spaces, $.string))
             )
           )
         ),
@@ -175,7 +173,7 @@ module.exports = grammar({
         ),
         field("name", $.variable),
         "IN",
-        repeat(field("value", choice($.string, $.expr))),
+        repeat(field("value", $.string)),
         $._eol,
         optional($._command_block),
         "END",
@@ -526,8 +524,9 @@ module.exports = grammar({
           //                              |--shell_command--|
           //
           /[,=-]/,
-          /[^"\\\n#\s,=-][^"\\\n]*/,
+          /[^)"\\\n#\s,=-][^)"\\\n]*/,
           /\\[^"\n,=-]/,
+          ")",
           seq(
             '"',
             repeat(
@@ -752,13 +751,23 @@ module.exports = grammar({
     single_quoted_string: ($) =>
       seq(
         token.immediate("'"),
-        repeat(choice(token.immediate(/[^'\n\\]+/), alias($._immediate_escape_sequence, $.escape_sequence))),
+        repeat(
+          choice(
+            token.immediate(/[^'\n\\]+/),
+            alias($._immediate_escape_sequence, $.escape_sequence)
+          )
+        ),
         token.immediate("'")
       ),
     _immediate_single_quoted_string: ($) =>
       seq(
         "'",
-        repeat(choice(token.immediate(/[^'\n\\]+/), alias($._immediate_escape_sequence, $.escape_sequence))),
+        repeat(
+          choice(
+            token.immediate(/[^'\n\\]+/),
+            alias($._immediate_escape_sequence, $.escape_sequence)
+          )
+        ),
         "'"
       ),
     unquoted_string: ($) =>
@@ -840,7 +849,8 @@ module.exports = grammar({
             token.immediate("{"),
             alias($._immediate_variable, $.variable),
             "}"
-          )
+          ),
+          seq(token.immediate("("), $.shell_fragment, ")")
         )
       ),
     _immediate_expansion: ($) =>
@@ -852,10 +862,13 @@ module.exports = grammar({
             token.immediate("{"),
             alias($._immediate_variable, $.variable),
             token.immediate("}")
-          )
+          ),
+          seq(token.immediate("("), $.shell_fragment, token.immediate(")"))
         )
       ),
     _immediate_variable: ($) => token.immediate(/[a-zA-Z_][a-zA-Z0-9_]*/),
+
+    shell_expr: ($) => /[a-zA-Z0-9_ ]+/,
 
     // extra tokens, eol, …
     _immediate_escape_sequence: (_) => /\\./,

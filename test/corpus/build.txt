@@ -111,6 +111,40 @@ foo:
                 (variable)))))))
 
 ==================
+build command with shell expansions
+==================
+
+foo:
+  BUILD \
+    --platform=linux/$(cat /arch)64 \
+    --platform $(cat /os_arch)64 \
+    +$(bar)
+
+---
+
+    (source_file
+      (target
+        name: (identifier)
+        (build_command
+          (line_continuation)
+          option: (platform
+            value: (string
+              (unquoted_string
+                (expansion
+                  (shell_fragment)))))
+          (line_continuation)
+          option: (platform
+            value: (string
+              (unquoted_string
+                (expansion
+                  (shell_fragment)))))
+          (line_continuation)
+          (target_ref
+            name: (identifier
+              (expansion
+                (shell_fragment)))))))
+
+==================
 build command with target expansion
 ==================
 
@@ -127,6 +161,24 @@ foo:
             (unquoted_string
               (expansion
                 (variable)))))))
+
+==================
+build command with target shell expansion
+==================
+
+foo:
+  BUILD $(cat /target)
+
+---
+
+    (source_file
+      (target
+        name: (identifier)
+        (build_command
+          (string
+            (unquoted_string
+              (expansion
+                (shell_fragment)))))))
 
 ==================
 build command deprecated build arg

@@ -60,7 +60,7 @@
 (escape_sequence) @string.escape
 
 (variable) @variable
-(expansion ["$" "{" "}"] @punctuation.special)
+(expansion ["$" "{" "}" "(" ")"] @punctuation.special)
 (build_arg) @variable
 
 [
