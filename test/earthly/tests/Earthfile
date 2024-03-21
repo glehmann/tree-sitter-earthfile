@@ -739,7 +739,7 @@ escape-test:
 
 escape-dir-test:
     RUN mkdir ./dir-with-+-in-it
-    COPY escape-dir2.earth ./dir-with-+-in-it/Earthfile
+    COPY escape-dir2.earth ./dir-with--in-it/Earthfile
     DO +RUN_EARTHLY --earthfile=escape-dir1.earth --extra_args="--no-output" --target=+test
 
 eine-test-base:

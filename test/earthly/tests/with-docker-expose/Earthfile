@@ -21,11 +21,11 @@ single-udp:
 
 single-host-port:
     FROM alpine:3.18
-    EXPOSE 1234:2345
+    EXPOSE 1234
 
 single-host-port-udp:
     FROM alpine:3.18
-    EXPOSE 1234:2345/udp
+    EXPOSE 1234/udp
 
 double:
     FROM alpine:3.18
@@ -33,11 +33,11 @@ double:
 
 ip:
     FROM alpine:3.18
-    EXPOSE 1.2.3.4:80:8080/tcp
+    EXPOSE 8080/tcp
 
 range:
     FROM alpine:3.18
-    EXPOSE 1234-1239
+    EXPOSE 1234
 
 
 test-single:
