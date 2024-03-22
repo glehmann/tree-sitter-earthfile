@@ -1,6 +1,6 @@
 # tree-sitter-earthfile
 
-A work-in-progress [tree-sitter](https://tree-sitter.github.io/) grammar for [Earthfile](https://docs.earthly.dev/docs/earthfile).
+[tree-sitter](https://tree-sitter.github.io/) grammar for [Earthfile](https://docs.earthly.dev/docs/earthfile).
 
 ![Screenshot of yage Earthfile in neovim](screenshot.jpg)
 
