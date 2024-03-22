@@ -5,10 +5,6 @@
 #include <string.h>
 // #include <wctype.h>
 
-#ifdef NDEBUG
-#error "expected assertions to be enabled"
-#endif
-
 // Enable this for debugging
 // #define DEBUG_PRINT
 
