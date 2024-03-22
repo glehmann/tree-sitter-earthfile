@@ -19,6 +19,7 @@ jobs:
       - uses: tree-sitter/setup-action/cli@v1
       - uses: tree-sitter/parser-test-action@v2
         with:
+          test-node: true
           test-rust: true
       - uses: tree-sitter/parse-action@v3
         with:
