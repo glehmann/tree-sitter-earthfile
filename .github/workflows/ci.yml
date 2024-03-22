@@ -8,13 +8,17 @@ on:
 
 jobs:
   test:
-    runs-on: ubuntu-latest
+    name: Run tests
+    runs-on: ${{matrix.os}}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [ubuntu-latest, windows-latest, macos-14]
     steps:
-    - uses: actions/checkout@v2
-    - uses: actions/setup-node@v1
-      with:
-        node-version: 20
-    - run: npm install tree-sitter-cli -g
-    - run: tree-sitter generate
-    - run: tree-sitter test
-    - run: find test/earthly/ -name Earthfile | xargs tree-sitter parse
+      - uses: actions/checkout@v4
+      - uses: tree-sitter/setup-action/cli@v1
+      - uses: tree-sitter/parser-test-action@v2
+      - uses: tree-sitter/parse-action@v3
+        with:
+          files: |-
+            test/earthly/**
