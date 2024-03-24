@@ -16,8 +16,8 @@ class TestPackage(test.TestCase):
     def test_parse(self):
         nodes = self.tree.root_node.named_children
         print(nodes)
-        self.assertEqual(len(nodes), 3)
-        self.assertEqual(nodes[0].type, 'source_file')
+        self.assertEqual(len(nodes), 1)
+        self.assertEqual(nodes[0].type, 'version_command')
 
 if __name__ == '__main__':
     test.main(verbosity=2)
