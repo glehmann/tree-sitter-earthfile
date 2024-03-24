@@ -3,14 +3,19 @@
 import unittest as test
 
 import tree_sitter_earthfile as tse
+import tree_sitter as ts
 
 class TestPackage(test.TestCase):
     def setUp(self) -> None:
         self.source = b'VERSION 0.8\n'
-        self.tree = tse.parse(self.source)
+        language = ts.Language(tse.language(), "earthfile")
+        parser = ts.Parser()
+        parser.set_language(language)
+        self.tree = parser.parse(self.source)
 
     def test_parse(self):
         nodes = self.tree.root_node.named_children
+        print(nodes)
         self.assertEqual(len(nodes), 3)
         self.assertEqual(nodes[0].type, 'source_file')
 
