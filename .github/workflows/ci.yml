@@ -22,7 +22,6 @@ jobs:
           test-node: true
           test-rust: ${{ matrix.os != 'windows-latest' }}
           test-python: true
-          test-swift: ${{ matrix.os == 'macos-14' }}
       - uses: tree-sitter/parse-action@v3
         with:
           files: |-
