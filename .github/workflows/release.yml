@@ -10,15 +10,15 @@ concurrency:
 
 jobs:
   npm:
-    uses: tree-sitter/workflows/.github/workflows/package-npm.yml@v1
+    uses: tree-sitter/workflows/.github/workflows/package-npm.yml@main
     secrets:
       NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
   crates:
-    uses: tree-sitter/workflows/.github/workflows/package-crates.yml@v1
+    uses: tree-sitter/workflows/.github/workflows/package-crates.yml@main
     secrets:
       CARGO_REGISTRY_TOKEN: ${{secrets.CARGO_TOKEN}}
   pypi:
-    uses: tree-sitter/workflows/.github/workflows/package-pypi.yml@v1
+    uses: tree-sitter/workflows/.github/workflows/package-pypi.yml@main
     with:
       python-version: 3.9
     secrets:
