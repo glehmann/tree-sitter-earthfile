@@ -10,7 +10,7 @@ concurrency:
 
 jobs:
   npm:
-    uses: tree-sitter/workflows/.github/workflows/package-npm.yml@main
+    uses: tree-sitter/workflows/.github/workflows/package-npm.yml@v1
     secrets:
       NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
   crates:
