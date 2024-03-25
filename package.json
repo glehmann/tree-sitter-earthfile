@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-earthfile",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Earthfile tree-sitter grammar",
   "author": "Gaëtan Lehmann <gaetan.lehmann@gmail.com>",
   "main": "bindings/node",
