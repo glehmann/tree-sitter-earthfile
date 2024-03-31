@@ -20,8 +20,12 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "_command_block"
+              "type": "FIELD",
+              "name": "base_target",
+              "content": {
+                "type": "SYMBOL",
+                "name": "block"
+              }
             },
             {
               "type": "BLANK"
@@ -107,7 +111,7 @@
                   "members": [
                     {
                       "type": "SYMBOL",
-                      "name": "_command_block"
+                      "name": "block"
                     },
                     {
                       "type": "BLANK"
@@ -136,13 +140,23 @@
         },
         {
           "type": "FIELD",
-          "name": "option",
+          "name": "options",
           "content": {
-            "type": "REPEAT",
-            "content": {
-              "type": "SYMBOL",
-              "name": "feature_flag"
-            }
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "ALIAS",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "version_options"
+                },
+                "named": true,
+                "value": "options"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
           }
         },
         {
@@ -159,6 +173,13 @@
         }
       ]
     },
+    "version_options": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "SYMBOL",
+        "name": "feature_flag"
+      }
+    },
     "arg_command": {
       "type": "SEQ",
       "members": [
@@ -167,23 +188,24 @@
           "value": "ARG"
         },
         {
-          "type": "REPEAT",
+          "type": "FIELD",
+          "name": "options",
           "content": {
-            "type": "FIELD",
-            "name": "option",
-            "content": {
-              "type": "CHOICE",
-              "members": [
-                {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "ALIAS",
+                "content": {
                   "type": "SYMBOL",
-                  "name": "required"
+                  "name": "arg_options"
                 },
-                {
-                  "type": "SYMBOL",
-                  "name": "global"
-                }
-              ]
-            }
+                "named": true,
+                "value": "options"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
           }
         },
         {
@@ -238,6 +260,22 @@
         }
       ]
     },
+    "arg_options": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "required"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "global"
+          }
+        ]
+      }
+    },
     "build_command": {
       "type": "SEQ",
       "members": [
@@ -246,35 +284,24 @@
           "value": "BUILD"
         },
         {
-          "type": "REPEAT",
+          "type": "FIELD",
+          "name": "options",
           "content": {
-            "type": "FIELD",
-            "name": "option",
-            "content": {
-              "type": "CHOICE",
-              "members": [
-                {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "ALIAS",
+                "content": {
                   "type": "SYMBOL",
-                  "name": "auto_skip"
+                  "name": "build_options"
                 },
-                {
-                  "type": "SYMBOL",
-                  "name": "allow_privileged"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "build_arg_deprecated"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "pass_args"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "platform"
-                }
-              ]
-            }
+                "named": true,
+                "value": "options"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
           }
         },
         {
@@ -291,17 +318,50 @@
           ]
         },
         {
-          "type": "REPEAT",
-          "content": {
-            "type": "SYMBOL",
-            "name": "build_arg"
-          }
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "build_args"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         },
         {
           "type": "SYMBOL",
           "name": "_eol"
         }
       ]
+    },
+    "build_options": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "auto_skip"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "allow_privileged"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "build_arg_deprecated"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "pass_args"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "platform"
+          }
+        ]
+      }
     },
     "cache_command": {
       "type": "SEQ",
@@ -311,31 +371,24 @@
           "value": "CACHE"
         },
         {
-          "type": "REPEAT",
+          "type": "FIELD",
+          "name": "options",
           "content": {
-            "type": "FIELD",
-            "name": "option",
-            "content": {
-              "type": "CHOICE",
-              "members": [
-                {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "ALIAS",
+                "content": {
                   "type": "SYMBOL",
-                  "name": "chmod"
+                  "name": "cache_options"
                 },
-                {
-                  "type": "SYMBOL",
-                  "name": "id"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "persist"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "sharing"
-                }
-              ]
-            }
+                "named": true,
+                "value": "options"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
           }
         },
         {
@@ -351,6 +404,30 @@
           "name": "_eol"
         }
       ]
+    },
+    "cache_options": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "chmod"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "id"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "persist"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "sharing"
+          }
+        ]
+      }
     },
     "cmd_command": {
       "type": "SEQ",
@@ -386,55 +463,24 @@
           "value": "COPY"
         },
         {
-          "type": "REPEAT",
+          "type": "FIELD",
+          "name": "options",
           "content": {
-            "type": "FIELD",
-            "name": "option",
-            "content": {
-              "type": "CHOICE",
-              "members": [
-                {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "ALIAS",
+                "content": {
                   "type": "SYMBOL",
-                  "name": "allow_privileged"
+                  "name": "copy_options"
                 },
-                {
-                  "type": "SYMBOL",
-                  "name": "chmod"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "chown"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "dir"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "if_exists"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "keep_own"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "keep_ts"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "pass_args"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "platform"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "symlink_no_follow"
-                }
-              ]
-            }
+                "named": true,
+                "value": "options"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
           }
         },
         {
@@ -475,6 +521,54 @@
         }
       ]
     },
+    "copy_options": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "allow_privileged"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "chmod"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "chown"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "dir"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "if_exists"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "keep_own"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "keep_ts"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "pass_args"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "platform"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "symlink_no_follow"
+          }
+        ]
+      }
+    },
     "do_command": {
       "type": "SEQ",
       "members": [
@@ -483,23 +577,24 @@
           "value": "DO"
         },
         {
-          "type": "REPEAT",
+          "type": "FIELD",
+          "name": "options",
           "content": {
-            "type": "FIELD",
-            "name": "option",
-            "content": {
-              "type": "CHOICE",
-              "members": [
-                {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "ALIAS",
+                "content": {
                   "type": "SYMBOL",
-                  "name": "allow_privileged"
+                  "name": "do_options"
                 },
-                {
-                  "type": "SYMBOL",
-                  "name": "pass_args"
-                }
-              ]
-            }
+                "named": true,
+                "value": "options"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
           }
         },
         {
@@ -507,13 +602,34 @@
           "name": "function_ref"
         },
         {
-          "type": "REPEAT",
-          "content": {
-            "type": "SYMBOL",
-            "name": "build_arg"
-          }
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "build_args"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         }
       ]
+    },
+    "do_options": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "allow_privileged"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "pass_args"
+          }
+        ]
+      }
     },
     "entrypoint_command": {
       "type": "SEQ",
@@ -576,14 +692,16 @@
           ]
         },
         {
-          "type": "REPEAT",
+          "type": "FIELD",
+          "name": "value",
           "content": {
-            "type": "FIELD",
-            "name": "value",
+            "type": "ALIAS",
             "content": {
               "type": "SYMBOL",
-              "name": "string"
-            }
+              "name": "string_with_spaces"
+            },
+            "named": true,
+            "value": "string"
           }
         },
         {
@@ -620,39 +738,24 @@
           "value": "FOR"
         },
         {
-          "type": "REPEAT",
+          "type": "FIELD",
+          "name": "options",
           "content": {
-            "type": "FIELD",
-            "name": "option",
-            "content": {
-              "type": "CHOICE",
-              "members": [
-                {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "ALIAS",
+                "content": {
                   "type": "SYMBOL",
-                  "name": "sep"
+                  "name": "for_options"
                 },
-                {
-                  "type": "SYMBOL",
-                  "name": "privileged"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "ssh"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "no_cache"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "mount"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "secret"
-                }
-              ]
-            }
+                "named": true,
+                "value": "options"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
           }
         },
         {
@@ -668,14 +771,11 @@
           "value": "IN"
         },
         {
-          "type": "REPEAT",
+          "type": "FIELD",
+          "name": "values",
           "content": {
-            "type": "FIELD",
-            "name": "value",
-            "content": {
-              "type": "SYMBOL",
-              "name": "string"
-            }
+            "type": "SYMBOL",
+            "name": "strings"
           }
         },
         {
@@ -687,7 +787,7 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "_command_block"
+              "name": "block"
             },
             {
               "type": "BLANK"
@@ -704,6 +804,38 @@
         }
       ]
     },
+    "for_options": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "sep"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "privileged"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "ssh"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "no_cache"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "mount"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "secret"
+          }
+        ]
+      }
+    },
     "from_command": {
       "type": "SEQ",
       "members": [
@@ -712,27 +844,24 @@
           "value": "FROM"
         },
         {
-          "type": "REPEAT",
+          "type": "FIELD",
+          "name": "options",
           "content": {
-            "type": "FIELD",
-            "name": "option",
-            "content": {
-              "type": "CHOICE",
-              "members": [
-                {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "ALIAS",
+                "content": {
                   "type": "SYMBOL",
-                  "name": "platform"
+                  "name": "from_options"
                 },
-                {
-                  "type": "SYMBOL",
-                  "name": "allow_privileged"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "pass_args"
-                }
-              ]
-            }
+                "named": true,
+                "value": "options"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
           }
         },
         {
@@ -753,17 +882,42 @@
           ]
         },
         {
-          "type": "REPEAT",
-          "content": {
-            "type": "SYMBOL",
-            "name": "build_arg"
-          }
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "build_args"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         },
         {
           "type": "SYMBOL",
           "name": "_eol"
         }
       ]
+    },
+    "from_options": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "platform"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "allow_privileged"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "pass_args"
+          }
+        ]
+      }
     },
     "from_dockerfile_command": {
       "type": "SEQ",
@@ -773,31 +927,24 @@
           "value": "FROM DOCKERFILE"
         },
         {
-          "type": "REPEAT",
+          "type": "FIELD",
+          "name": "options",
           "content": {
-            "type": "FIELD",
-            "name": "option",
-            "content": {
-              "type": "CHOICE",
-              "members": [
-                {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "ALIAS",
+                "content": {
                   "type": "SYMBOL",
-                  "name": "docker_build_arg"
+                  "name": "from_dockerfile_options"
                 },
-                {
-                  "type": "SYMBOL",
-                  "name": "docker_file"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "docker_target"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "platform"
-                }
-              ]
-            }
+                "named": true,
+                "value": "options"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
           }
         },
         {
@@ -813,6 +960,30 @@
           "name": "_eol"
         }
       ]
+    },
+    "from_dockerfile_options": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "docker_build_arg"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "docker_file"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "docker_target"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "platform"
+          }
+        ]
+      }
     },
     "function_command": {
       "type": "SEQ",
@@ -844,23 +1015,24 @@
           "value": "GIT CLONE"
         },
         {
-          "type": "REPEAT",
+          "type": "FIELD",
+          "name": "options",
           "content": {
-            "type": "FIELD",
-            "name": "option",
-            "content": {
-              "type": "CHOICE",
-              "members": [
-                {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "ALIAS",
+                "content": {
                   "type": "SYMBOL",
-                  "name": "branch"
+                  "name": "git_clone_options"
                 },
-                {
-                  "type": "SYMBOL",
-                  "name": "keep_ts"
-                }
-              ]
-            }
+                "named": true,
+                "value": "options"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
           }
         },
         {
@@ -884,6 +1056,22 @@
           "name": "_eol"
         }
       ]
+    },
+    "git_clone_options": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "branch"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "keep_ts"
+          }
+        ]
+      }
     },
     "host_command": {
       "type": "SEQ",
@@ -929,19 +1117,10 @@
           "type": "REPEAT",
           "content": {
             "type": "FIELD",
-            "name": "else_if",
+            "name": "alternative",
             "content": {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "STRING",
-                  "value": "ELSE IF"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "else_if_block"
-                }
-              ]
+              "type": "SYMBOL",
+              "name": "elif_block"
             }
           }
         },
@@ -950,19 +1129,10 @@
           "members": [
             {
               "type": "FIELD",
-              "name": "else",
+              "name": "alternative",
               "content": {
-                "type": "SEQ",
-                "members": [
-                  {
-                    "type": "STRING",
-                    "value": "ELSE"
-                  },
-                  {
-                    "type": "SYMBOL",
-                    "name": "else_block"
-                  }
-                ]
+                "type": "SYMBOL",
+                "name": "else_block"
               }
             },
             {
@@ -988,19 +1158,24 @@
           "value": "IMPORT"
         },
         {
-          "type": "REPEAT",
+          "type": "FIELD",
+          "name": "options",
           "content": {
-            "type": "FIELD",
-            "name": "option",
-            "content": {
-              "type": "CHOICE",
-              "members": [
-                {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "ALIAS",
+                "content": {
                   "type": "SYMBOL",
-                  "name": "allow_privileged"
-                }
-              ]
-            }
+                  "name": "import_options"
+                },
+                "named": true,
+                "value": "options"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
           }
         },
         {
@@ -1037,6 +1212,18 @@
           "name": "_eol"
         }
       ]
+    },
+    "import_options": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "allow_privileged"
+          }
+        ]
+      }
     },
     "let_command": {
       "type": "SEQ",
@@ -1120,47 +1307,24 @@
           "value": "RUN"
         },
         {
-          "type": "REPEAT",
+          "type": "FIELD",
+          "name": "options",
           "content": {
-            "type": "FIELD",
-            "name": "option",
-            "content": {
-              "type": "CHOICE",
-              "members": [
-                {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "ALIAS",
+                "content": {
                   "type": "SYMBOL",
-                  "name": "entrypoint"
+                  "name": "run_options"
                 },
-                {
-                  "type": "SYMBOL",
-                  "name": "mount"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "network_none"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "no_cache"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "privileged"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "push"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "secret"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "ssh"
-                }
-              ]
-            }
+                "named": true,
+                "value": "options"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
           }
         },
         {
@@ -1198,6 +1362,46 @@
         }
       ]
     },
+    "run_options": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "entrypoint"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "mount"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "network_none"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "no_cache"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "privileged"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "push"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "secret"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "ssh"
+          }
+        ]
+      }
+    },
     "save_artifact_command": {
       "type": "SEQ",
       "members": [
@@ -1206,35 +1410,24 @@
           "value": "SAVE ARTIFACT"
         },
         {
-          "type": "REPEAT",
+          "type": "FIELD",
+          "name": "options",
           "content": {
-            "type": "FIELD",
-            "name": "option",
-            "content": {
-              "type": "CHOICE",
-              "members": [
-                {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "ALIAS",
+                "content": {
                   "type": "SYMBOL",
-                  "name": "if_exists"
+                  "name": "save_artifact_options"
                 },
-                {
-                  "type": "SYMBOL",
-                  "name": "force"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "keep_own"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "keep_ts"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "symlink_no_follow"
-                }
-              ]
-            }
+                "named": true,
+                "value": "options"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
           }
         },
         {
@@ -1292,6 +1485,34 @@
         }
       ]
     },
+    "save_artifact_options": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "if_exists"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "force"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "keep_own"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "keep_ts"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "symlink_no_follow"
+          }
+        ]
+      }
+    },
     "save_image_command": {
       "type": "SEQ",
       "members": [
@@ -1300,60 +1521,39 @@
           "value": "SAVE IMAGE"
         },
         {
+          "type": "FIELD",
+          "name": "options",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "ALIAS",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "save_image_options"
+                },
+                "named": true,
+                "value": "options"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          }
+        },
+        {
           "type": "CHOICE",
           "members": [
             {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "REPEAT",
-                  "content": {
-                    "type": "FIELD",
-                    "name": "option",
-                    "content": {
-                      "type": "CHOICE",
-                      "members": [
-                        {
-                          "type": "SYMBOL",
-                          "name": "cache_from"
-                        },
-                        {
-                          "type": "SYMBOL",
-                          "name": "push"
-                        }
-                      ]
-                    }
-                  }
-                },
-                {
-                  "type": "REPEAT",
-                  "content": {
-                    "type": "FIELD",
-                    "name": "image",
-                    "content": {
-                      "type": "CHOICE",
-                      "members": [
-                        {
-                          "type": "SYMBOL",
-                          "name": "string"
-                        },
-                        {
-                          "type": "SYMBOL",
-                          "name": "image_spec"
-                        }
-                      ]
-                    }
-                  }
-                }
-              ]
-            },
-            {
               "type": "FIELD",
-              "name": "option",
+              "name": "images",
               "content": {
                 "type": "SYMBOL",
-                "name": "cache_hint"
+                "name": "images"
               }
+            },
+            {
+              "type": "BLANK"
             }
           ]
         },
@@ -1362,6 +1562,26 @@
           "name": "_eol"
         }
       ]
+    },
+    "save_image_options": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "cache_from"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "cache_hint"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "push"
+          }
+        ]
+      }
     },
     "set_command": {
       "type": "SEQ",
@@ -1419,8 +1639,12 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "_command_block"
+              "type": "FIELD",
+              "name": "body",
+              "content": {
+                "type": "SYMBOL",
+                "name": "block"
+              }
             },
             {
               "type": "BLANK"
@@ -1436,14 +1660,24 @@
           "name": "_eol"
         },
         {
-          "type": "REPEAT",
+          "type": "FIELD",
+          "name": "finally",
           "content": {
-            "type": "FIELD",
-            "name": "finally",
-            "content": {
-              "type": "SYMBOL",
-              "name": "save_artifact_command"
-            }
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "ALIAS",
+                "content": {
+                  "type": "SYMBOL",
+                  "name": "try_command_finally_block"
+                },
+                "named": true,
+                "value": "block"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
           }
         },
         {
@@ -1455,6 +1689,13 @@
           "name": "_eol"
         }
       ]
+    },
+    "try_command_finally_block": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "SYMBOL",
+        "name": "save_artifact_command"
+      }
     },
     "user_command": {
       "type": "SEQ",
@@ -1564,7 +1805,7 @@
           "members": [
             {
               "type": "SYMBOL",
-              "name": "_command_block"
+              "name": "block"
             },
             {
               "type": "BLANK"
@@ -1589,39 +1830,24 @@
           "value": "WITH DOCKER"
         },
         {
-          "type": "REPEAT",
+          "type": "FIELD",
+          "name": "options",
           "content": {
-            "type": "FIELD",
-            "name": "option",
-            "content": {
-              "type": "CHOICE",
-              "members": [
-                {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "ALIAS",
+                "content": {
                   "type": "SYMBOL",
-                  "name": "allow_privileged"
+                  "name": "with_docker_options"
                 },
-                {
-                  "type": "SYMBOL",
-                  "name": "compose"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "load"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "platform"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "pull"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "service"
-                }
-              ]
-            }
+                "named": true,
+                "value": "options"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
           }
         },
         {
@@ -1637,6 +1863,38 @@
           "name": "_eol"
         }
       ]
+    },
+    "with_docker_options": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "allow_privileged"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "compose"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "load"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "platform"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "pull"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "service"
+          }
+        ]
+      }
     },
     "workdir_command": {
       "type": "SEQ",
@@ -1655,7 +1913,7 @@
         }
       ]
     },
-    "_command_block": {
+    "block": {
       "type": "REPEAT1",
       "content": {
         "type": "CHOICE",
@@ -1791,35 +2049,24 @@
       "type": "SEQ",
       "members": [
         {
-          "type": "REPEAT",
+          "type": "FIELD",
+          "name": "options",
           "content": {
-            "type": "FIELD",
-            "name": "option",
-            "content": {
-              "type": "CHOICE",
-              "members": [
-                {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "ALIAS",
+                "content": {
                   "type": "SYMBOL",
-                  "name": "ssh"
+                  "name": "_conditional_block_options"
                 },
-                {
-                  "type": "SYMBOL",
-                  "name": "privileged"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "no_cache"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "mount"
-                },
-                {
-                  "type": "SYMBOL",
-                  "name": "secret"
-                }
-              ]
-            }
+                "named": true,
+                "value": "options"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
           }
         },
         {
@@ -1835,26 +2082,80 @@
           "name": "_eol"
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "_command_block"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
+          "type": "FIELD",
+          "name": "body",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "block"
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
+          }
         }
       ]
     },
-    "else_if_block": {
-      "type": "SYMBOL",
-      "name": "_conditional_block"
+    "_conditional_block_options": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "ssh"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "privileged"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "no_cache"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "mount"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "secret"
+          }
+        ]
+      }
+    },
+    "elif_block": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "ELSE IF"
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_conditional_block"
+        }
+      ]
     },
     "else_block": {
-      "type": "SYMBOL",
-      "name": "_command_block"
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "STRING",
+          "value": "ELSE"
+        },
+        {
+          "type": "FIELD",
+          "name": "body",
+          "content": {
+            "type": "SYMBOL",
+            "name": "block"
+          }
+        }
+      ]
     },
     "_immediate_identifier": {
       "type": "SEQ",
@@ -2275,6 +2576,22 @@
         ]
       }
     },
+    "images": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SYMBOL",
+            "name": "string"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "image_spec"
+          }
+        ]
+      }
+    },
     "label": {
       "type": "SEQ",
       "members": [
@@ -2318,6 +2635,10 @@
     "number": {
       "type": "PATTERN",
       "value": "\\d+"
+    },
+    "options": {
+      "type": "STRING",
+      "value": "dummy node to use as an alias in the command options"
     },
     "port": {
       "type": "SEQ",
@@ -2563,11 +2884,8 @@
           "name": "target_ref"
         },
         {
-          "type": "REPEAT1",
-          "content": {
-            "type": "SYMBOL",
-            "name": "build_arg"
-          }
+          "type": "SYMBOL",
+          "name": "build_args"
         },
         {
           "type": "TOKEN",
@@ -2646,11 +2964,16 @@
           ]
         },
         {
-          "type": "REPEAT",
-          "content": {
-            "type": "SYMBOL",
-            "name": "build_arg"
-          }
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "build_args"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         },
         {
           "type": "TOKEN",
@@ -2819,6 +3142,13 @@
           ]
         }
       ]
+    },
+    "build_args": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "SYMBOL",
+        "name": "build_arg"
+      }
     },
     "build_arg_deprecated": {
       "type": "SEQ",
@@ -4354,6 +4684,13 @@
           }
         }
       ]
+    },
+    "strings": {
+      "type": "REPEAT1",
+      "content": {
+        "type": "SYMBOL",
+        "name": "string"
+      }
     },
     "expansion": {
       "type": "SEQ",

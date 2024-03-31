@@ -35,7 +35,7 @@ module.exports = grammar({
     source_file: ($) =>
       seq(
         optional($.version_command),
-        optional($._command_block),
+        optional(field("base_target", $.block)),
         repeat($.target)
       ),
 
@@ -54,22 +54,23 @@ module.exports = grammar({
         field("name", $.identifier),
         ":",
         $._eol,
-        optional(seq($._indent, optional($._command_block), $._dedent))
+        optional(seq($._indent, optional($.block), $._dedent))
       ),
 
     version_command: ($) =>
       seq(
         "VERSION",
-        field("option", repeat($.feature_flag)),
+        field("options", optional(alias($.version_options, $.options))),
         field("version", $.version_major_minor),
         $._eol
       ),
+    version_options: ($) => repeat1($.feature_flag),
 
     // the target commands
     arg_command: ($) =>
       seq(
         "ARG",
-        repeat(field("option", choice($.required, $.global))),
+        field("options", optional(alias($.arg_options, $.options))),
         field("name", $.variable),
         optional(
           seq(
@@ -82,34 +83,36 @@ module.exports = grammar({
         ),
         $._eol
       ),
+    arg_options: ($) => repeat1(choice($.required, $.global)),
 
     build_command: ($) =>
       seq(
         "BUILD",
-        repeat(
-          field(
-            "option",
-            choice(
-              $.auto_skip,
-              $.allow_privileged,
-              $.build_arg_deprecated,
-              $.pass_args,
-              $.platform
-            )
-          )
-        ),
+        field("options", optional(alias($.build_options, $.options))),
         choice($.target_ref, $.string),
-        repeat($.build_arg),
+        optional($.build_args),
         $._eol
+      ),
+    build_options: ($) =>
+      repeat1(
+        choice(
+          $.auto_skip,
+          $.allow_privileged,
+          $.build_arg_deprecated,
+          $.pass_args,
+          $.platform
+        )
       ),
 
     cache_command: ($) =>
       seq(
         "CACHE",
-        repeat(field("option", choice($.chmod, $.id, $.persist, $.sharing))),
+        field("options", optional(alias($.cache_options, $.options))),
         field("mount_point", $.string),
         $._eol
       ),
+    cache_options: ($) =>
+      repeat1(choice($.chmod, $.id, $.persist, $.sharing)),
 
     cmd_command: ($) =>
       seq("CMD", choice($.shell_fragment, $.string_array), $._eol),
@@ -117,23 +120,7 @@ module.exports = grammar({
     copy_command: ($) =>
       seq(
         "COPY",
-        repeat(
-          field(
-            "option",
-            choice(
-              $.allow_privileged,
-              $.chmod,
-              $.chown,
-              $.dir,
-              $.if_exists,
-              $.keep_own,
-              $.keep_ts,
-              $.pass_args,
-              $.platform,
-              $.symlink_no_follow
-            )
-          )
-        ),
+        field("options", optional(alias($.copy_options, $.options))),
         repeat1(
           field(
             "src",
@@ -143,14 +130,31 @@ module.exports = grammar({
         field("dest", $.string),
         $._eol
       ),
+    copy_options: ($) =>
+      repeat1(
+        choice(
+          $.allow_privileged,
+          $.chmod,
+          $.chown,
+          $.dir,
+          $.if_exists,
+          $.keep_own,
+          $.keep_ts,
+          $.pass_args,
+          $.platform,
+          $.symlink_no_follow
+        )
+      ),
 
     do_command: ($) =>
       seq(
         "DO",
-        repeat(field("option", choice($.allow_privileged, $.pass_args))),
+        field("options", optional(alias($.do_options, $.options))),
         $.function_ref,
-        repeat($.build_arg)
+        optional($.build_args)
       ),
+    do_options: ($) =>
+      repeat1(choice($.allow_privileged, $.pass_args)),
 
     entrypoint_command: ($) =>
       seq("ENTRYPOINT", choice($.shell_fragment, $.string_array), $._eol),
@@ -160,7 +164,7 @@ module.exports = grammar({
         "ENV",
         field("key", $.variable),
         optional(token(prec(5, "="))),
-        repeat(field("value", $.string)),
+        field("value", alias($.string_with_spaces, $.string)),
         $._eol
       ),
 
@@ -169,48 +173,48 @@ module.exports = grammar({
     for_command: ($) =>
       seq(
         "FOR",
-        repeat(
-          field(
-            "option",
-            choice($.sep, $.privileged, $.ssh, $.no_cache, $.mount, $.secret)
-          )
-        ),
+        field("options", optional(alias($.for_options, $.options))),
         field("name", $.variable),
         "IN",
-        repeat(field("value", $.string)),
+        field("values", $.strings),
         $._eol,
-        optional($._command_block),
+        optional($.block),
         "END",
         $._eol
+      ),
+    for_options: ($) =>
+      repeat1(
+        choice($.sep, $.privileged, $.ssh, $.no_cache, $.mount, $.secret)
       ),
 
     from_command: ($) =>
       seq(
         "FROM",
-        repeat(
-          field("option", choice($.platform, $.allow_privileged, $.pass_args))
-        ),
+        field("options", optional(alias($.from_options, $.options))),
         choice($.image_spec, $.target_ref, $.string),
-        repeat($.build_arg),
+        optional($.build_args),
         $._eol
+      ),
+    from_options: ($) =>
+      repeat1(
+        choice($.platform, $.allow_privileged, $.pass_args)
       ),
 
     from_dockerfile_command: ($) =>
       seq(
         "FROM DOCKERFILE",
-        repeat(
-          field(
-            "option",
-            choice(
-              $.docker_build_arg,
-              $.docker_file,
-              $.docker_target,
-              $.platform
-            )
-          )
-        ),
+        field("options", optional(alias($.from_dockerfile_options, $.options))),
         field("context", $.string),
         $._eol
+      ),
+    from_dockerfile_options: ($) =>
+      repeat1(
+        choice(
+          $.docker_build_arg,
+          $.docker_file,
+          $.docker_target,
+          $.platform
+        )
       ),
 
     function_command: ($) => seq(choice("FUNCTION", "COMMAND"), $._eol),
@@ -218,11 +222,13 @@ module.exports = grammar({
     git_clone_command: ($) =>
       seq(
         "GIT CLONE",
-        repeat(field("option", choice($.branch, $.keep_ts))),
+        field("options", optional(alias($.git_clone_options, $.options))),
         field("url", $.string),
         field("dest", $.string),
         $._eol
       ),
+    git_clone_options: ($) =>
+      repeat1(choice($.branch, $.keep_ts)),
 
     host_command: ($) =>
       seq("HOST", field("name", $.identifier), field("ip", $.string), $._eol),
@@ -231,8 +237,8 @@ module.exports = grammar({
       seq(
         "IF",
         $._conditional_block,
-        repeat(field("else_if", seq("ELSE IF", $.else_if_block))),
-        optional(field("else", seq("ELSE", $.else_block))),
+        repeat(field("alternative", $.elif_block)),
+        optional(field("alternative", $.else_block)),
         "END",
         $._eol
       ),
@@ -240,11 +246,13 @@ module.exports = grammar({
     import_command: ($) =>
       seq(
         "IMPORT",
-        repeat(field("option", choice($.allow_privileged))),
+        field("options", optional(alias($.import_options, $.options))),
         $.earthfile_ref,
         optional(seq("AS", field("alias", $.identifier))),
         $._eol
       ),
+    import_options: ($) =>
+      repeat1(choice($.allow_privileged)),
 
     let_command: ($) =>
       seq(
@@ -262,59 +270,54 @@ module.exports = grammar({
     run_command: ($) =>
       seq(
         "RUN",
-        repeat(
-          field(
-            "option",
-            choice(
-              $.entrypoint,
-              $.mount,
-              $.network_none,
-              $.no_cache,
-              $.privileged,
-              $.push,
-              $.secret,
-              $.ssh
-            )
-          )
-        ),
+        field("options", optional(alias($.run_options, $.options))),
         optional(" -- "),
         field("command", choice($.string_array, $.shell_fragment)),
         $._eol
+      ),
+    run_options: ($) =>
+      repeat1(
+        choice(
+          $.entrypoint,
+          $.mount,
+          $.network_none,
+          $.no_cache,
+          $.privileged,
+          $.push,
+          $.secret,
+          $.ssh
+        )
       ),
 
     save_artifact_command: ($) =>
       seq(
         "SAVE ARTIFACT",
-        repeat(
-          field(
-            "option",
-            choice(
-              $.if_exists,
-              $.force,
-              $.keep_own,
-              $.keep_ts,
-              $.symlink_no_follow
-            )
-          )
-        ),
+        field("options", optional(alias($.save_artifact_options, $.options))),
         field("src", $.string),
         optional(field("dest", $.string)),
         optional(seq("AS LOCAL", field("local_dest", $.string))),
         $._eol
       ),
+    save_artifact_options: ($) =>
+      repeat1(
+        choice(
+          $.if_exists,
+          $.force,
+          $.keep_own,
+          $.keep_ts,
+          $.symlink_no_follow
+        )
+      ),
 
     save_image_command: ($) =>
       seq(
         "SAVE IMAGE",
-        choice(
-          seq(
-            repeat(field("option", choice($.cache_from, $.push))),
-            repeat(field("image", choice($.string, $.image_spec)))
-          ),
-          field("option", $.cache_hint)
-        ),
+        field("options", optional(alias($.save_image_options, $.options))),
+        optional(field("images", $.images)),
         $._eol
       ),
+    save_image_options: ($) =>
+      repeat1(choice($.cache_from, $.cache_hint, $.push)),
 
     set_command: ($) =>
       seq(
@@ -329,13 +332,15 @@ module.exports = grammar({
       seq(
         "TRY",
         $._eol,
-        optional($._command_block),
+        optional(field("body", $.block)),
         "FINALLY",
         $._eol,
-        repeat(field("finally", $.save_artifact_command)),
+        field("finally", optional(alias($.try_command_finally_block, $.block))),
         "END",
         $._eol
       ),
+    try_command_finally_block: ($) => repeat1($.save_artifact_command),
+
 
     user_command: ($) =>
       seq(
@@ -353,33 +358,32 @@ module.exports = grammar({
     volume_command: ($) =>
       seq("VOLUME", choice($.string_array, repeat($.string)), $._eol),
 
-    wait_command: ($) => seq("WAIT", optional($._command_block), "END", $._eol),
+    wait_command: ($) => seq("WAIT", optional($.block), "END", $._eol),
 
     with_docker_command: ($) =>
       seq(
         "WITH DOCKER",
-        repeat(
-          field(
-            "option",
-            choice(
-              $.allow_privileged,
-              $.compose,
-              $.load,
-              $.platform,
-              $.pull,
-              $.service
-            )
-          )
-        ),
+        field("options", optional(alias($.with_docker_options, $.options))),
         $.run_command,
         "END",
         $._eol
+      ),
+    with_docker_options: ($) =>
+      repeat1(
+        choice(
+          $.allow_privileged,
+          $.compose,
+          $.load,
+          $.platform,
+          $.pull,
+          $.service
+        )
       ),
 
     workdir_command: ($) => seq("WORKDIR", $.string, $._eol),
 
     // code blocks
-    _command_block: ($) =>
+    block: ($) =>
       repeat1(
         choice(
           $.arg_command,
@@ -417,18 +421,17 @@ module.exports = grammar({
       ),
     _conditional_block: ($) =>
       seq(
-        repeat(
-          field(
-            "option",
-            choice($.ssh, $.privileged, $.no_cache, $.mount, $.secret)
-          )
-        ),
+        field("options", optional(alias($._conditional_block_options, $.options))),
         field("condition", $.shell_fragment),
         $._eol,
-        optional($._command_block)
+        field("body", optional($.block))
       ),
-    else_if_block: ($) => $._conditional_block,
-    else_block: ($) => $._command_block,
+    _conditional_block_options: ($) =>
+      repeat1(
+        choice($.ssh, $.privileged, $.no_cache, $.mount, $.secret)
+      ),
+    elif_block: ($) => seq("ELSE IF", $._conditional_block),
+    else_block: ($) => seq("ELSE", field("body", $.block)),
 
     // command elements
     _immediate_identifier: ($) =>
@@ -518,6 +521,7 @@ module.exports = grammar({
           alias($._immediate_expansion, $.expansion)
         )
       ),
+    images: ($) => repeat1(choice($.string, $.image_spec)),
     label: ($) =>
       seq(
         field("label", $.identifier),
@@ -525,6 +529,7 @@ module.exports = grammar({
         field("value", $.string)
       ),
     number: (_) => /\d+/,
+    options: ($) => "dummy node to use as an alias in the command options",
     port: ($) =>
       seq(
         $.number,
@@ -578,7 +583,7 @@ module.exports = grammar({
         field("name", alias($._immediate_identifier, $.identifier))
       ),
     target_ref_with_build_args: ($) =>
-      seq("(", $.target_ref, repeat1($.build_arg), token(prec(5, ")"))),
+      seq("(", $.target_ref, $.build_args, token(prec(5, ")"))),
     target_artifact: ($) =>
       seq($.target_ref, token.immediate("/"), $.unquoted_string),
     target_artifact_build_args: ($) =>
@@ -588,7 +593,7 @@ module.exports = grammar({
           seq($.target_ref, token.immediate("/"), $.unquoted_string),
           $.string
         ),
-        repeat($.build_arg),
+        optional($.build_args),
         token(prec(5, ")"))
       ),
     variable: ($) => /[a-zA-Z_][a-zA-Z0-9_]*/,
@@ -615,6 +620,7 @@ module.exports = grammar({
           field("value", $.string)
         )
       ),
+    build_args: ($) => repeat1($.build_arg),
     build_arg_deprecated: ($) =>
       seq(
         token(prec(5, "--build-arg")),
@@ -858,6 +864,7 @@ module.exports = grammar({
           )
         )
       ),
+    strings: ($) => repeat1($.string),
 
     // expansion/variable stuff
     // expansion: ($) => seq(token("$"), $.variable),

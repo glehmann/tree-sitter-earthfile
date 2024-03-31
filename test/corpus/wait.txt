@@ -12,6 +12,9 @@ foo:
     (source_file
       (target
         name: (identifier)
-        (wait_command
-          (run_command
-            command: (shell_fragment)))))
+        (block
+          (wait_command
+            (block
+              (run_command
+                command: (shell_fragment)))))))
+

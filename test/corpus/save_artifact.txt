@@ -10,9 +10,11 @@ foo:
     (source_file
       (target
         name: (identifier)
-        (save_artifact_command
-          src: (string
-            (unquoted_string)))))
+        (block
+          (save_artifact_command
+            src: (string
+              (unquoted_string))))))
+
 
 ==================
 save artifact with dest
@@ -26,11 +28,13 @@ foo:
     (source_file
       (target
         name: (identifier)
-        (save_artifact_command
-          src: (string
-            (unquoted_string))
-          dest: (string
-            (unquoted_string)))))
+        (block
+          (save_artifact_command
+            src: (string
+              (unquoted_string))
+            dest: (string
+              (unquoted_string))))))
+
 
 ==================
 save artifact with dest as local
@@ -44,13 +48,15 @@ foo:
     (source_file
       (target
         name: (identifier)
-        (save_artifact_command
-          src: (string
-            (unquoted_string))
-          dest: (string
-            (unquoted_string))
-          local_dest: (string
-            (unquoted_string)))))
+        (block
+          (save_artifact_command
+            src: (string
+              (unquoted_string))
+            dest: (string
+              (unquoted_string))
+            local_dest: (string
+              (unquoted_string))))))
+
 
 ==================
 save artifact with options
@@ -64,8 +70,11 @@ foo:
     (source_file
       (target
         name: (identifier)
-        (save_artifact_command
-          option: (keep_ts)
-          option: (force)
-          src: (string
-            (unquoted_string)))))
+        (block
+          (save_artifact_command
+            options: (options
+              (keep_ts)
+              (force))
+            src: (string
+              (unquoted_string))))))
+

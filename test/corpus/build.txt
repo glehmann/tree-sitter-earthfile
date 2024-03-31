@@ -10,9 +10,11 @@ foo:
     (source_file
       (target
         name: (identifier)
-        (build_command
-          (target_ref
-            name: (identifier)))))
+        (block
+          (build_command
+            (target_ref
+              name: (identifier))))))
+
 
 ==================
 build command with options
@@ -29,18 +31,21 @@ foo:
     (source_file
       (target
         name: (identifier)
-        (build_command
-          (line_continuation)
-          option: (platform
-            value: (string
-              (unquoted_string)))
-          (line_continuation)
-          option: (platform
-            value: (string
-              (unquoted_string)))
-          (line_continuation)
-          (target_ref
-            name: (identifier)))))
+        (block
+          (build_command
+            (line_continuation)
+            options: (options
+              (platform
+                value: (string
+                  (unquoted_string)))
+              (line_continuation)
+              (platform
+                value: (string
+                  (unquoted_string))))
+            (line_continuation)
+            (target_ref
+              name: (identifier))))))
+
 
 ==================
 build command with expansions
@@ -57,24 +62,27 @@ foo:
     (source_file
       (target
         name: (identifier)
-        (build_command
-          (line_continuation)
-          option: (platform
-            value: (string
-              (unquoted_string
+        (block
+          (build_command
+            (line_continuation)
+            options: (options
+              (platform
+                value: (string
+                  (unquoted_string
+                    (expansion
+                      (variable)))))
+              (line_continuation)
+              (platform
+                value: (string
+                  (unquoted_string
+                    (expansion
+                      (variable))))))
+            (line_continuation)
+            (target_ref
+              name: (identifier
                 (expansion
-                  (variable)))))
-          (line_continuation)
-          option: (platform
-            value: (string
-              (unquoted_string
-                (expansion
-                  (variable)))))
-          (line_continuation)
-          (target_ref
-            name: (identifier
-              (expansion
-                (variable)))))))
+                  (variable))))))))
+
 
 ==================
 build command with bracket expansions
@@ -91,24 +99,27 @@ foo:
     (source_file
       (target
         name: (identifier)
-        (build_command
-          (line_continuation)
-          option: (platform
-            value: (string
-              (unquoted_string
+        (block
+          (build_command
+            (line_continuation)
+            options: (options
+              (platform
+                value: (string
+                  (unquoted_string
+                    (expansion
+                      (variable)))))
+              (line_continuation)
+              (platform
+                value: (string
+                  (unquoted_string
+                    (expansion
+                      (variable))))))
+            (line_continuation)
+            (target_ref
+              name: (identifier
                 (expansion
-                  (variable)))))
-          (line_continuation)
-          option: (platform
-            value: (string
-              (unquoted_string
-                (expansion
-                  (variable)))))
-          (line_continuation)
-          (target_ref
-            name: (identifier
-              (expansion
-                (variable)))))))
+                  (variable))))))))
+
 
 ==================
 build command with shell expansions
@@ -125,24 +136,27 @@ foo:
     (source_file
       (target
         name: (identifier)
-        (build_command
-          (line_continuation)
-          option: (platform
-            value: (string
-              (unquoted_string
+        (block
+          (build_command
+            (line_continuation)
+            options: (options
+              (platform
+                value: (string
+                  (unquoted_string
+                    (expansion
+                      (shell_fragment)))))
+              (line_continuation)
+              (platform
+                value: (string
+                  (unquoted_string
+                    (expansion
+                      (shell_fragment))))))
+            (line_continuation)
+            (target_ref
+              name: (identifier
                 (expansion
-                  (shell_fragment)))))
-          (line_continuation)
-          option: (platform
-            value: (string
-              (unquoted_string
-                (expansion
-                  (shell_fragment)))))
-          (line_continuation)
-          (target_ref
-            name: (identifier
-              (expansion
-                (shell_fragment)))))))
+                  (shell_fragment))))))))
+
 
 ==================
 build command with target expansion
@@ -156,11 +170,13 @@ foo:
     (source_file
       (target
         name: (identifier)
-        (build_command
-          (string
-            (unquoted_string
-              (expansion
-                (variable)))))))
+        (block
+          (build_command
+            (string
+              (unquoted_string
+                (expansion
+                  (variable))))))))
+
 
 ==================
 build command with target shell expansion
@@ -174,11 +190,13 @@ foo:
     (source_file
       (target
         name: (identifier)
-        (build_command
-          (string
-            (unquoted_string
-              (expansion
-                (shell_fragment)))))))
+        (block
+          (build_command
+            (string
+              (unquoted_string
+                (expansion
+                  (shell_fragment))))))))
+
 
 ==================
 build command deprecated build arg
@@ -192,12 +210,15 @@ foo:
     (source_file
       (target
         name: (identifier)
-        (build_command
-          option: (build_arg_deprecated
-            value: (string
-              (unquoted_string)))
-          (target_ref
-            name: (identifier)))))
+        (block
+          (build_command
+            options: (options
+              (build_arg_deprecated
+                value: (string
+                  (unquoted_string))))
+            (target_ref
+              name: (identifier))))))
+
 
 ==================
 build command with empty build arg
@@ -211,8 +232,11 @@ foo:
     (source_file
       (target
         name: (identifier)
-        (build_command
-          (target_ref
-            name: (identifier))
-          (build_arg
-            name: (variable)))))
+        (block
+          (build_command
+            (target_ref
+              name: (identifier))
+            (build_args
+              (build_arg
+                name: (variable)))))))
+

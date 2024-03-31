@@ -10,7 +10,9 @@ foo:
     (source_file
       (target
         name: (identifier)
-        (set_command
-          name: (variable)
-          value: (string
-            (unquoted_string)))))
+        (block
+          (set_command
+            name: (variable)
+            value: (string
+              (unquoted_string))))))
+

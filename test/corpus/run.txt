@@ -10,8 +10,10 @@ foo:
     (source_file
       (target
         name: (identifier)
-        (run_command
-          command: (shell_fragment))))
+        (block
+          (run_command
+            command: (shell_fragment)))))
+
 
 ==================
 run with options
@@ -25,12 +27,15 @@ foo:
     (source_file
       (target
         name: (identifier)
-        (run_command
-          option: (push)
-          option: (secret
-            value: (string
-              (unquoted_string)))
-          command: (shell_fragment))))
+        (block
+          (run_command
+            options: (options
+              (push)
+              (secret
+                value: (string
+                  (unquoted_string))))
+            command: (shell_fragment)))))
+
 
 ==================
 run array
@@ -44,10 +49,12 @@ foo:
     (source_file
       (target
         name: (identifier)
-        (run_command
-          command: (string_array
-            (double_quoted_string)
-            (double_quoted_string)))))
+        (block
+          (run_command
+            command: (string_array
+              (double_quoted_string)
+              (double_quoted_string))))))
+
 
 ==================
 run with comments
@@ -65,6 +72,8 @@ foo:
     (source_file
       (target
         name: (identifier)
-        (run_command
-          command: (shell_fragment
-            (line_continuation_comment)))))
+        (block
+          (run_command
+            command: (shell_fragment
+              (line_continuation_comment))))))
+

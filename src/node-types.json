@@ -23,16 +23,12 @@
           }
         ]
       },
-      "option": {
-        "multiple": true,
+      "options": {
+        "multiple": false,
         "required": false,
         "types": [
           {
-            "type": "global",
-            "named": true
-          },
-          {
-            "type": "required",
+            "type": "options",
             "named": true
           }
         ]
@@ -44,6 +40,141 @@
       "types": [
         {
           "type": "comment",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "block",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "arg_command",
+          "named": true
+        },
+        {
+          "type": "build_command",
+          "named": true
+        },
+        {
+          "type": "cache_command",
+          "named": true
+        },
+        {
+          "type": "cmd_command",
+          "named": true
+        },
+        {
+          "type": "copy_command",
+          "named": true
+        },
+        {
+          "type": "do_command",
+          "named": true
+        },
+        {
+          "type": "entrypoint_command",
+          "named": true
+        },
+        {
+          "type": "env_command",
+          "named": true
+        },
+        {
+          "type": "expose_command",
+          "named": true
+        },
+        {
+          "type": "for_command",
+          "named": true
+        },
+        {
+          "type": "from_command",
+          "named": true
+        },
+        {
+          "type": "from_dockerfile_command",
+          "named": true
+        },
+        {
+          "type": "function_command",
+          "named": true
+        },
+        {
+          "type": "git_clone_command",
+          "named": true
+        },
+        {
+          "type": "host_command",
+          "named": true
+        },
+        {
+          "type": "if_command",
+          "named": true
+        },
+        {
+          "type": "import_command",
+          "named": true
+        },
+        {
+          "type": "label_command",
+          "named": true
+        },
+        {
+          "type": "let_command",
+          "named": true
+        },
+        {
+          "type": "locally_command",
+          "named": true
+        },
+        {
+          "type": "project_command",
+          "named": true
+        },
+        {
+          "type": "run_command",
+          "named": true
+        },
+        {
+          "type": "save_artifact_command",
+          "named": true
+        },
+        {
+          "type": "save_image_command",
+          "named": true
+        },
+        {
+          "type": "set_command",
+          "named": true
+        },
+        {
+          "type": "try_command",
+          "named": true
+        },
+        {
+          "type": "user_command",
+          "named": true
+        },
+        {
+          "type": "volume_command",
+          "named": true
+        },
+        {
+          "type": "wait_command",
+          "named": true
+        },
+        {
+          "type": "with_docker_command",
+          "named": true
+        },
+        {
+          "type": "workdir_command",
           "named": true
         }
       ]
@@ -108,31 +239,30 @@
     }
   },
   {
+    "type": "build_args",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "build_arg",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "build_command",
     "named": true,
     "fields": {
-      "option": {
-        "multiple": true,
+      "options": {
+        "multiple": false,
         "required": false,
         "types": [
           {
-            "type": "allow_privileged",
-            "named": true
-          },
-          {
-            "type": "auto_skip",
-            "named": true
-          },
-          {
-            "type": "build_arg_deprecated",
-            "named": true
-          },
-          {
-            "type": "pass_args",
-            "named": true
-          },
-          {
-            "type": "platform",
+            "type": "options",
             "named": true
           }
         ]
@@ -143,7 +273,7 @@
       "required": true,
       "types": [
         {
-          "type": "build_arg",
+          "type": "build_args",
           "named": true
         },
         {
@@ -175,24 +305,12 @@
           }
         ]
       },
-      "option": {
-        "multiple": true,
+      "options": {
+        "multiple": false,
         "required": false,
         "types": [
           {
-            "type": "chmod",
-            "named": true
-          },
-          {
-            "type": "id",
-            "named": true
-          },
-          {
-            "type": "persist",
-            "named": true
-          },
-          {
-            "type": "sharing",
+            "type": "options",
             "named": true
           }
         ]
@@ -310,48 +428,12 @@
           }
         ]
       },
-      "option": {
-        "multiple": true,
+      "options": {
+        "multiple": false,
         "required": false,
         "types": [
           {
-            "type": "allow_privileged",
-            "named": true
-          },
-          {
-            "type": "chmod",
-            "named": true
-          },
-          {
-            "type": "chown",
-            "named": true
-          },
-          {
-            "type": "dir",
-            "named": true
-          },
-          {
-            "type": "if_exists",
-            "named": true
-          },
-          {
-            "type": "keep_own",
-            "named": true
-          },
-          {
-            "type": "keep_ts",
-            "named": true
-          },
-          {
-            "type": "pass_args",
-            "named": true
-          },
-          {
-            "type": "platform",
-            "named": true
-          },
-          {
-            "type": "symlink_no_follow",
+            "type": "options",
             "named": true
           }
         ]
@@ -390,16 +472,12 @@
     "type": "do_command",
     "named": true,
     "fields": {
-      "option": {
-        "multiple": true,
+      "options": {
+        "multiple": false,
         "required": false,
         "types": [
           {
-            "type": "allow_privileged",
-            "named": true
-          },
-          {
-            "type": "pass_args",
+            "type": "options",
             "named": true
           }
         ]
@@ -410,7 +488,7 @@
       "required": true,
       "types": [
         {
-          "type": "build_arg",
+          "type": "build_args",
           "named": true
         },
         {
@@ -517,144 +595,19 @@
     }
   },
   {
-    "type": "else_block",
-    "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": true,
-      "types": [
-        {
-          "type": "arg_command",
-          "named": true
-        },
-        {
-          "type": "build_command",
-          "named": true
-        },
-        {
-          "type": "cache_command",
-          "named": true
-        },
-        {
-          "type": "cmd_command",
-          "named": true
-        },
-        {
-          "type": "copy_command",
-          "named": true
-        },
-        {
-          "type": "do_command",
-          "named": true
-        },
-        {
-          "type": "entrypoint_command",
-          "named": true
-        },
-        {
-          "type": "env_command",
-          "named": true
-        },
-        {
-          "type": "expose_command",
-          "named": true
-        },
-        {
-          "type": "for_command",
-          "named": true
-        },
-        {
-          "type": "from_command",
-          "named": true
-        },
-        {
-          "type": "from_dockerfile_command",
-          "named": true
-        },
-        {
-          "type": "function_command",
-          "named": true
-        },
-        {
-          "type": "git_clone_command",
-          "named": true
-        },
-        {
-          "type": "host_command",
-          "named": true
-        },
-        {
-          "type": "if_command",
-          "named": true
-        },
-        {
-          "type": "import_command",
-          "named": true
-        },
-        {
-          "type": "label_command",
-          "named": true
-        },
-        {
-          "type": "let_command",
-          "named": true
-        },
-        {
-          "type": "locally_command",
-          "named": true
-        },
-        {
-          "type": "project_command",
-          "named": true
-        },
-        {
-          "type": "run_command",
-          "named": true
-        },
-        {
-          "type": "save_artifact_command",
-          "named": true
-        },
-        {
-          "type": "save_image_command",
-          "named": true
-        },
-        {
-          "type": "set_command",
-          "named": true
-        },
-        {
-          "type": "try_command",
-          "named": true
-        },
-        {
-          "type": "user_command",
-          "named": true
-        },
-        {
-          "type": "volume_command",
-          "named": true
-        },
-        {
-          "type": "wait_command",
-          "named": true
-        },
-        {
-          "type": "with_docker_command",
-          "named": true
-        },
-        {
-          "type": "workdir_command",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "else_if_block",
+    "type": "elif_block",
     "named": true,
     "fields": {
+      "body": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "block",
+            "named": true
+          }
+        ]
+      },
       "condition": {
         "multiple": false,
         "required": true,
@@ -665,166 +618,42 @@
           }
         ]
       },
-      "option": {
-        "multiple": true,
+      "options": {
+        "multiple": false,
         "required": false,
         "types": [
           {
-            "type": "mount",
-            "named": true
-          },
-          {
-            "type": "no_cache",
-            "named": true
-          },
-          {
-            "type": "privileged",
-            "named": true
-          },
-          {
-            "type": "secret",
-            "named": true
-          },
-          {
-            "type": "ssh",
+            "type": "options",
             "named": true
           }
         ]
       }
     },
     "children": {
-      "multiple": true,
+      "multiple": false,
       "required": false,
       "types": [
         {
-          "type": "arg_command",
-          "named": true
-        },
-        {
-          "type": "build_command",
-          "named": true
-        },
-        {
-          "type": "cache_command",
-          "named": true
-        },
-        {
-          "type": "cmd_command",
-          "named": true
-        },
-        {
           "type": "comment",
-          "named": true
-        },
-        {
-          "type": "copy_command",
-          "named": true
-        },
-        {
-          "type": "do_command",
-          "named": true
-        },
-        {
-          "type": "entrypoint_command",
-          "named": true
-        },
-        {
-          "type": "env_command",
-          "named": true
-        },
-        {
-          "type": "expose_command",
-          "named": true
-        },
-        {
-          "type": "for_command",
-          "named": true
-        },
-        {
-          "type": "from_command",
-          "named": true
-        },
-        {
-          "type": "from_dockerfile_command",
-          "named": true
-        },
-        {
-          "type": "function_command",
-          "named": true
-        },
-        {
-          "type": "git_clone_command",
-          "named": true
-        },
-        {
-          "type": "host_command",
-          "named": true
-        },
-        {
-          "type": "if_command",
-          "named": true
-        },
-        {
-          "type": "import_command",
-          "named": true
-        },
-        {
-          "type": "label_command",
-          "named": true
-        },
-        {
-          "type": "let_command",
-          "named": true
-        },
-        {
-          "type": "locally_command",
-          "named": true
-        },
-        {
-          "type": "project_command",
-          "named": true
-        },
-        {
-          "type": "run_command",
-          "named": true
-        },
-        {
-          "type": "save_artifact_command",
-          "named": true
-        },
-        {
-          "type": "save_image_command",
-          "named": true
-        },
-        {
-          "type": "set_command",
-          "named": true
-        },
-        {
-          "type": "try_command",
-          "named": true
-        },
-        {
-          "type": "user_command",
-          "named": true
-        },
-        {
-          "type": "volume_command",
-          "named": true
-        },
-        {
-          "type": "wait_command",
-          "named": true
-        },
-        {
-          "type": "with_docker_command",
-          "named": true
-        },
-        {
-          "type": "workdir_command",
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "else_block",
+    "named": true,
+    "fields": {
+      "body": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "block",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
@@ -865,8 +694,8 @@
         ]
       },
       "value": {
-        "multiple": true,
-        "required": false,
+        "multiple": false,
+        "required": true,
         "types": [
           {
             "type": "string",
@@ -943,42 +772,22 @@
           }
         ]
       },
-      "option": {
-        "multiple": true,
+      "options": {
+        "multiple": false,
         "required": false,
         "types": [
           {
-            "type": "mount",
-            "named": true
-          },
-          {
-            "type": "no_cache",
-            "named": true
-          },
-          {
-            "type": "privileged",
-            "named": true
-          },
-          {
-            "type": "secret",
-            "named": true
-          },
-          {
-            "type": "sep",
-            "named": true
-          },
-          {
-            "type": "ssh",
+            "type": "options",
             "named": true
           }
         ]
       },
-      "value": {
-        "multiple": true,
-        "required": false,
+      "values": {
+        "multiple": false,
+        "required": true,
         "types": [
           {
-            "type": "string",
+            "type": "strings",
             "named": true
           }
         ]
@@ -989,131 +798,11 @@
       "required": false,
       "types": [
         {
-          "type": "arg_command",
-          "named": true
-        },
-        {
-          "type": "build_command",
-          "named": true
-        },
-        {
-          "type": "cache_command",
-          "named": true
-        },
-        {
-          "type": "cmd_command",
+          "type": "block",
           "named": true
         },
         {
           "type": "comment",
-          "named": true
-        },
-        {
-          "type": "copy_command",
-          "named": true
-        },
-        {
-          "type": "do_command",
-          "named": true
-        },
-        {
-          "type": "entrypoint_command",
-          "named": true
-        },
-        {
-          "type": "env_command",
-          "named": true
-        },
-        {
-          "type": "expose_command",
-          "named": true
-        },
-        {
-          "type": "for_command",
-          "named": true
-        },
-        {
-          "type": "from_command",
-          "named": true
-        },
-        {
-          "type": "from_dockerfile_command",
-          "named": true
-        },
-        {
-          "type": "function_command",
-          "named": true
-        },
-        {
-          "type": "git_clone_command",
-          "named": true
-        },
-        {
-          "type": "host_command",
-          "named": true
-        },
-        {
-          "type": "if_command",
-          "named": true
-        },
-        {
-          "type": "import_command",
-          "named": true
-        },
-        {
-          "type": "label_command",
-          "named": true
-        },
-        {
-          "type": "let_command",
-          "named": true
-        },
-        {
-          "type": "locally_command",
-          "named": true
-        },
-        {
-          "type": "project_command",
-          "named": true
-        },
-        {
-          "type": "run_command",
-          "named": true
-        },
-        {
-          "type": "save_artifact_command",
-          "named": true
-        },
-        {
-          "type": "save_image_command",
-          "named": true
-        },
-        {
-          "type": "set_command",
-          "named": true
-        },
-        {
-          "type": "try_command",
-          "named": true
-        },
-        {
-          "type": "user_command",
-          "named": true
-        },
-        {
-          "type": "volume_command",
-          "named": true
-        },
-        {
-          "type": "wait_command",
-          "named": true
-        },
-        {
-          "type": "with_docker_command",
-          "named": true
-        },
-        {
-          "type": "workdir_command",
           "named": true
         }
       ]
@@ -1123,20 +812,12 @@
     "type": "from_command",
     "named": true,
     "fields": {
-      "option": {
-        "multiple": true,
+      "options": {
+        "multiple": false,
         "required": false,
         "types": [
           {
-            "type": "allow_privileged",
-            "named": true
-          },
-          {
-            "type": "pass_args",
-            "named": true
-          },
-          {
-            "type": "platform",
+            "type": "options",
             "named": true
           }
         ]
@@ -1147,7 +828,7 @@
       "required": true,
       "types": [
         {
-          "type": "build_arg",
+          "type": "build_args",
           "named": true
         },
         {
@@ -1183,24 +864,12 @@
           }
         ]
       },
-      "option": {
-        "multiple": true,
+      "options": {
+        "multiple": false,
         "required": false,
         "types": [
           {
-            "type": "docker_build_arg",
-            "named": true
-          },
-          {
-            "type": "docker_file",
-            "named": true
-          },
-          {
-            "type": "docker_target",
-            "named": true
-          },
-          {
-            "type": "platform",
+            "type": "options",
             "named": true
           }
         ]
@@ -1272,16 +941,12 @@
           }
         ]
       },
-      "option": {
-        "multiple": true,
+      "options": {
+        "multiple": false,
         "required": false,
         "types": [
           {
-            "type": "branch",
-            "named": true
-          },
-          {
-            "type": "keep_ts",
+            "type": "options",
             "named": true
           }
         ]
@@ -1378,6 +1043,30 @@
     "type": "if_command",
     "named": true,
     "fields": {
+      "alternative": {
+        "multiple": true,
+        "required": false,
+        "types": [
+          {
+            "type": "elif_block",
+            "named": true
+          },
+          {
+            "type": "else_block",
+            "named": true
+          }
+        ]
+      },
+      "body": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "block",
+            "named": true
+          }
+        ]
+      },
       "condition": {
         "multiple": false,
         "required": true,
@@ -1388,56 +1077,12 @@
           }
         ]
       },
-      "else": {
-        "multiple": true,
+      "options": {
+        "multiple": false,
         "required": false,
         "types": [
           {
-            "type": "ELSE",
-            "named": false
-          },
-          {
-            "type": "else_block",
-            "named": true
-          }
-        ]
-      },
-      "else_if": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "ELSE IF",
-            "named": false
-          },
-          {
-            "type": "else_if_block",
-            "named": true
-          }
-        ]
-      },
-      "option": {
-        "multiple": true,
-        "required": false,
-        "types": [
-          {
-            "type": "mount",
-            "named": true
-          },
-          {
-            "type": "no_cache",
-            "named": true
-          },
-          {
-            "type": "privileged",
-            "named": true
-          },
-          {
-            "type": "secret",
-            "named": true
-          },
-          {
-            "type": "ssh",
+            "type": "options",
             "named": true
           }
         ]
@@ -1448,131 +1093,7 @@
       "required": false,
       "types": [
         {
-          "type": "arg_command",
-          "named": true
-        },
-        {
-          "type": "build_command",
-          "named": true
-        },
-        {
-          "type": "cache_command",
-          "named": true
-        },
-        {
-          "type": "cmd_command",
-          "named": true
-        },
-        {
           "type": "comment",
-          "named": true
-        },
-        {
-          "type": "copy_command",
-          "named": true
-        },
-        {
-          "type": "do_command",
-          "named": true
-        },
-        {
-          "type": "entrypoint_command",
-          "named": true
-        },
-        {
-          "type": "env_command",
-          "named": true
-        },
-        {
-          "type": "expose_command",
-          "named": true
-        },
-        {
-          "type": "for_command",
-          "named": true
-        },
-        {
-          "type": "from_command",
-          "named": true
-        },
-        {
-          "type": "from_dockerfile_command",
-          "named": true
-        },
-        {
-          "type": "function_command",
-          "named": true
-        },
-        {
-          "type": "git_clone_command",
-          "named": true
-        },
-        {
-          "type": "host_command",
-          "named": true
-        },
-        {
-          "type": "if_command",
-          "named": true
-        },
-        {
-          "type": "import_command",
-          "named": true
-        },
-        {
-          "type": "label_command",
-          "named": true
-        },
-        {
-          "type": "let_command",
-          "named": true
-        },
-        {
-          "type": "locally_command",
-          "named": true
-        },
-        {
-          "type": "project_command",
-          "named": true
-        },
-        {
-          "type": "run_command",
-          "named": true
-        },
-        {
-          "type": "save_artifact_command",
-          "named": true
-        },
-        {
-          "type": "save_image_command",
-          "named": true
-        },
-        {
-          "type": "set_command",
-          "named": true
-        },
-        {
-          "type": "try_command",
-          "named": true
-        },
-        {
-          "type": "user_command",
-          "named": true
-        },
-        {
-          "type": "volume_command",
-          "named": true
-        },
-        {
-          "type": "wait_command",
-          "named": true
-        },
-        {
-          "type": "with_docker_command",
-          "named": true
-        },
-        {
-          "type": "workdir_command",
           "named": true
         }
       ]
@@ -1684,6 +1205,25 @@
     }
   },
   {
+    "type": "images",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "image_spec",
+          "named": true
+        },
+        {
+          "type": "string",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "import_command",
     "named": true,
     "fields": {
@@ -1697,12 +1237,12 @@
           }
         ]
       },
-      "option": {
-        "multiple": true,
+      "options": {
+        "multiple": false,
         "required": false,
         "types": [
           {
-            "type": "allow_privileged",
+            "type": "options",
             "named": true
           }
         ]
@@ -1870,6 +1410,169 @@
     }
   },
   {
+    "type": "options",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "allow_privileged",
+          "named": true
+        },
+        {
+          "type": "auto_skip",
+          "named": true
+        },
+        {
+          "type": "branch",
+          "named": true
+        },
+        {
+          "type": "build_arg_deprecated",
+          "named": true
+        },
+        {
+          "type": "cache_from",
+          "named": true
+        },
+        {
+          "type": "cache_hint",
+          "named": true
+        },
+        {
+          "type": "chmod",
+          "named": true
+        },
+        {
+          "type": "chown",
+          "named": true
+        },
+        {
+          "type": "compose",
+          "named": true
+        },
+        {
+          "type": "dir",
+          "named": true
+        },
+        {
+          "type": "docker_build_arg",
+          "named": true
+        },
+        {
+          "type": "docker_file",
+          "named": true
+        },
+        {
+          "type": "docker_target",
+          "named": true
+        },
+        {
+          "type": "entrypoint",
+          "named": true
+        },
+        {
+          "type": "feature_flag",
+          "named": true
+        },
+        {
+          "type": "force",
+          "named": true
+        },
+        {
+          "type": "global",
+          "named": true
+        },
+        {
+          "type": "id",
+          "named": true
+        },
+        {
+          "type": "if_exists",
+          "named": true
+        },
+        {
+          "type": "keep_own",
+          "named": true
+        },
+        {
+          "type": "keep_ts",
+          "named": true
+        },
+        {
+          "type": "load",
+          "named": true
+        },
+        {
+          "type": "mount",
+          "named": true
+        },
+        {
+          "type": "network_none",
+          "named": true
+        },
+        {
+          "type": "no_cache",
+          "named": true
+        },
+        {
+          "type": "pass_args",
+          "named": true
+        },
+        {
+          "type": "persist",
+          "named": true
+        },
+        {
+          "type": "platform",
+          "named": true
+        },
+        {
+          "type": "privileged",
+          "named": true
+        },
+        {
+          "type": "pull",
+          "named": true
+        },
+        {
+          "type": "push",
+          "named": true
+        },
+        {
+          "type": "required",
+          "named": true
+        },
+        {
+          "type": "secret",
+          "named": true
+        },
+        {
+          "type": "sep",
+          "named": true
+        },
+        {
+          "type": "service",
+          "named": true
+        },
+        {
+          "type": "sharing",
+          "named": true
+        },
+        {
+          "type": "ssh",
+          "named": true
+        },
+        {
+          "type": "symlink_no_follow",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "platform",
     "named": true,
     "fields": {
@@ -1981,40 +1684,12 @@
           }
         ]
       },
-      "option": {
-        "multiple": true,
+      "options": {
+        "multiple": false,
         "required": false,
         "types": [
           {
-            "type": "entrypoint",
-            "named": true
-          },
-          {
-            "type": "mount",
-            "named": true
-          },
-          {
-            "type": "network_none",
-            "named": true
-          },
-          {
-            "type": "no_cache",
-            "named": true
-          },
-          {
-            "type": "privileged",
-            "named": true
-          },
-          {
-            "type": "push",
-            "named": true
-          },
-          {
-            "type": "secret",
-            "named": true
-          },
-          {
-            "type": "ssh",
+            "type": "options",
             "named": true
           }
         ]
@@ -2055,28 +1730,12 @@
           }
         ]
       },
-      "option": {
-        "multiple": true,
+      "options": {
+        "multiple": false,
         "required": false,
         "types": [
           {
-            "type": "force",
-            "named": true
-          },
-          {
-            "type": "if_exists",
-            "named": true
-          },
-          {
-            "type": "keep_own",
-            "named": true
-          },
-          {
-            "type": "keep_ts",
-            "named": true
-          },
-          {
-            "type": "symlink_no_follow",
+            "type": "options",
             "named": true
           }
         ]
@@ -2107,34 +1766,22 @@
     "type": "save_image_command",
     "named": true,
     "fields": {
-      "image": {
-        "multiple": true,
+      "images": {
+        "multiple": false,
         "required": false,
         "types": [
           {
-            "type": "image_spec",
-            "named": true
-          },
-          {
-            "type": "string",
+            "type": "images",
             "named": true
           }
         ]
       },
-      "option": {
-        "multiple": true,
+      "options": {
+        "multiple": false,
         "required": false,
         "types": [
           {
-            "type": "cache_from",
-            "named": true
-          },
-          {
-            "type": "cache_hint",
-            "named": true
-          },
-          {
-            "type": "push",
+            "type": "options",
             "named": true
           }
         ]
@@ -2287,141 +1934,28 @@
   {
     "type": "source_file",
     "named": true,
-    "fields": {},
+    "fields": {
+      "base_target": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "block",
+            "named": true
+          }
+        ]
+      }
+    },
     "children": {
       "multiple": true,
       "required": false,
       "types": [
         {
-          "type": "arg_command",
-          "named": true
-        },
-        {
-          "type": "build_command",
-          "named": true
-        },
-        {
-          "type": "cache_command",
-          "named": true
-        },
-        {
-          "type": "cmd_command",
-          "named": true
-        },
-        {
-          "type": "copy_command",
-          "named": true
-        },
-        {
-          "type": "do_command",
-          "named": true
-        },
-        {
-          "type": "entrypoint_command",
-          "named": true
-        },
-        {
-          "type": "env_command",
-          "named": true
-        },
-        {
-          "type": "expose_command",
-          "named": true
-        },
-        {
-          "type": "for_command",
-          "named": true
-        },
-        {
-          "type": "from_command",
-          "named": true
-        },
-        {
-          "type": "from_dockerfile_command",
-          "named": true
-        },
-        {
-          "type": "function_command",
-          "named": true
-        },
-        {
-          "type": "git_clone_command",
-          "named": true
-        },
-        {
-          "type": "host_command",
-          "named": true
-        },
-        {
-          "type": "if_command",
-          "named": true
-        },
-        {
-          "type": "import_command",
-          "named": true
-        },
-        {
-          "type": "label_command",
-          "named": true
-        },
-        {
-          "type": "let_command",
-          "named": true
-        },
-        {
-          "type": "locally_command",
-          "named": true
-        },
-        {
-          "type": "project_command",
-          "named": true
-        },
-        {
-          "type": "run_command",
-          "named": true
-        },
-        {
-          "type": "save_artifact_command",
-          "named": true
-        },
-        {
-          "type": "save_image_command",
-          "named": true
-        },
-        {
-          "type": "set_command",
-          "named": true
-        },
-        {
           "type": "target",
           "named": true
         },
         {
-          "type": "try_command",
-          "named": true
-        },
-        {
-          "type": "user_command",
-          "named": true
-        },
-        {
           "type": "version_command",
-          "named": true
-        },
-        {
-          "type": "volume_command",
-          "named": true
-        },
-        {
-          "type": "wait_command",
-          "named": true
-        },
-        {
-          "type": "with_docker_command",
-          "named": true
-        },
-        {
-          "type": "workdir_command",
           "named": true
         }
       ]
@@ -2466,6 +2000,21 @@
     }
   },
   {
+    "type": "strings",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "string",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "target",
     "named": true,
     "fields": {
@@ -2485,131 +2034,11 @@
       "required": false,
       "types": [
         {
-          "type": "arg_command",
-          "named": true
-        },
-        {
-          "type": "build_command",
-          "named": true
-        },
-        {
-          "type": "cache_command",
-          "named": true
-        },
-        {
-          "type": "cmd_command",
+          "type": "block",
           "named": true
         },
         {
           "type": "comment",
-          "named": true
-        },
-        {
-          "type": "copy_command",
-          "named": true
-        },
-        {
-          "type": "do_command",
-          "named": true
-        },
-        {
-          "type": "entrypoint_command",
-          "named": true
-        },
-        {
-          "type": "env_command",
-          "named": true
-        },
-        {
-          "type": "expose_command",
-          "named": true
-        },
-        {
-          "type": "for_command",
-          "named": true
-        },
-        {
-          "type": "from_command",
-          "named": true
-        },
-        {
-          "type": "from_dockerfile_command",
-          "named": true
-        },
-        {
-          "type": "function_command",
-          "named": true
-        },
-        {
-          "type": "git_clone_command",
-          "named": true
-        },
-        {
-          "type": "host_command",
-          "named": true
-        },
-        {
-          "type": "if_command",
-          "named": true
-        },
-        {
-          "type": "import_command",
-          "named": true
-        },
-        {
-          "type": "label_command",
-          "named": true
-        },
-        {
-          "type": "let_command",
-          "named": true
-        },
-        {
-          "type": "locally_command",
-          "named": true
-        },
-        {
-          "type": "project_command",
-          "named": true
-        },
-        {
-          "type": "run_command",
-          "named": true
-        },
-        {
-          "type": "save_artifact_command",
-          "named": true
-        },
-        {
-          "type": "save_image_command",
-          "named": true
-        },
-        {
-          "type": "set_command",
-          "named": true
-        },
-        {
-          "type": "try_command",
-          "named": true
-        },
-        {
-          "type": "user_command",
-          "named": true
-        },
-        {
-          "type": "volume_command",
-          "named": true
-        },
-        {
-          "type": "wait_command",
-          "named": true
-        },
-        {
-          "type": "with_docker_command",
-          "named": true
-        },
-        {
-          "type": "workdir_command",
           "named": true
         }
       ]
@@ -2643,7 +2072,7 @@
       "required": true,
       "types": [
         {
-          "type": "build_arg",
+          "type": "build_args",
           "named": true
         },
         {
@@ -2696,7 +2125,7 @@
       "required": true,
       "types": [
         {
-          "type": "build_arg",
+          "type": "build_args",
           "named": true
         },
         {
@@ -2710,12 +2139,22 @@
     "type": "try_command",
     "named": true,
     "fields": {
-      "finally": {
-        "multiple": true,
+      "body": {
+        "multiple": false,
         "required": false,
         "types": [
           {
-            "type": "save_artifact_command",
+            "type": "block",
+            "named": true
+          }
+        ]
+      },
+      "finally": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "block",
             "named": true
           }
         ]
@@ -2726,131 +2165,7 @@
       "required": false,
       "types": [
         {
-          "type": "arg_command",
-          "named": true
-        },
-        {
-          "type": "build_command",
-          "named": true
-        },
-        {
-          "type": "cache_command",
-          "named": true
-        },
-        {
-          "type": "cmd_command",
-          "named": true
-        },
-        {
           "type": "comment",
-          "named": true
-        },
-        {
-          "type": "copy_command",
-          "named": true
-        },
-        {
-          "type": "do_command",
-          "named": true
-        },
-        {
-          "type": "entrypoint_command",
-          "named": true
-        },
-        {
-          "type": "env_command",
-          "named": true
-        },
-        {
-          "type": "expose_command",
-          "named": true
-        },
-        {
-          "type": "for_command",
-          "named": true
-        },
-        {
-          "type": "from_command",
-          "named": true
-        },
-        {
-          "type": "from_dockerfile_command",
-          "named": true
-        },
-        {
-          "type": "function_command",
-          "named": true
-        },
-        {
-          "type": "git_clone_command",
-          "named": true
-        },
-        {
-          "type": "host_command",
-          "named": true
-        },
-        {
-          "type": "if_command",
-          "named": true
-        },
-        {
-          "type": "import_command",
-          "named": true
-        },
-        {
-          "type": "label_command",
-          "named": true
-        },
-        {
-          "type": "let_command",
-          "named": true
-        },
-        {
-          "type": "locally_command",
-          "named": true
-        },
-        {
-          "type": "project_command",
-          "named": true
-        },
-        {
-          "type": "run_command",
-          "named": true
-        },
-        {
-          "type": "save_artifact_command",
-          "named": true
-        },
-        {
-          "type": "save_image_command",
-          "named": true
-        },
-        {
-          "type": "set_command",
-          "named": true
-        },
-        {
-          "type": "try_command",
-          "named": true
-        },
-        {
-          "type": "user_command",
-          "named": true
-        },
-        {
-          "type": "volume_command",
-          "named": true
-        },
-        {
-          "type": "wait_command",
-          "named": true
-        },
-        {
-          "type": "with_docker_command",
-          "named": true
-        },
-        {
-          "type": "workdir_command",
           "named": true
         }
       ]
@@ -2923,12 +2238,12 @@
     "type": "version_command",
     "named": true,
     "fields": {
-      "option": {
-        "multiple": true,
+      "options": {
+        "multiple": false,
         "required": false,
         "types": [
           {
-            "type": "feature_flag",
+            "type": "options",
             "named": true
           }
         ]
@@ -2987,131 +2302,11 @@
       "required": false,
       "types": [
         {
-          "type": "arg_command",
-          "named": true
-        },
-        {
-          "type": "build_command",
-          "named": true
-        },
-        {
-          "type": "cache_command",
-          "named": true
-        },
-        {
-          "type": "cmd_command",
+          "type": "block",
           "named": true
         },
         {
           "type": "comment",
-          "named": true
-        },
-        {
-          "type": "copy_command",
-          "named": true
-        },
-        {
-          "type": "do_command",
-          "named": true
-        },
-        {
-          "type": "entrypoint_command",
-          "named": true
-        },
-        {
-          "type": "env_command",
-          "named": true
-        },
-        {
-          "type": "expose_command",
-          "named": true
-        },
-        {
-          "type": "for_command",
-          "named": true
-        },
-        {
-          "type": "from_command",
-          "named": true
-        },
-        {
-          "type": "from_dockerfile_command",
-          "named": true
-        },
-        {
-          "type": "function_command",
-          "named": true
-        },
-        {
-          "type": "git_clone_command",
-          "named": true
-        },
-        {
-          "type": "host_command",
-          "named": true
-        },
-        {
-          "type": "if_command",
-          "named": true
-        },
-        {
-          "type": "import_command",
-          "named": true
-        },
-        {
-          "type": "label_command",
-          "named": true
-        },
-        {
-          "type": "let_command",
-          "named": true
-        },
-        {
-          "type": "locally_command",
-          "named": true
-        },
-        {
-          "type": "project_command",
-          "named": true
-        },
-        {
-          "type": "run_command",
-          "named": true
-        },
-        {
-          "type": "save_artifact_command",
-          "named": true
-        },
-        {
-          "type": "save_image_command",
-          "named": true
-        },
-        {
-          "type": "set_command",
-          "named": true
-        },
-        {
-          "type": "try_command",
-          "named": true
-        },
-        {
-          "type": "user_command",
-          "named": true
-        },
-        {
-          "type": "volume_command",
-          "named": true
-        },
-        {
-          "type": "wait_command",
-          "named": true
-        },
-        {
-          "type": "with_docker_command",
-          "named": true
-        },
-        {
-          "type": "workdir_command",
           "named": true
         }
       ]
@@ -3121,32 +2316,12 @@
     "type": "with_docker_command",
     "named": true,
     "fields": {
-      "option": {
-        "multiple": true,
+      "options": {
+        "multiple": false,
         "required": false,
         "types": [
           {
-            "type": "allow_privileged",
-            "named": true
-          },
-          {
-            "type": "compose",
-            "named": true
-          },
-          {
-            "type": "load",
-            "named": true
-          },
-          {
-            "type": "platform",
-            "named": true
-          },
-          {
-            "type": "pull",
-            "named": true
-          },
-          {
-            "type": "service",
+            "type": "options",
             "named": true
           }
         ]

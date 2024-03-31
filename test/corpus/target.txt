@@ -32,8 +32,10 @@ foo:
 
 ---
 
-(source_file
-  (target
-    name: (identifier)
-    (arg_command
-        name: (variable))))
+    (source_file
+      (target
+        name: (identifier)
+        (block
+          (arg_command
+            name: (variable)))))
+

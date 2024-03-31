@@ -6,9 +6,11 @@ ARG foo
 
 ---
 
-(source_file
-  (arg_command
-    name: (variable)))
+    (source_file
+      base_target: (block
+        (arg_command
+          name: (variable))))
+
 
 ==================
 arg command required
@@ -18,10 +20,13 @@ ARG --required foo
 
 ---
 
-(source_file
-  (arg_command
-    option: (required)
-    name: (variable)))
+    (source_file
+      base_target: (block
+        (arg_command
+          options: (options
+            (required))
+          name: (variable))))
+
 
 ==================
 arg command global
@@ -31,10 +36,13 @@ ARG --global foo
 
 ---
 
-(source_file
-  (arg_command
-    option: (global)
-    name: (variable)))
+    (source_file
+      base_target: (block
+        (arg_command
+          options: (options
+            (global))
+          name: (variable))))
+
 
 ==================
 arg command default value
@@ -44,11 +52,13 @@ ARG foo=aaa
 
 ---
 
-(source_file
-  (arg_command
-    name: (variable)
-        default_value: (string
-          (unquoted_string))))
+    (source_file
+      base_target: (block
+        (arg_command
+          name: (variable)
+          default_value: (string
+            (unquoted_string)))))
+
 
 ==================
 arg command default value single quoted
@@ -58,11 +68,13 @@ ARG foo='auie tsrn'
 
 ---
 
-(source_file
-  (arg_command
-    name: (variable)
-        default_value: (string
-          (single_quoted_string))))
+    (source_file
+      base_target: (block
+        (arg_command
+          name: (variable)
+          default_value: (string
+            (single_quoted_string)))))
+
 
 ==================
 arg command default value double quoted
@@ -72,11 +84,13 @@ ARG foo="it's ok"
 
 ---
 
-(source_file
-  (arg_command
-    name: (variable)
-        default_value: (string
-          (double_quoted_string))))
+    (source_file
+      base_target: (block
+        (arg_command
+          name: (variable)
+          default_value: (string
+            (double_quoted_string)))))
+
 
 ==================
 arg command default value expr
@@ -86,13 +100,15 @@ ARG foo=$(echo $(echo hop))
 
 ---
 
-  (source_file
-    (arg_command
-      name: (variable)
-        default_value: (string
-          (unquoted_string
-            (expansion
-              (shell_fragment))))))
+    (source_file
+      base_target: (block
+        (arg_command
+          name: (variable)
+          default_value: (string
+            (unquoted_string
+              (expansion
+                (shell_fragment)))))))
+
 
 ==================
 arg command without values
@@ -102,9 +118,11 @@ ARG foo=
 
 ---
 
-(source_file
-  (arg_command
-    name: (variable)))
+    (source_file
+      base_target: (block
+        (arg_command
+          name: (variable))))
+
 
 ==================
 arg command with spaces around =
@@ -115,10 +133,12 @@ ARG foo = bar
 ---
 
     (source_file
-      (arg_command
-        name: (variable)
-        default_value: (string
-          (unquoted_string))))
+      base_target: (block
+        (arg_command
+          name: (variable)
+          default_value: (string
+            (unquoted_string)))))
+
 
 ==================
 arg command with value starting with a sharp
@@ -129,10 +149,12 @@ ARG foo="#123456"
 ---
 
     (source_file
-      (arg_command
-        name: (variable)
-        default_value: (string
-          (double_quoted_string))))
+      base_target: (block
+        (arg_command
+          name: (variable)
+          default_value: (string
+            (double_quoted_string)))))
+
 
 ==================
 arg command unquoted with spaces
@@ -143,8 +165,10 @@ ARG foo=a bb  ccc   dddd    # comment
 ---
 
     (source_file
-      (arg_command
-        name: (variable)
-        default_value: (string
-          (unquoted_string))
-        (comment)))
+      base_target: (block
+        (arg_command
+          name: (variable)
+          default_value: (string
+            (unquoted_string))
+          (comment))))
+

@@ -10,8 +10,10 @@ foo:
     (source_file
       (target
         name: (identifier)
-        (cmd_command
-          (shell_fragment))))
+        (block
+          (cmd_command
+            (shell_fragment)))))
+
 
 ==================
 cmd command
@@ -25,7 +27,9 @@ foo:
     (source_file
       (target
         name: (identifier)
-        (cmd_command
-          (string_array
-            (double_quoted_string)
-            (double_quoted_string)))))
+        (block
+          (cmd_command
+            (string_array
+              (double_quoted_string)
+              (double_quoted_string))))))
+

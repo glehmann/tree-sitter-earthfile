@@ -12,19 +12,24 @@ foo:
     (source_file
       (target
         name: (identifier)
-        (for_command
-          name: (variable)
-          value: (string
-            (unquoted_string))
-          value: (string
-            (unquoted_string
-              (expansion
-                (shell_fragment))))
-          value: (string
-            (unquoted_string))
-          (run_command
-            option: (no_cache)
-            command: (shell_fragment)))))
+        (block
+          (for_command
+            name: (variable)
+            values: (strings
+              (string
+                (unquoted_string))
+              (string
+                (unquoted_string
+                  (expansion
+                    (shell_fragment))))
+              (string
+                (unquoted_string)))
+            (block
+              (run_command
+                options: (options
+                  (no_cache))
+                command: (shell_fragment)))))))
+
 
 ==================
 for command with options
@@ -40,14 +45,19 @@ foo:
     (source_file
       (target
         name: (identifier)
-        (for_command
-          option: (ssh)
-          name: (variable)
-          value: (string
-            (unquoted_string))
-          value: (string
-            (unquoted_string))
-          value: (string
-            (unquoted_string))
-          (run_command
-            command: (shell_fragment)))))
+        (block
+          (for_command
+            options: (options
+              (ssh))
+            name: (variable)
+            values: (strings
+              (string
+                (unquoted_string))
+              (string
+                (unquoted_string))
+              (string
+                (unquoted_string)))
+            (block
+              (run_command
+                command: (shell_fragment)))))))
+

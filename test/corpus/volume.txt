@@ -10,11 +10,13 @@ foo:
     (source_file
       (target
         name: (identifier)
-        (volume_command
-          (string
-            (unquoted_string))
-          (string
-            (unquoted_string)))))
+        (block
+          (volume_command
+            (string
+              (unquoted_string))
+            (string
+              (unquoted_string))))))
+
 
 ==================
 volume command array variant
@@ -28,7 +30,9 @@ foo:
     (source_file
       (target
         name: (identifier)
-        (volume_command
-          (string_array
-            (double_quoted_string)
-            (double_quoted_string)))))
+        (block
+          (volume_command
+            (string_array
+              (double_quoted_string)
+              (double_quoted_string))))))
+

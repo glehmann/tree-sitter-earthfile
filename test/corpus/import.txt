@@ -7,8 +7,10 @@ IMPORT github.com/earthly/lib/rust
 ---
 
     (source_file
-      (import_command
-        (earthfile_ref)))
+      base_target: (block
+        (import_command
+          (earthfile_ref))))
+
 
 ==================
 import command alias
@@ -19,6 +21,8 @@ IMPORT github.com/earthly/lib/rust AS rust
 ---
 
     (source_file
-      (import_command
-        (earthfile_ref)
-        alias: (identifier)))
+      base_target: (block
+        (import_command
+          (earthfile_ref)
+          alias: (identifier))))
+

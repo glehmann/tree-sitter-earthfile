@@ -10,7 +10,9 @@ foo:
     (source_file
       (target
         name: (identifier)
-        (host_command
-          name: (identifier)
-          ip: (string
-            (unquoted_string)))))
+        (block
+          (host_command
+            name: (identifier)
+            ip: (string
+              (unquoted_string))))))
+

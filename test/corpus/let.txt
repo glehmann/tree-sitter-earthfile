@@ -10,7 +10,9 @@ foo:
     (source_file
       (target
         name: (identifier)
-        (let_command
-          name: (variable)
-          value: (string
-            (unquoted_string)))))
+        (block
+          (let_command
+            name: (variable)
+            value: (string
+              (unquoted_string))))))
+

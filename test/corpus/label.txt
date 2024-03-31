@@ -12,18 +12,20 @@ foo:
     (source_file
       (target
         name: (identifier)
-        (label_command
-          (label
-            label: (identifier)
-            value: (string
-              (unquoted_string)))
-          (line_continuation)
-          (label
-            label: (identifier)
-            value: (string
-              (single_quoted_string)))
-          (line_continuation)
-          (label
-            label: (identifier)
-            value: (string
-              (double_quoted_string))))))
+        (block
+          (label_command
+            (label
+              label: (identifier)
+              value: (string
+                (unquoted_string)))
+            (line_continuation)
+            (label
+              label: (identifier)
+              value: (string
+                (single_quoted_string)))
+            (line_continuation)
+            (label
+              label: (identifier)
+              value: (string
+                (double_quoted_string)))))))
+

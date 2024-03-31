@@ -7,6 +7,8 @@ PROJECT apache/spark
 ---
 
     (source_file
-      (project_command
-        org_name: (identifier)
-        project_name: (identifier)))
+      base_target: (block
+        (project_command
+          org_name: (identifier)
+          project_name: (identifier))))
+

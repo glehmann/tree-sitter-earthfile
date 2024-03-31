@@ -10,9 +10,12 @@ foo:
     (source_file
       (target
         name: (identifier)
-        (save_image_command
-          image: (image_spec
-            name: (image_name)))))
+        (block
+          (save_image_command
+            images: (images
+              (image_spec
+                name: (image_name)))))))
+
 
 ==================
 save image with options
@@ -26,14 +29,18 @@ foo:
     (source_file
       (target
         name: (identifier)
-        (save_image_command
-          option: (push)
-          image: (image_spec
-            name: (image_name)
-            tag: (image_tag))
-          image: (image_spec
-            name: (image_name)
-            tag: (image_tag)))))
+        (block
+          (save_image_command
+            options: (options
+              (push))
+            images: (images
+              (image_spec
+                name: (image_name)
+                tag: (image_tag))
+              (image_spec
+                name: (image_name)
+                tag: (image_tag)))))))
+
 
 ==================
 save image cache hint
@@ -47,8 +54,11 @@ foo:
     (source_file
       (target
         name: (identifier)
-        (save_image_command
-          option: (cache_hint))))
+        (block
+          (save_image_command
+            options: (options
+              (cache_hint))))))
+
 
 ==================
 save image with quoted string
@@ -62,12 +72,15 @@ foo:
     (source_file
       (target
         name: (identifier)
-        (save_image_command
-          image: (image_spec
-            name: (image_name
-              (double_quoted_string
-                (expansion
-                  (variable))))))))
+        (block
+          (save_image_command
+            images: (images
+              (image_spec
+                name: (image_name
+                  (double_quoted_string
+                    (expansion
+                      (variable))))))))))
+
 
 ==================
 save image with quoted name and tag
@@ -81,12 +94,15 @@ foo:
     (source_file
       (target
         name: (identifier)
-        (save_image_command
-          image: (image_spec
-            name: (image_name
-              (double_quoted_string
-                (expansion
-                  (variable))))
-            tag: (image_tag
-              (expansion
-                (variable)))))))
+        (block
+          (save_image_command
+            images: (images
+              (image_spec
+                name: (image_name
+                  (double_quoted_string
+                    (expansion
+                      (variable))))
+                tag: (image_tag
+                  (expansion
+                    (variable)))))))))
+

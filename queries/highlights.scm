@@ -30,7 +30,9 @@
 (workdir_command "WORKDIR" @keyword)
 
 (for_command ["FOR" "IN" "END"] @keyword.control)
-(if_command ["IF" "ELSE" "ELSE IF" "END"] @keyword.control)
+(if_command ["IF" "END"] @keyword.control)
+(elif_block ["ELSE IF"] @keyword.control)
+(else_block ["ELSE"] @keyword.control)
 (import_command ["IMPORT" "AS"] @keyword.control)
 (try_command ["TRY" "FINALLY" "END"] @keyword.control)
 
@@ -53,8 +55,8 @@
 (target (identifier) @module)
 
 [
-  (double_quoted_string)
-  (single_quoted_string)
+    (double_quoted_string)
+    (single_quoted_string)
 ] @string
 (unquoted_string) @string.special
 (escape_sequence) @string.escape
@@ -63,11 +65,9 @@
 (expansion ["$" "{" "}" "(" ")"] @punctuation.special)
 (build_arg) @variable
 
-[
-    option: (_)
-] @type
+(options) @type
 
-option: (_ "=" @operator)
+(options (_ "=" @operator))
 (build_arg "=" @operator)
 (arg_command "=" @operator)
 (env_command "=" @operator)

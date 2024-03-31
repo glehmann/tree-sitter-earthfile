@@ -10,11 +10,13 @@ foo:
     (source_file
       (target
         name: (identifier)
-        (git_clone_command
-          url: (string
-            (unquoted_string))
-          dest: (string
-            (unquoted_string)))))
+        (block
+          (git_clone_command
+            url: (string
+              (unquoted_string))
+            dest: (string
+              (unquoted_string))))))
+
 
 ==================
 git clone command with options
@@ -28,12 +30,15 @@ foo:
     (source_file
       (target
         name: (identifier)
-        (git_clone_command
-          option: (keep_ts)
-          option: (branch
-            value: (string
-              (unquoted_string)))
-          url: (string
-            (unquoted_string))
-          dest: (string
-            (unquoted_string)))))
+        (block
+          (git_clone_command
+            options: (options
+              (keep_ts)
+              (branch
+                value: (string
+                  (unquoted_string))))
+            url: (string
+              (unquoted_string))
+            dest: (string
+              (unquoted_string))))))
+

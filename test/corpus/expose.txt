@@ -10,9 +10,11 @@ foo:
     (source_file
       (target
         name: (identifier)
-        (expose_command
-          (port
-            (number)
-            protocol: (identifier))
-          (port
-            (number)))))
+        (block
+          (expose_command
+            (port
+              (number)
+              protocol: (identifier))
+            (port
+              (number))))))
+ 

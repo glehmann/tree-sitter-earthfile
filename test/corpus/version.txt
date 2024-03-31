@@ -18,11 +18,14 @@ VERSION --pass-args --try 0.8
 
 ---
 
-(source_file
-  (version_command
-    option: (feature_flag)
-    option: (feature_flag)
-    version: (version_major_minor)))
+    (source_file
+      (version_command
+        options: (options
+          (feature_flag)
+          (feature_flag))
+        version: (version_major_minor)))
+
+
 
 ==================
 version command multiline
@@ -35,11 +38,13 @@ VERSION \
 
 ---
 
-(source_file
-  (version_command
-    (line_continuation)
-    option: (feature_flag)
-    (line_continuation)
-    option: (feature_flag)
-    (line_continuation)
-    version: (version_major_minor)))
+    (source_file
+      (version_command
+        (line_continuation)
+        options: (options
+          (feature_flag)
+          (line_continuation)
+          (feature_flag))
+        (line_continuation)
+        version: (version_major_minor)))
+

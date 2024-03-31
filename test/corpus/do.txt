@@ -10,10 +10,13 @@ foo:
     (source_file
       (target
         name: (identifier)
-        (do_command
-          (function_ref
-            name: (identifier))
-          (build_arg
-            name: (variable)
-            value: (string
-              (unquoted_string))))))
+        (block
+          (do_command
+            (function_ref
+              name: (identifier))
+            (build_args
+              (build_arg
+                name: (variable)
+                value: (string
+                  (unquoted_string))))))))
+
