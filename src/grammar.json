@@ -484,16 +484,32 @@
           }
         },
         {
-          "type": "FIELD",
-          "name": "sources",
+          "type": "REPEAT1",
           "content": {
-            "type": "SYMBOL",
-            "name": "copy_sources"
+            "type": "FIELD",
+            "name": "src",
+            "content": {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "target_artifact"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "target_artifact_build_args"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "string"
+                }
+              ]
+            }
           }
         },
         {
           "type": "FIELD",
-          "name": "destination",
+          "name": "dest",
           "content": {
             "type": "SYMBOL",
             "name": "string"
@@ -504,26 +520,6 @@
           "name": "_eol"
         }
       ]
-    },
-    "copy_sources": {
-      "type": "REPEAT1",
-      "content": {
-        "type": "CHOICE",
-        "members": [
-          {
-            "type": "SYMBOL",
-            "name": "target_artifact"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "target_artifact_build_args"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "string"
-          }
-        ]
-      }
     },
     "copy_options": {
       "type": "REPEAT1",
@@ -4958,9 +4954,6 @@
     [
       "earthfile_ref",
       "unquoted_string"
-    ],
-    [
-      "copy_sources"
     ],
     [
       "image_digest"

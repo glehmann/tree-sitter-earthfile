@@ -19,7 +19,6 @@ module.exports = grammar({
     [$.earthfile_ref, $.image_name, $.unquoted_string],
     [$.earthfile_ref, $.target_ref_with_build_args],
     [$.earthfile_ref, $.unquoted_string],
-    [$.copy_sources],
     [$.image_digest],
     [$.image_name],
     [$.image_name, $.string],
@@ -122,13 +121,14 @@ module.exports = grammar({
       seq(
         "COPY",
         field("options", optional(alias($.copy_options, $.options))),
-        field("sources", $.copy_sources),
-        field("destination", $.string),
+        repeat1(
+          field(
+            "src",
+            choice($.target_artifact, $.target_artifact_build_args, $.string)
+          )
+        ),
+        field("dest", $.string),
         $._eol
-      ),
-    copy_sources: ($) =>
-      repeat1(
-        choice($.target_artifact, $.target_artifact_build_args, $.string)
       ),
     copy_options: ($) =>
       repeat1(

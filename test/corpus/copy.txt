@@ -12,10 +12,9 @@ foo:
         name: (identifier)
         (block
           (copy_command
-            sources: (copy_sources
-              (string
-                (unquoted_string)))
-            destination: (string
+            src: (string
+              (unquoted_string))
+            dest: (string
               (unquoted_string))))))
 
 
@@ -33,12 +32,11 @@ foo:
         name: (identifier)
         (block
           (copy_command
-            sources: (copy_sources
-              (string
-                (double_quoted_string))
-              (string
-                (unquoted_string)))
-            destination: (string
+            src: (string
+              (double_quoted_string))
+            src: (string
+              (unquoted_string))
+            dest: (string
               (unquoted_string))))))
 
 
@@ -62,10 +60,9 @@ foo:
               (platform
                 value: (string
                   (unquoted_string))))
-            sources: (copy_sources
-              (string
-                (unquoted_string)))
-            destination: (string
+            src: (string
+              (unquoted_string))
+            dest: (string
               (unquoted_string))))))
 
 
@@ -83,21 +80,20 @@ foo:
         name: (identifier)
         (block
           (copy_command
-            sources: (copy_sources
-              (target_artifact_build_args
-                (target_ref
-                  name: (identifier))
-                (unquoted_string)
-                (build_args
-                  (build_arg
-                    name: (variable)
-                    value: (string
-                      (unquoted_string)))))
-              (target_artifact
-                (target_ref
-                  name: (identifier))
-                (unquoted_string)))
-            destination: (string
+            src: (target_artifact_build_args
+              (target_ref
+                name: (identifier))
+              (unquoted_string)
+              (build_args
+                (build_arg
+                  name: (variable)
+                  value: (string
+                    (unquoted_string)))))
+            src: (target_artifact
+              (target_ref
+                name: (identifier))
+              (unquoted_string))
+            dest: (string
               (unquoted_string))))))
 
 
@@ -123,58 +119,57 @@ foo:
         (block
           (copy_command
             (line_continuation)
-            sources: (copy_sources
-              (target_artifact
-                (target_ref
-                  name: (identifier))
-                (unquoted_string
-                  (expansion
-                    (variable))))
-              (line_continuation)
-              (target_artifact
-                (target_ref
-                  name: (identifier
-                    (expansion
-                      (variable))))
-                (unquoted_string))
-              (line_continuation)
-              (string
-                (unquoted_string
-                  (expansion
-                    (variable))))
-              (line_continuation)
-              (string
-                (unquoted_string
-                  (expansion
-                    (variable))))
-              (line_continuation)
-              (target_artifact_build_args
-                (target_ref
-                  name: (identifier
-                    (expansion
-                      (variable))))
-                (unquoted_string
-                  (expansion
-                    (variable)))
-                (build_args
-                  (build_arg
-                    name: (variable)
-                    value: (string
-                      (unquoted_string)))))
-              (line_continuation)
-              (target_artifact_build_args
-                (string
-                  (unquoted_string
-                    (expansion
-                      (variable))
-                    (expansion
-                      (variable))))
-                (build_args
-                  (build_arg
-                    name: (variable)
-                    value: (string
-                      (unquoted_string))))))
+            src: (target_artifact
+              (target_ref
+                name: (identifier))
+              (unquoted_string
+                (expansion
+                  (variable))))
             (line_continuation)
-            destination: (string
+            src: (target_artifact
+              (target_ref
+                name: (identifier
+                  (expansion
+                    (variable))))
+              (unquoted_string))
+            (line_continuation)
+            src: (string
+              (unquoted_string
+                (expansion
+                  (variable))))
+            (line_continuation)
+            src: (string
+              (unquoted_string
+                (expansion
+                  (variable))))
+            (line_continuation)
+            src: (target_artifact_build_args
+              (target_ref
+                name: (identifier
+                  (expansion
+                    (variable))))
+              (unquoted_string
+                (expansion
+                  (variable)))
+              (build_args
+                (build_arg
+                  name: (variable)
+                  value: (string
+                    (unquoted_string)))))
+            (line_continuation)
+            src: (target_artifact_build_args
+              (string
+                (unquoted_string
+                  (expansion
+                    (variable))
+                  (expansion
+                    (variable))))
+              (build_args
+                (build_arg
+                  name: (variable)
+                  value: (string
+                    (unquoted_string)))))
+            (line_continuation)
+            dest: (string
               (unquoted_string))))))
 
