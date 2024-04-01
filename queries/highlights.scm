@@ -44,15 +44,13 @@
 
 (line_continuation) @operator
 
-(function_ref) @function
-
 [
     (target_ref)
     (target_artifact)
-    (image_spec)
-] @module
+    (function_ref)
+] @function
 
-(target (identifier) @module)
+(target (identifier) @function)
 
 [
     (double_quoted_string)
