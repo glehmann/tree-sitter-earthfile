@@ -418,7 +418,7 @@
     "type": "copy_command",
     "named": true,
     "fields": {
-      "dest": {
+      "destination": {
         "multiple": false,
         "required": true,
         "types": [
@@ -438,20 +438,12 @@
           }
         ]
       },
-      "src": {
-        "multiple": true,
+      "sources": {
+        "multiple": false,
         "required": true,
         "types": [
           {
-            "type": "string",
-            "named": true
-          },
-          {
-            "type": "target_artifact",
-            "named": true
-          },
-          {
-            "type": "target_artifact_build_args",
+            "type": "copy_sources",
             "named": true
           }
         ]
@@ -463,6 +455,29 @@
       "types": [
         {
           "type": "comment",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
+    "type": "copy_sources",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": true,
+      "types": [
+        {
+          "type": "string",
+          "named": true
+        },
+        {
+          "type": "target_artifact",
+          "named": true
+        },
+        {
+          "type": "target_artifact_build_args",
           "named": true
         }
       ]
