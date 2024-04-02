@@ -8,7 +8,7 @@ module.exports = grammar({
   extras: ($) => [
     /[ \t]+/,
     "\n",
-    "\rn",
+    "\r\n",
     "\f",
     $.line_continuation,
     $.comment,
@@ -909,6 +909,6 @@ module.exports = grammar({
     line_continuation: (_) => token(prec(10, "\\\n")),
     comment: (_) => token(prec(10, /#[^\n]*(\n|\r\n|\f)/)),
     line_continuation_comment: (_) => token(prec(10, /\\(\s*#.*\n)+/)),
-    _eol: ($) => choice("\n", "\rn", "\f", $.comment),
+    _eol: ($) => choice("\n", "\r\n", "\f", $.comment),
   },
 });

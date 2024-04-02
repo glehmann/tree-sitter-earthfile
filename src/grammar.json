@@ -4932,7 +4932,7 @@
         },
         {
           "type": "STRING",
-          "value": "\rn"
+          "value": "\r\n"
         },
         {
           "type": "STRING",
@@ -4956,7 +4956,7 @@
     },
     {
       "type": "STRING",
-      "value": "\rn"
+      "value": "\r\n"
     },
     {
       "type": "STRING",
