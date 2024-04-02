@@ -29,12 +29,12 @@
 (with_docker_command "WITH DOCKER" @keyword)
 (workdir_command "WORKDIR" @keyword)
 
-(for_command ["FOR" "IN" "END"] @keyword.control)
-(if_command ["IF" "END"] @keyword.control)
-(elif_block ["ELSE IF"] @keyword.control)
-(else_block ["ELSE"] @keyword.control)
-(import_command ["IMPORT" "AS"] @keyword.control)
-(try_command ["TRY" "FINALLY" "END"] @keyword.control)
+(for_command ["FOR" "IN" "END"] @keyword.control.repeat)
+(if_command ["IF" "END"] @keyword.control.conditional)
+(elif_block ["ELSE IF"] @keyword.control.conditional)
+(else_block ["ELSE"] @keyword.control.conditional)
+(import_command ["IMPORT" "AS"] @keyword.control.import)
+(try_command ["TRY" "FINALLY" "END"] @keyword.control.exception)
 (wait_command ["WAIT" "END"] @keyword.control)
 
 
