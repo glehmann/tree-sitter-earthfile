@@ -358,7 +358,7 @@ module.exports = grammar({
     volume_command: ($) =>
       seq("VOLUME", choice($.string_array, repeat($.string)), $._eol),
 
-    wait_command: ($) => seq("WAIT", optional($.block), "END", $._eol),
+    wait_command: ($) => seq("WAIT", $._eol, optional($.block), "END", $._eol),
 
     with_docker_command: ($) =>
       seq(
@@ -384,10 +384,9 @@ module.exports = grammar({
 
     // code blocks
     block: ($) =>
-      seq(optional(/\s+/),
         repeat1(
-          seq(
             choice(
+              /\s+/,
               $.arg_command,
               $.build_command,
               $.cache_command,
@@ -420,9 +419,6 @@ module.exports = grammar({
               $.with_docker_command,
               $.workdir_command
             ),
-            optional(/\s+/)
-          )
-        )
       ),
     _conditional_block: ($) =>
       seq(

@@ -18,3 +18,20 @@ foo:
               (run_command
                 command: (shell_fragment)))))))
 
+==================
+wait command empty
+==================
+
+foo:
+  WAIT
+  END
+
+---
+
+    (source_file
+      (target
+        name: (identifier)
+        (block
+          (wait_command
+            (block)))))
+
