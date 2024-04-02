@@ -5,4 +5,5 @@
   (#set! injection.language "comment"))
 
 ((shell_fragment) @injection.content
-  (#set! injection.language "bash"))
+  (#set! injection.language "bash")
+  (#set! injection.include-children))
