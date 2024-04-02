@@ -14,11 +14,11 @@ jobs:
     secrets:
       NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
   crates:
-    uses: tree-sitter/workflows/.github/workflows/package-crates.yml@main
+    uses: tree-sitter/workflows/.github/workflows/package-crates.yml@40bd608aa33e574baf89ed4290db19751df3bccf
     secrets:
       CARGO_REGISTRY_TOKEN: ${{secrets.CARGO_TOKEN}}
   pypi:
-    uses: tree-sitter/workflows/.github/workflows/package-pypi.yml@main
+    uses: tree-sitter/workflows/.github/workflows/package-pypi.yml@40bd608aa33e574baf89ed4290db19751df3bccf
     with:
       python-version: 3.9
     secrets:
