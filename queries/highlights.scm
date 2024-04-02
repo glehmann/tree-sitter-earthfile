@@ -35,6 +35,7 @@
 (else_block ["ELSE"] @keyword.control)
 (import_command ["IMPORT" "AS"] @keyword.control)
 (try_command ["TRY" "FINALLY" "END"] @keyword.control)
+(wait_command ["WAIT" "END"] @keyword.control)
 
 
 [
