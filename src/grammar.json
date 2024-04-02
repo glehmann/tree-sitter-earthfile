@@ -1914,136 +1914,170 @@
       ]
     },
     "block": {
-      "type": "REPEAT1",
-      "content": {
-        "type": "CHOICE",
-        "members": [
-          {
-            "type": "SYMBOL",
-            "name": "arg_command"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "build_command"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "cache_command"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "cmd_command"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "copy_command"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "do_command"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "entrypoint_command"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "env_command"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "expose_command"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "for_command"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "from_command"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "from_dockerfile_command"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "function_command"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "git_clone_command"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "host_command"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "if_command"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "import_command"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "let_command"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "label_command"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "locally_command"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "project_command"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "run_command"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "save_artifact_command"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "save_image_command"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "set_command"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "try_command"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "user_command"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "volume_command"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "wait_command"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "with_docker_command"
-          },
-          {
-            "type": "SYMBOL",
-            "name": "workdir_command"
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "PATTERN",
+              "value": "\\s+"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        },
+        {
+          "type": "REPEAT1",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "arg_command"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "build_command"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "cache_command"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "cmd_command"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "copy_command"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "do_command"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "entrypoint_command"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "env_command"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "expose_command"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "for_command"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "from_command"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "from_dockerfile_command"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "function_command"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "git_clone_command"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "host_command"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "if_command"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "import_command"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "let_command"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "label_command"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "locally_command"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "project_command"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "run_command"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "save_artifact_command"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "save_image_command"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "set_command"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "try_command"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "user_command"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "volume_command"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "wait_command"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "with_docker_command"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "workdir_command"
+                  }
+                ]
+              },
+              {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "PATTERN",
+                    "value": "\\s+"
+                  },
+                  {
+                    "type": "BLANK"
+                  }
+                ]
+              }
+            ]
           }
-        ]
-      }
+        }
+      ]
     },
     "_conditional_block": {
       "type": "SEQ",

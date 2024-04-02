@@ -384,39 +384,44 @@ module.exports = grammar({
 
     // code blocks
     block: ($) =>
-      repeat1(
-        choice(
-          $.arg_command,
-          $.build_command,
-          $.cache_command,
-          $.cmd_command,
-          $.copy_command,
-          $.do_command,
-          $.entrypoint_command,
-          $.env_command,
-          $.expose_command,
-          $.for_command,
-          $.from_command,
-          $.from_dockerfile_command,
-          $.function_command,
-          $.git_clone_command,
-          $.host_command,
-          $.if_command,
-          $.import_command,
-          $.let_command,
-          $.label_command,
-          $.locally_command,
-          $.project_command,
-          $.run_command,
-          $.save_artifact_command,
-          $.save_image_command,
-          $.set_command,
-          $.try_command,
-          $.user_command,
-          $.volume_command,
-          $.wait_command,
-          $.with_docker_command,
-          $.workdir_command
+      seq(optional(/\s+/),
+        repeat1(
+          seq(
+            choice(
+              $.arg_command,
+              $.build_command,
+              $.cache_command,
+              $.cmd_command,
+              $.copy_command,
+              $.do_command,
+              $.entrypoint_command,
+              $.env_command,
+              $.expose_command,
+              $.for_command,
+              $.from_command,
+              $.from_dockerfile_command,
+              $.function_command,
+              $.git_clone_command,
+              $.host_command,
+              $.if_command,
+              $.import_command,
+              $.let_command,
+              $.label_command,
+              $.locally_command,
+              $.project_command,
+              $.run_command,
+              $.save_artifact_command,
+              $.save_image_command,
+              $.set_command,
+              $.try_command,
+              $.user_command,
+              $.volume_command,
+              $.wait_command,
+              $.with_docker_command,
+              $.workdir_command
+            ),
+            optional(/\s+/)
+          )
         )
       ),
     _conditional_block: ($) =>
