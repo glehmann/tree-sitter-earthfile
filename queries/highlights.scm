@@ -62,7 +62,7 @@
 (variable) @variable
 (expansion ["$" "{" "}" "(" ")"] @punctuation.special)
 (build_arg) @variable
-(options) @variable.parameter
+(options (_) @variable.parameter)
 
 (options (_ "=" @operator))
 (build_arg "=" @operator)
