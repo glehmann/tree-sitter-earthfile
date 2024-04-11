@@ -579,7 +579,7 @@ module.exports = grammar({
       ),
     target_ref: ($) =>
       seq(
-        optional($.earthfile_ref),
+        optional(field("earthfile", $.earthfile_ref)),
         token(prec(5, "+")),
         field("name", alias($._immediate_identifier, $.identifier))
       ),

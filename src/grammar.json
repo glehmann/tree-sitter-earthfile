@@ -2846,8 +2846,12 @@
           "type": "CHOICE",
           "members": [
             {
-              "type": "SYMBOL",
-              "name": "earthfile_ref"
+              "type": "FIELD",
+              "name": "earthfile",
+              "content": {
+                "type": "SYMBOL",
+                "name": "earthfile_ref"
+              }
             },
             {
               "type": "BLANK"
