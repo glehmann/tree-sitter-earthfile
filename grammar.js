@@ -150,7 +150,7 @@ module.exports = grammar({
       seq(
         "DO",
         field("options", optional(alias($.do_options, $.options))),
-        $.function_ref,
+        alias($.target_ref, $.function_ref),
         optional($.build_args)
       ),
     do_options: ($) =>
@@ -463,12 +463,7 @@ module.exports = grammar({
         )
       ),
     expr: ($) => /\$\(.+\)/,
-    function_ref: ($) =>
-      seq(
-        optional($.earthfile_ref),
-        token(prec(5, "+")),
-        field("name", alias($._immediate_identifier, $.identifier))
-      ),
+    function_ref: ($) => "dummy node to be used as an alias for target_ref",
     identifier: ($) => /[a-zA-Z_][a-zA-Z0-9_\-.]*/,
     image_spec: ($) =>
       seq(

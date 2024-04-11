@@ -905,6 +905,16 @@
     "type": "function_ref",
     "named": true,
     "fields": {
+      "earthfile": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "earthfile_ref",
+            "named": true
+          }
+        ]
+      },
       "name": {
         "multiple": false,
         "required": true,
@@ -915,16 +925,6 @@
           }
         ]
       }
-    },
-    "children": {
-      "multiple": false,
-      "required": false,
-      "types": [
-        {
-          "type": "earthfile_ref",
-          "named": true
-        }
-      ]
     }
   },
   {

@@ -598,8 +598,13 @@
           }
         },
         {
-          "type": "SYMBOL",
-          "name": "function_ref"
+          "type": "ALIAS",
+          "content": {
+            "type": "SYMBOL",
+            "name": "target_ref"
+          },
+          "named": true,
+          "value": "function_ref"
         },
         {
           "type": "CHOICE",
@@ -2318,45 +2323,8 @@
       "value": "\\$\\(.+\\)"
     },
     "function_ref": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "earthfile_ref"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "TOKEN",
-          "content": {
-            "type": "PREC",
-            "value": 5,
-            "content": {
-              "type": "STRING",
-              "value": "+"
-            }
-          }
-        },
-        {
-          "type": "FIELD",
-          "name": "name",
-          "content": {
-            "type": "ALIAS",
-            "content": {
-              "type": "SYMBOL",
-              "name": "_immediate_identifier"
-            },
-            "named": true,
-            "value": "identifier"
-          }
-        }
-      ]
+      "type": "STRING",
+      "value": "dummy node to be used as an alias for target_ref"
     },
     "identifier": {
       "type": "PATTERN",
