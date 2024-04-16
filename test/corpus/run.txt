@@ -77,3 +77,24 @@ foo:
             command: (shell_fragment
               (line_continuation_comment))))))
 
+
+==================
+run with quotes
+==================
+
+server:
+    RUN echo -e "#!/bin/sh\\ntouch /i-was-run" > /run-this \
+      && chmod +x /run-this \
+      && /run-this
+
+---
+
+    (source_file
+      (target
+        name: (identifier)
+        (block
+          (run_command
+            command: (shell_fragment
+              (escape_sequence)
+              (line_continuation)
+              (line_continuation))))))

@@ -2691,7 +2691,7 @@
                       "type": "IMMEDIATE_TOKEN",
                       "content": {
                         "type": "PREC",
-                        "value": 5,
+                        "value": 15,
                         "content": {
                           "type": "PATTERN",
                           "value": "[^\"\\\\]+"

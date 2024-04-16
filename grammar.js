@@ -553,7 +553,7 @@ module.exports = grammar({
             '"',
             repeat(
               choice(
-                token.immediate(prec(5, /[^"\\]+/)),
+                token.immediate(prec(15, /[^"\\]+/)),
                 alias($._immediate_escape_sequence, $.escape_sequence)
               )
             ),
