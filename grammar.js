@@ -271,7 +271,7 @@ module.exports = grammar({
       seq(
         "RUN",
         field("options", optional(alias($.run_options, $.options))),
-        optional(" -- "),
+        choice(" -- ", / +/),
         field("command", choice($.string_array, $.shell_fragment)),
         $._eol
       ),
@@ -553,7 +553,7 @@ module.exports = grammar({
             '"',
             repeat(
               choice(
-                token.immediate(prec(15, /[^"\\]+/)),
+                token.immediate(prec(5, /[^"\\]+/)),
                 alias($._immediate_escape_sequence, $.escape_sequence)
               )
             ),

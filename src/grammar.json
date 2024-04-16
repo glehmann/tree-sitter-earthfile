@@ -1340,7 +1340,8 @@
               "value": " -- "
             },
             {
-              "type": "BLANK"
+              "type": "PATTERN",
+              "value": " +"
             }
           ]
         },
@@ -2690,7 +2691,7 @@
                       "type": "IMMEDIATE_TOKEN",
                       "content": {
                         "type": "PREC",
-                        "value": 15,
+                        "value": 5,
                         "content": {
                           "type": "PATTERN",
                           "value": "[^\"\\\\]+"
