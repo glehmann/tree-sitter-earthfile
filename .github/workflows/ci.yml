@@ -17,7 +17,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - uses: tree-sitter/setup-action/cli@v1
-      - uses: tree-sitter/parser-test-action@v2
+      - uses: tree-sitter/parser-test-action@d5602999469eba602748c0e1bbddb03740326b12
         with:
           test-node: true
           test-rust: ${{ matrix.os != 'windows-latest' }}
