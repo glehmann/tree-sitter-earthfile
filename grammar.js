@@ -204,7 +204,7 @@ module.exports = grammar({
       seq(
         "FROM DOCKERFILE",
         field("options", optional(alias($.from_dockerfile_options, $.options))),
-        field("context", $.string),
+        field("context", choice($.target_artifact, $.target_artifact_build_args, $.string)),
         $._eol
       ),
     from_dockerfile_options: ($) =>
@@ -661,7 +661,7 @@ module.exports = grammar({
       seq(
         token(prec(5, "-f")),
         choice(token.immediate(" "), token.immediate("=")),
-        field("value", $.string)
+        field("value", choice($.target_artifact, $.target_artifact_build_args, $.string))
       ),
     docker_target: ($) =>
       seq(

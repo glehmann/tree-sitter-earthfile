@@ -956,8 +956,21 @@
           "type": "FIELD",
           "name": "context",
           "content": {
-            "type": "SYMBOL",
-            "name": "string"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "target_artifact"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "target_artifact_build_args"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "string"
+              }
+            ]
           }
         },
         {
@@ -3475,8 +3488,21 @@
           "type": "FIELD",
           "name": "value",
           "content": {
-            "type": "SYMBOL",
-            "name": "string"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "target_artifact"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "target_artifact_build_args"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "string"
+              }
+            ]
           }
         }
       ]

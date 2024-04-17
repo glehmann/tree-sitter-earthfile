@@ -535,6 +535,14 @@
           {
             "type": "string",
             "named": true
+          },
+          {
+            "type": "target_artifact",
+            "named": true
+          },
+          {
+            "type": "target_artifact_build_args",
+            "named": true
           }
         ]
       }
@@ -860,6 +868,14 @@
         "types": [
           {
             "type": "string",
+            "named": true
+          },
+          {
+            "type": "target_artifact",
+            "named": true
+          },
+          {
+            "type": "target_artifact_build_args",
             "named": true
           }
         ]

@@ -17,6 +17,32 @@ foo:
 
 
 ==================
+from dockerfile with targets
+==================
+
+foo:
+  FROM DOCKERFILE -f +sometarget/Dockerfile +someothertarget/*
+
+
+---
+
+    (source_file
+      (target
+        (identifier)
+        (block
+          (from_dockerfile_command
+            (options
+              (docker_file
+                (target_artifact
+                  (target_ref
+                    (identifier))
+                  (unquoted_string))))
+            (target_artifact
+              (target_ref
+                (identifier))
+              (unquoted_string))))))
+
+==================
 from dockerfile command with options
 ==================
 
@@ -50,4 +76,3 @@ foo:
             (line_continuation)
             context: (string
               (unquoted_string))))))
-
