@@ -284,6 +284,7 @@ module.exports = grammar({
           $.no_cache,
           $.privileged,
           $.push,
+          $.raw_output,
           $.secret,
           $.ssh
         )
@@ -716,6 +717,7 @@ module.exports = grammar({
         field("value", $.image_spec)
       ),
     push: ($) => token(prec(5, "--push")),
+    raw_output: ($) => token(prec(5, "--raw-output")),
     required: ($) => token(prec(5, "--required")),
     secret: ($) =>
       seq(

@@ -1558,6 +1558,10 @@
           "named": true
         },
         {
+          "type": "raw_output",
+          "named": true
+        },
+        {
           "type": "required",
           "named": true
         },
@@ -2763,6 +2767,10 @@
   },
   {
     "type": "push",
+    "named": true
+  },
+  {
+    "type": "raw_output",
     "named": true
   },
   {

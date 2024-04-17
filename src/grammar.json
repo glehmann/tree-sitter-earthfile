@@ -1412,6 +1412,10 @@
           },
           {
             "type": "SYMBOL",
+            "name": "raw_output"
+          },
+          {
+            "type": "SYMBOL",
             "name": "secret"
           },
           {
@@ -3935,6 +3939,17 @@
         "content": {
           "type": "STRING",
           "value": "--push"
+        }
+      }
+    },
+    "raw_output": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 5,
+        "content": {
+          "type": "STRING",
+          "value": "--raw-output"
         }
       }
     },
