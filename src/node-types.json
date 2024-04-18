@@ -1822,9 +1822,19 @@
     "type": "secret",
     "named": true,
     "fields": {
-      "value": {
+      "id": {
         "multiple": false,
         "required": true,
+        "types": [
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      },
+      "var": {
+        "multiple": false,
+        "required": false,
         "types": [
           {
             "type": "string",

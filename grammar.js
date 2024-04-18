@@ -723,7 +723,8 @@ module.exports = grammar({
       seq(
         token(prec(5, "--secret")),
         choice(token.immediate(" "), token.immediate("=")),
-        field("value", $.string)
+        optional(seq(field("var", $.string), token.immediate(prec(5, "=")))),
+        field("id", $.string)
       ),
     sep: ($) =>
       seq(

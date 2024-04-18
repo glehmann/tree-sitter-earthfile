@@ -20,7 +20,7 @@ run with options
 ==================
 
 foo:
-    RUN --push --secret api_key echo foo
+    RUN --push --secret api_key --secret foo=bar echo foo
 
 ---
 
@@ -32,7 +32,12 @@ foo:
             options: (options
               (push)
               (secret
-                value: (string
+                id: (string
+                  (unquoted_string)))
+              (secret
+                var: (string
+                  (unquoted_string))
+                id: (string
                   (unquoted_string))))
             command: (shell_fragment)))))
 
