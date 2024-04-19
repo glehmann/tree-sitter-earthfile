@@ -4008,7 +4008,7 @@
                   "name": "var",
                   "content": {
                     "type": "SYMBOL",
-                    "name": "string"
+                    "name": "variable"
                   }
                 },
                 {
@@ -4034,7 +4034,7 @@
           "name": "id",
           "content": {
             "type": "SYMBOL",
-            "name": "string"
+            "name": "variable"
           }
         }
       ]

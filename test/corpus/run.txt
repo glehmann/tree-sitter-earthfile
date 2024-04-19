@@ -32,15 +32,11 @@ foo:
             options: (options
               (push)
               (secret
-                id: (string
-                  (unquoted_string)))
+                id: (variable))
               (secret
-                var: (string
-                  (unquoted_string))
-                id: (string
-                  (unquoted_string))))
+                var: (variable)
+                id: (variable)))
             command: (shell_fragment)))))
-
 
 ==================
 run array
