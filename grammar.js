@@ -436,12 +436,24 @@ module.exports = grammar({
     else_block: ($) => seq("ELSE", field("body", $.block)),
 
     // command elements
-    _immediate_identifier: ($) =>
+    _expandable_identifier: ($) =>
       seq(
-        choice(token.immediate(/[a-zA-Z_]+/), $.expansion),
+        choice(/[a-zA-Z_]+/, $.expansion),
         repeat(
           choice(
-            token.immediate(/[a-zA-Z0-9_\-.]+/),
+            token.immediate(/[a-zA-Z0-9_]+/),
+            token.immediate(/[.-]+/),
+            alias($._immediate_expansion, $.expansion)
+          )
+        )
+      ),
+    _immediate_identifier: ($) =>
+      seq(
+        choice(token.immediate(/[a-zA-Z_]+/), alias($._immediate_expansion, $.expansion)),
+        repeat(
+          choice(
+            token.immediate(/[a-zA-Z0-9_]+/),
+            token.immediate(/[.-]+/),
             alias($._immediate_expansion, $.expansion)
           )
         )
@@ -465,7 +477,7 @@ module.exports = grammar({
       ),
     expr: ($) => /\$\(.+\)/,
     function_ref: ($) => "dummy node to be used as an alias for target_ref",
-    identifier: ($) => /[a-zA-Z_][a-zA-Z0-9_\-.]*/,
+    identifier: ($) => seq(/[a-zA-Z_]/, optional(repeat(choice(token.immediate(/[a-zA-Z0-9_]+/), token.immediate(/[.-]+/))))),
     image_spec: ($) =>
       seq(
         field("name", $.image_name),
@@ -593,7 +605,7 @@ module.exports = grammar({
         optional($.build_args),
         token(prec(5, ")"))
       ),
-    variable: ($) => /[a-zA-Z_][a-zA-Z0-9_]*/,
+    variable: ($) => seq(/[a-zA-Z_]+/, optional(token.immediate(/[a-zA-Z0-9_]+/))),
     version_major_minor: ($) => /[0-9]+\.[0-9]+/,
 
     // options
@@ -723,8 +735,14 @@ module.exports = grammar({
       seq(
         token(prec(5, "--secret")),
         choice(token.immediate(" "), token.immediate("=")),
-        optional(seq(field("var", $.variable), token.immediate(prec(5, "=")))),
-        field("id", $.variable),
+        choice(
+          field("id", alias($._expandable_identifier, $.identifier)),
+          seq(
+            field("var", $.variable),
+            token.immediate(prec(5, "=")),
+            field("id", alias($._immediate_identifier, $.identifier))
+          ),
+        )
       ),
     sep: ($) =>
       seq(

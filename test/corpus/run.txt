@@ -32,11 +32,43 @@ foo:
             options: (options
               (push)
               (secret
-                id: (variable))
+                id: (identifier))
               (secret
                 var: (variable)
-                id: (variable)))
+                id: (identifier)))
             command: (shell_fragment)))))
+
+
+==================
+run with expanded secret
+==================
+
+foo:
+    RUN --secret ${secret_arg} \
+        --secret foo=${bar} \
+        echo foo
+
+---
+
+    (source_file
+      (target
+        name: (identifier)
+        (block
+          (run_command
+            options: (options
+              (secret
+                id: (identifier
+                  (expansion
+                    (variable))))
+              (line_continuation)
+              (secret
+                var: (variable)
+                id: (identifier
+                  (expansion
+                    (variable)))))
+            (line_continuation)
+            command: (shell_fragment)))))
+
 
 ==================
 run array

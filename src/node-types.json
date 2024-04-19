@@ -1827,7 +1827,7 @@
         "required": true,
         "types": [
           {
-            "type": "variable",
+            "type": "identifier",
             "named": true
           }
         ]
@@ -2263,6 +2263,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "variable",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "version_command",
@@ -2793,10 +2798,6 @@
   },
   {
     "type": "symlink_no_follow",
-    "named": true
-  },
-  {
-    "type": "variable",
     "named": true
   },
   {
