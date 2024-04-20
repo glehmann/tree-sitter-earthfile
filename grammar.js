@@ -1,5 +1,3 @@
-const string_base_regex = /[^"'\s\\\$()+:@=]+/;
-
 module.exports = grammar({
   name: "earthfile",
 
@@ -16,17 +14,18 @@ module.exports = grammar({
   ],
 
   conflicts: ($) => [
-    [$.earthfile_ref, $.image_name, $.unquoted_string],
+    [$._string_base],
+    [$.earthfile_ref],
     [$.earthfile_ref, $.target_ref_with_build_args],
     [$.earthfile_ref, $.unquoted_string],
     [$.image_digest],
     [$.image_name],
     [$.image_name, $.string],
-    [$.image_name, $.unquoted_string],
     [$.image_tag],
     [$.shell_fragment],
     [$.string],
     [$.unquoted_string],
+    [$.unquoted_string_with_spaces],
   ],
 
   rules: {
@@ -191,7 +190,7 @@ module.exports = grammar({
       seq(
         "FROM",
         field("options", optional(alias($.from_options, $.options))),
-        choice($.image_spec, $.target_ref, $.string),
+        choice($.image_spec, $.target_ref), // , $.string),
         optional($.build_args),
         $._eol
       ),
@@ -231,7 +230,7 @@ module.exports = grammar({
       repeat1(choice($.branch, $.keep_ts)),
 
     host_command: ($) =>
-      seq("HOST", field("name", $.identifier), / +/, field("ip", $.string), $._eol),
+      seq("HOST", field("name", $.identifier), field("ip", $.string), $._eol),
 
     if_command: ($) =>
       seq(
@@ -496,18 +495,20 @@ module.exports = grammar({
             $.single_quoted_string
           ),
           repeat(
-            choice(
-              $._immediate_string_base,
-              // alias($._immediate_escape_sequence, $.escape_sequence),
-              // token.immediate("("),
-              // token.immediate(")"),
-              // token.immediate("+"),
-              // token.immediate(":"),
-              // token.immediate("@"),
-              // token.immediate("="),
-              alias($._immediate_double_quoted_string, $.double_quoted_string),
-              alias($._immediate_double_quoted_string, $.single_quoted_string),
-              alias($._immediate_expansion, $.expansion)
+            prec.left(1,
+              choice(
+                $._immediate_string_base,
+                // alias($._immediate_escape_sequence, $.escape_sequence),
+                // token.immediate("("),
+                // token.immediate(")"),
+                // token.immediate("+"),
+                // token.immediate(":"),
+                // token.immediate("@"),
+                // token.immediate("="),
+                alias($._immediate_double_quoted_string, $.double_quoted_string),
+                alias($._immediate_double_quoted_string, $.single_quoted_string),
+                alias($._immediate_expansion, $.expansion)
+              )
             )
           )
         )
@@ -766,8 +767,13 @@ module.exports = grammar({
     symlink_no_follow: ($) => token(prec(5, "--symlink-no-follow")),
 
     // string stuff
-    _string_base: ($) => string_base_regex,
-    _immediate_string_base: ($) => token.immediate(string_base_regex),
+    _string_base: ($) => seq(
+      choice(/[^"'\s\\\$()+:@=a-zA-Z0-9_]+/, /[a-zA-Z0-9_]+/),
+      optional($._immediate_string_base),
+    ),
+    _immediate_string_base: ($) => repeat1(
+      choice(token.immediate(/[^"'\s\\\$()+:@=a-zA-Z0-9_]+/), token.immediate(/[a-zA-Z0-9_]+/)),
+    ),
     double_quoted_string: ($) =>
       seq(
         '"',

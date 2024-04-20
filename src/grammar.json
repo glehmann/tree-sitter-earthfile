@@ -879,10 +879,6 @@
             {
               "type": "SYMBOL",
               "name": "target_ref"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "string"
             }
           ]
         },
@@ -1105,10 +1101,6 @@
             "type": "SYMBOL",
             "name": "identifier"
           }
-        },
-        {
-          "type": "PATTERN",
-          "value": " +"
         },
         {
           "type": "FIELD",
@@ -2547,40 +2539,44 @@
           {
             "type": "REPEAT",
             "content": {
-              "type": "CHOICE",
-              "members": [
-                {
-                  "type": "SYMBOL",
-                  "name": "_immediate_string_base"
-                },
-                {
-                  "type": "ALIAS",
-                  "content": {
+              "type": "PREC_LEFT",
+              "value": 1,
+              "content": {
+                "type": "CHOICE",
+                "members": [
+                  {
                     "type": "SYMBOL",
-                    "name": "_immediate_double_quoted_string"
+                    "name": "_immediate_string_base"
                   },
-                  "named": true,
-                  "value": "double_quoted_string"
-                },
-                {
-                  "type": "ALIAS",
-                  "content": {
-                    "type": "SYMBOL",
-                    "name": "_immediate_double_quoted_string"
+                  {
+                    "type": "ALIAS",
+                    "content": {
+                      "type": "SYMBOL",
+                      "name": "_immediate_double_quoted_string"
+                    },
+                    "named": true,
+                    "value": "double_quoted_string"
                   },
-                  "named": true,
-                  "value": "single_quoted_string"
-                },
-                {
-                  "type": "ALIAS",
-                  "content": {
-                    "type": "SYMBOL",
-                    "name": "_immediate_expansion"
+                  {
+                    "type": "ALIAS",
+                    "content": {
+                      "type": "SYMBOL",
+                      "name": "_immediate_double_quoted_string"
+                    },
+                    "named": true,
+                    "value": "single_quoted_string"
                   },
-                  "named": true,
-                  "value": "expansion"
-                }
-              ]
+                  {
+                    "type": "ALIAS",
+                    "content": {
+                      "type": "SYMBOL",
+                      "name": "_immediate_expansion"
+                    },
+                    "named": true,
+                    "value": "expansion"
+                  }
+                ]
+              }
             }
           }
         ]
@@ -4331,14 +4327,55 @@
       }
     },
     "_string_base": {
-      "type": "PATTERN",
-      "value": "[^\"'\\s\\\\\\$()+:@=]+"
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "PATTERN",
+              "value": "[^\"'\\s\\\\\\$()+:@=a-zA-Z0-9_]+"
+            },
+            {
+              "type": "PATTERN",
+              "value": "[a-zA-Z0-9_]+"
+            }
+          ]
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "_immediate_string_base"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        }
+      ]
     },
     "_immediate_string_base": {
-      "type": "IMMEDIATE_TOKEN",
+      "type": "REPEAT1",
       "content": {
-        "type": "PATTERN",
-        "value": "[^\"'\\s\\\\\\$()+:@=]+"
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "IMMEDIATE_TOKEN",
+            "content": {
+              "type": "PATTERN",
+              "value": "[^\"'\\s\\\\\\$()+:@=a-zA-Z0-9_]+"
+            }
+          },
+          {
+            "type": "IMMEDIATE_TOKEN",
+            "content": {
+              "type": "PATTERN",
+              "value": "[a-zA-Z0-9_]+"
+            }
+          }
+        ]
       }
     },
     "double_quoted_string": {
@@ -5141,9 +5178,10 @@
   ],
   "conflicts": [
     [
-      "earthfile_ref",
-      "image_name",
-      "unquoted_string"
+      "_string_base"
+    ],
+    [
+      "earthfile_ref"
     ],
     [
       "earthfile_ref",
@@ -5164,10 +5202,6 @@
       "string"
     ],
     [
-      "image_name",
-      "unquoted_string"
-    ],
-    [
       "image_tag"
     ],
     [
@@ -5178,6 +5212,9 @@
     ],
     [
       "unquoted_string"
+    ],
+    [
+      "unquoted_string_with_spaces"
     ]
   ],
   "precedences": [],

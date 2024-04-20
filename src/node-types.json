@@ -848,10 +848,6 @@
           "named": true
         },
         {
-          "type": "string",
-          "named": true
-        },
-        {
           "type": "target_ref",
           "named": true
         }
