@@ -231,7 +231,7 @@ module.exports = grammar({
       repeat1(choice($.branch, $.keep_ts)),
 
     host_command: ($) =>
-      seq("HOST", field("name", $.identifier), field("ip", $.string), $._eol),
+      seq("HOST", field("name", $.identifier), / +/, field("ip", $.string), $._eol),
 
     if_command: ($) =>
       seq(

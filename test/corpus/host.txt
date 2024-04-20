@@ -3,7 +3,7 @@ host command
 ==================
 
 foo:
-  HOST foo 127.0.0.1
+  HOST foo.example.com 127.0.0.1
 
 ---
 
