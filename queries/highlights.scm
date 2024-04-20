@@ -67,6 +67,7 @@
 (escape_sequence) @constant.character.escape
 
 (variable) @variable
+(secret (identifier) @variable.other.member)
 (expansion ["$" "{" "}" "(" ")"] @punctuation.special)
 (build_arg) @variable
 (options (_) @variable.parameter)

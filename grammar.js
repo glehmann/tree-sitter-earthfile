@@ -740,7 +740,7 @@ module.exports = grammar({
           seq(
             field("var", $.variable),
             token.immediate(prec(5, "=")),
-            field("id", alias($._immediate_identifier, $.identifier))
+            field("id", choice(alias($._immediate_identifier, $.identifier), $.string))
           ),
         )
       ),
