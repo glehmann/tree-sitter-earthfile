@@ -549,6 +549,7 @@ module.exports = grammar({
       repeat1(
         choice(
           $._string_base,
+          $._comment,
           "[",
           "]",
           "(",
@@ -933,6 +934,7 @@ module.exports = grammar({
     shell_expr: ($) => /[a-zA-Z0-9_ ]+/,
 
     // extra tokens, eol, …
+    _comment: (_) => token(prec(15, /#[^\n]*(\n|\r\n|\f)/)),
     _immediate_escape_sequence: (_) => /\\./,
     escape_sequence: (_) => /\\./,
     line_continuation: (_) => token(prec(10, "\\\n")),

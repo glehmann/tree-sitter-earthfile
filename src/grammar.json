@@ -2769,6 +2769,10 @@
             "name": "_string_base"
           },
           {
+            "type": "SYMBOL",
+            "name": "_comment"
+          },
+          {
             "type": "STRING",
             "value": "["
           },
@@ -5191,6 +5195,17 @@
     "shell_expr": {
       "type": "PATTERN",
       "value": "[a-zA-Z0-9_ ]+"
+    },
+    "_comment": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 15,
+        "content": {
+          "type": "PATTERN",
+          "value": "#[^\\n]*(\\n|\\r\\n|\\f)"
+        }
+      }
     },
     "_immediate_escape_sequence": {
       "type": "PATTERN",
