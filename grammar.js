@@ -476,7 +476,7 @@ module.exports = grammar({
       ),
     expr: ($) => /\$\(.+\)/,
     function_ref: ($) => "dummy node to be used as an alias for target_ref",
-    identifier: ($) => seq(/[a-zA-Z_]/, optional(repeat(choice(token.immediate(/[a-zA-Z0-9_]+/), token.immediate(/[.-]+/))))),
+    identifier: ($) => seq(/[a-zA-Z_]/, repeat(choice(token.immediate(/[a-zA-Z0-9_]+/), token.immediate(/[.-]+/)))),
     image_spec: ($) =>
       seq(
         field("name", $.image_name),
@@ -548,21 +548,18 @@ module.exports = grammar({
     shell_fragment: ($) =>
       repeat1(
         choice(
-          // A shell fragment is broken into the same tokens as other
-          // constructs because the lexer prefers the longer tokens
-          // when it has a choice. The example below shows the tokenization
-          // of the --mount parameter.
-          //
-          //   RUN --mount=foo=bar,baz=42 ls --all
-          //       ^^     ^   ^   ^   ^
-          //         ^^^^^ ^^^ ^^^ ^^^ ^^
-          //       |--------param-------|
-          //                              |--shell_command--|
-          //
-          /[,=-]/,
-          /[^)"\\\n#\s,=-][^)"\\\n]*/,
-          /\\[^"\n,=-]/,
+          $._string_base,
+          "[",
+          "]",
+          "(",
           ")",
+          "{",
+          "}",
+          "$",
+          "+",
+          ":",
+          "@",
+          "=",
           seq(
             '"',
             repeat(
@@ -572,6 +569,16 @@ module.exports = grammar({
               )
             ),
             '"'
+          ),
+          seq(
+            "'",
+            repeat(
+              choice(
+                token.immediate(prec(15, /[^'\\]+/)),
+                alias($._immediate_escape_sequence, $.escape_sequence)
+              )
+            ),
+            "'"
           )
         )
       ),
@@ -768,11 +775,11 @@ module.exports = grammar({
 
     // string stuff
     _string_base: ($) => seq(
-      choice(/[^"'\s\\\$()+:@=a-zA-Z0-9_]+/, /[a-zA-Z0-9_]+/),
+      choice(/[^"'\s\\\$()\[\]+:@=a-zA-Z0-9_]+/, /[a-zA-Z0-9_]+/),
       optional($._immediate_string_base),
     ),
     _immediate_string_base: ($) => repeat1(
-      choice(token.immediate(/[^"'\s\\\$()+:@=a-zA-Z0-9_]+/), token.immediate(/[a-zA-Z0-9_]+/)),
+      choice(token.immediate(/[^"'\s\\\$()\[\]+:@=a-zA-Z0-9_]+/), token.immediate(/[a-zA-Z0-9_]+/)),
     ),
     double_quoted_string: ($) =>
       seq(
@@ -822,7 +829,7 @@ module.exports = grammar({
       ),
     unquoted_string: ($) =>
       seq(
-        choice($._string_base, $.expansion, "(", ")", "+", ":", "@", "="),
+        choice($._string_base, $.expansion, "[", "]", "(", ")", "+", ":", "@", "="),
         optional($._immediate_unquoted_string)
       ),
     _immediate_unquoted_string: ($) =>
@@ -830,6 +837,8 @@ module.exports = grammar({
         choice(
           $._immediate_string_base,
           alias($._immediate_escape_sequence, $.escape_sequence),
+          token.immediate("["),
+          token.immediate("]"),
           token.immediate("("),
           token.immediate(")"),
           token.immediate("+"),
@@ -841,11 +850,13 @@ module.exports = grammar({
       ),
     unquoted_string_with_spaces: ($) =>
       seq(
-        choice($._string_base, $.expansion, "(", ")", "+", ":", "@", "="),
+        choice($._string_base, $.expansion, "[", "]", "(", ")", "+", ":", "@", "="),
         repeat(
           choice(
             $._immediate_string_base,
             alias($._immediate_escape_sequence, $.escape_sequence),
+            token.immediate("["),
+            token.immediate("]"),
             token.immediate("("),
             token.immediate(")"),
             token.immediate("+"),
