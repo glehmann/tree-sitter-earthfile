@@ -1,5 +1,10 @@
 [
   {
+    "type": "_immediate_escape_sequence",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "arg_command",
     "named": true,
     "fields": {
@@ -1930,7 +1935,17 @@
   {
     "type": "shell_fragment",
     "named": true,
-    "fields": {}
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "_immediate_escape_sequence",
+          "named": true
+        }
+      ]
+    }
   },
   {
     "type": "single_quoted_string",

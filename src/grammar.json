@@ -2817,8 +2817,13 @@
             "value": "="
           },
           {
-            "type": "PATTERN",
-            "value": "\\\\."
+            "type": "ALIAS",
+            "content": {
+              "type": "SYMBOL",
+              "name": "escape_sequence"
+            },
+            "named": true,
+            "value": "_immediate_escape_sequence"
           },
           {
             "type": "SEQ",
