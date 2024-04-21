@@ -76,8 +76,7 @@ foo:
                 value: (string
                   (unquoted_string
                     (expansion
-                      (variable)))
-                  (unquoted_string))))
+                      (variable))))))
             (line_continuation)
             (target_ref
               name: (identifier

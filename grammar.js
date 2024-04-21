@@ -1,3 +1,18 @@
+const _string_base_tokens = "()[]{}$/,:@=+";
+function extra_tokens(except) {
+  let res = [];
+  for(const c of _string_base_tokens) {
+    if(!except.includes(c)) {
+      res.push(c);
+    }
+  }
+  return res;
+}
+
+function extra_immediate_tokens(except) {
+  return extra_tokens(except).map((t) => token.immediate(t));
+}
+
 module.exports = grammar({
   name: "earthfile",
 
@@ -459,17 +474,12 @@ module.exports = grammar({
       ),
     earthfile_ref: ($) =>
       seq(
-        choice($._string_base, $.expansion, "(", ")", ":", "@", "="),
+        choice($._string_base, $.expansion, ...extra_tokens("+$")),
         repeat(
           choice(
             $._immediate_string_base,
+            ...extra_immediate_tokens("+$"),
             alias($._immediate_escape_sequence, $.escape_sequence),
-            token.immediate("("),
-            token.immediate(")"),
-            // token.immediate("+"),
-            token.immediate(":"),
-            token.immediate("@"),
-            token.immediate("="),
             alias($._immediate_expansion, $.expansion)
           )
         )
@@ -497,13 +507,7 @@ module.exports = grammar({
             prec.left(1,
               choice(
                 $._immediate_string_base,
-                // alias($._immediate_escape_sequence, $.escape_sequence),
-                // token.immediate("("),
-                // token.immediate(")"),
-                // token.immediate("+"),
-                // token.immediate(":"),
-                // token.immediate("@"),
-                // token.immediate("="),
+                token.immediate("/"),
                 alias($._immediate_double_quoted_string, $.double_quoted_string),
                 alias($._immediate_double_quoted_string, $.single_quoted_string),
                 alias($._immediate_expansion, $.expansion)
@@ -530,7 +534,7 @@ module.exports = grammar({
           alias($._immediate_expansion, $.expansion)
         )
       ),
-    images: ($) => repeat1(choice($.string, $.image_spec)),
+    images: ($) => repeat1(choice($.image_spec, $.string)),
     label: ($) =>
       seq(
         field("label", $.identifier),
@@ -549,17 +553,7 @@ module.exports = grammar({
         choice(
           $._string_base,
           $._comment,
-          "[",
-          "]",
-          "(",
-          ")",
-          "{",
-          "}",
-          "$",
-          "+",
-          ":",
-          "@",
-          "=",
+          ...extra_tokens("\"'"),
           alias($.escape_sequence, $._immediate_escape_sequence),
           seq(
             '"',
@@ -776,11 +770,11 @@ module.exports = grammar({
 
     // string stuff
     _string_base: ($) => seq(
-      choice(/[^"'\s\\\$()\[\]+:@=a-zA-Z0-9_]+/, /[a-zA-Z0-9_]+/),
+      choice(/[^"'\s\\\$()\[\]{}+,:@=a-zA-Z0-9_/]+/, /[a-zA-Z0-9_]+/),
       optional($._immediate_string_base),
     ),
     _immediate_string_base: ($) => repeat1(
-      choice(token.immediate(/[^"'\s\\\$()\[\]+:@=a-zA-Z0-9_]+/), token.immediate(/[a-zA-Z0-9_]+/)),
+      choice(token.immediate(/[^"'\s\\\$()\[\]{}+,:@=a-zA-Z0-9_/]+/), token.immediate(/[a-zA-Z0-9_]+/)),
     ),
     double_quoted_string: ($) =>
       seq(
@@ -830,7 +824,7 @@ module.exports = grammar({
       ),
     unquoted_string: ($) =>
       seq(
-        choice($._string_base, $.expansion, "[", "]", "(", ")", "+", ":", "@", "="),
+        choice($._string_base, $.expansion, ...extra_tokens("$'\"")),
         optional($._immediate_unquoted_string)
       ),
     _immediate_unquoted_string: ($) =>
@@ -838,32 +832,18 @@ module.exports = grammar({
         choice(
           $._immediate_string_base,
           alias($._immediate_escape_sequence, $.escape_sequence),
-          token.immediate("["),
-          token.immediate("]"),
-          token.immediate("("),
-          token.immediate(")"),
-          token.immediate("+"),
-          token.immediate(":"),
-          token.immediate("@"),
-          token.immediate("="),
+          ...extra_immediate_tokens("$'\""),
           alias($._immediate_expansion, $.expansion)
         )
       ),
     unquoted_string_with_spaces: ($) =>
       seq(
-        choice($._string_base, $.expansion, "[", "]", "(", ")", "+", ":", "@", "="),
+        choice($._string_base, $.expansion, ...extra_tokens("$'\"")),
         repeat(
           choice(
             $._immediate_string_base,
             alias($._immediate_escape_sequence, $.escape_sequence),
-            token.immediate("["),
-            token.immediate("]"),
-            token.immediate("("),
-            token.immediate(")"),
-            token.immediate("+"),
-            token.immediate(":"),
-            token.immediate("@"),
-            token.immediate("="),
+            ...extra_immediate_tokens("$'\""),
             token.immediate(/[ \t]+/),
             alias($._immediate_expansion, $.expansion)
           )
