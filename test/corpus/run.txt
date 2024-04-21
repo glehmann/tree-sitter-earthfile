@@ -128,6 +128,5 @@ server:
         (block
           (run_command
             command: (shell_fragment
-              (escape_sequence)
               (line_continuation)
               (line_continuation))))))
