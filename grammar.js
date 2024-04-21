@@ -29,7 +29,9 @@ module.exports = grammar({
   ],
 
   conflicts: ($) => [
-    [$._expandable_identifier, $.variable],
+    [$._secret_id, $._string_base],
+    [$._secret_id, $.unquoted_string],
+    [$._secret_id, $.variable],
     [$._string_base],
     [$.earthfile_ref],
     [$.earthfile_ref, $.target_ref_with_build_args],
@@ -451,15 +453,16 @@ module.exports = grammar({
     else_block: ($) => seq("ELSE", field("body", $.block)),
 
     // command elements
-    _expandable_identifier: ($) =>
+    _secret_id: ($) =>
       seq(
-        choice(/[a-zA-Z_]+/, $.expansion),
+        choice(/[a-zA-Z_]+/, "/", $.expansion),
         repeat(
           choice(
             token.immediate(/[a-zA-Z_]+/),
             token.immediate(/[0-9]+/),
             token.immediate("."),
             token.immediate("-"),
+            token.immediate("/"),
             alias($._immediate_expansion, $.expansion)
           )
         )
@@ -764,11 +767,11 @@ module.exports = grammar({
         token(prec(5, "--secret")),
         choice(token.immediate(" "), token.immediate("=")),
         choice(
-          field("id", alias($._expandable_identifier, $.identifier)),
+          field("id", alias($._secret_id, $.identifier)),
           seq(
             field("var", $.variable),
             token.immediate(prec(5, "=")),
-            field("id", choice(alias($._immediate_identifier, $.identifier), $.string))
+            field("id", choice(alias($._secret_id, $.identifier), $.string))
           ),
         )
       ),
