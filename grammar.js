@@ -474,7 +474,6 @@ module.exports = grammar({
           )
         )
       ),
-    expr: ($) => /\$\(.+\)/,
     function_ref: ($) => "dummy node to be used as an alias for target_ref",
     identifier: ($) => seq(/[a-zA-Z_]/, repeat(choice(token.immediate(/[a-zA-Z0-9_]+/), token.immediate(/[.-]+/)))),
     image_spec: ($) =>
@@ -931,8 +930,6 @@ module.exports = grammar({
         )
       ),
     _immediate_variable: ($) => token.immediate(/[a-zA-Z_][a-zA-Z0-9_]*/),
-
-    shell_expr: ($) => /[a-zA-Z0-9_ ]+/,
 
     // extra tokens, eol, …
     _comment: (_) => token(prec(15, /#[^\n]*(\n|\r\n|\f)/)),
