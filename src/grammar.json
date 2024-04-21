@@ -2817,6 +2817,10 @@
             "value": "="
           },
           {
+            "type": "PATTERN",
+            "value": "\\\\."
+          },
+          {
             "type": "SEQ",
             "members": [
               {
@@ -2840,13 +2844,8 @@
                       }
                     },
                     {
-                      "type": "ALIAS",
-                      "content": {
-                        "type": "SYMBOL",
-                        "name": "_immediate_escape_sequence"
-                      },
-                      "named": true,
-                      "value": "escape_sequence"
+                      "type": "SYMBOL",
+                      "name": "_immediate_escape_sequence"
                     }
                   ]
                 }
@@ -2881,13 +2880,8 @@
                       }
                     },
                     {
-                      "type": "ALIAS",
-                      "content": {
-                        "type": "SYMBOL",
-                        "name": "_immediate_escape_sequence"
-                      },
-                      "named": true,
-                      "value": "escape_sequence"
+                      "type": "SYMBOL",
+                      "name": "_immediate_escape_sequence"
                     }
                   ]
                 }

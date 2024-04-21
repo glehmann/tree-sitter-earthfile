@@ -1930,17 +1930,7 @@
   {
     "type": "shell_fragment",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "escape_sequence",
-          "named": true
-        }
-      ]
-    }
+    "fields": {}
   },
   {
     "type": "single_quoted_string",
