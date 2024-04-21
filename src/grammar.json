@@ -2209,14 +2209,28 @@
                 "type": "IMMEDIATE_TOKEN",
                 "content": {
                   "type": "PATTERN",
-                  "value": "[a-zA-Z0-9_]+"
+                  "value": "[a-zA-Z_]+"
                 }
               },
               {
                 "type": "IMMEDIATE_TOKEN",
                 "content": {
                   "type": "PATTERN",
-                  "value": "[.-]+"
+                  "value": "[0-9]+"
+                }
+              },
+              {
+                "type": "IMMEDIATE_TOKEN",
+                "content": {
+                  "type": "STRING",
+                  "value": "."
+                }
+              },
+              {
+                "type": "IMMEDIATE_TOKEN",
+                "content": {
+                  "type": "STRING",
+                  "value": "-"
                 }
               },
               {
@@ -2266,14 +2280,28 @@
                 "type": "IMMEDIATE_TOKEN",
                 "content": {
                   "type": "PATTERN",
-                  "value": "[a-zA-Z0-9_]+"
+                  "value": "[a-zA-Z_]+"
                 }
               },
               {
                 "type": "IMMEDIATE_TOKEN",
                 "content": {
                   "type": "PATTERN",
-                  "value": "[.-]+"
+                  "value": "[0-9]+"
+                }
+              },
+              {
+                "type": "IMMEDIATE_TOKEN",
+                "content": {
+                  "type": "STRING",
+                  "value": "."
+                }
+              },
+              {
+                "type": "IMMEDIATE_TOKEN",
+                "content": {
+                  "type": "STRING",
+                  "value": "-"
                 }
               },
               {
@@ -2347,6 +2375,14 @@
             {
               "type": "STRING",
               "value": "="
+            },
+            {
+              "type": "STRING",
+              "value": "."
+            },
+            {
+              "type": "STRING",
+              "value": "-"
             }
           ]
         },
@@ -2437,6 +2473,20 @@
                 }
               },
               {
+                "type": "IMMEDIATE_TOKEN",
+                "content": {
+                  "type": "STRING",
+                  "value": "."
+                }
+              },
+              {
+                "type": "IMMEDIATE_TOKEN",
+                "content": {
+                  "type": "STRING",
+                  "value": "-"
+                }
+              },
+              {
                 "type": "ALIAS",
                 "content": {
                   "type": "SYMBOL",
@@ -2479,14 +2529,28 @@
                 "type": "IMMEDIATE_TOKEN",
                 "content": {
                   "type": "PATTERN",
-                  "value": "[a-zA-Z0-9_]+"
+                  "value": "[a-zA-Z_]+"
                 }
               },
               {
                 "type": "IMMEDIATE_TOKEN",
                 "content": {
                   "type": "PATTERN",
-                  "value": "[.-]+"
+                  "value": "[0-9]+"
+                }
+              },
+              {
+                "type": "IMMEDIATE_TOKEN",
+                "content": {
+                  "type": "STRING",
+                  "value": "."
+                }
+              },
+              {
+                "type": "IMMEDIATE_TOKEN",
+                "content": {
+                  "type": "STRING",
+                  "value": "-"
                 }
               }
             ]
@@ -2607,6 +2671,20 @@
                     "content": {
                       "type": "STRING",
                       "value": "/"
+                    }
+                  },
+                  {
+                    "type": "IMMEDIATE_TOKEN",
+                    "content": {
+                      "type": "STRING",
+                      "value": "-"
+                    }
+                  },
+                  {
+                    "type": "IMMEDIATE_TOKEN",
+                    "content": {
+                      "type": "STRING",
+                      "value": "."
                     }
                   },
                   {
@@ -2892,6 +2970,14 @@
           {
             "type": "STRING",
             "value": "+"
+          },
+          {
+            "type": "STRING",
+            "value": "."
+          },
+          {
+            "type": "STRING",
+            "value": "-"
           },
           {
             "type": "ALIAS",
@@ -3235,19 +3321,26 @@
           "value": "[a-zA-Z_]+"
         },
         {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "IMMEDIATE_TOKEN",
-              "content": {
-                "type": "PATTERN",
-                "value": "[a-zA-Z0-9_]+"
+          "type": "REPEAT",
+          "content": {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "IMMEDIATE_TOKEN",
+                "content": {
+                  "type": "PATTERN",
+                  "value": "[a-zA-Z_]+"
+                }
+              },
+              {
+                "type": "IMMEDIATE_TOKEN",
+                "content": {
+                  "type": "PATTERN",
+                  "value": "[0-9]+"
+                }
               }
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
+            ]
+          }
         }
       ]
     },
@@ -4479,11 +4572,15 @@
           "members": [
             {
               "type": "PATTERN",
-              "value": "[^\"'\\s\\\\\\$()\\[\\]{}+,:@=a-zA-Z0-9_/]+"
+              "value": "[^\"'\\s\\\\\\$()\\[\\]{}+,:@=a-zA-Z0-9_/.-]+"
             },
             {
               "type": "PATTERN",
-              "value": "[a-zA-Z0-9_]+"
+              "value": "[a-zA-Z_]+"
+            },
+            {
+              "type": "PATTERN",
+              "value": "[0-9]+"
             }
           ]
         },
@@ -4510,14 +4607,21 @@
             "type": "IMMEDIATE_TOKEN",
             "content": {
               "type": "PATTERN",
-              "value": "[^\"'\\s\\\\\\$()\\[\\]{}+,:@=a-zA-Z0-9_/]+"
+              "value": "[^\"'\\s\\\\\\$()\\[\\]{}+,:@=a-zA-Z0-9_/.-]+"
             }
           },
           {
             "type": "IMMEDIATE_TOKEN",
             "content": {
               "type": "PATTERN",
-              "value": "[a-zA-Z0-9_]+"
+              "value": "[a-zA-Z_]+"
+            }
+          },
+          {
+            "type": "IMMEDIATE_TOKEN",
+            "content": {
+              "type": "PATTERN",
+              "value": "[0-9]+"
             }
           }
         ]
@@ -4770,6 +4874,14 @@
             {
               "type": "STRING",
               "value": "+"
+            },
+            {
+              "type": "STRING",
+              "value": "."
+            },
+            {
+              "type": "STRING",
+              "value": "-"
             }
           ]
         },
@@ -4890,6 +5002,20 @@
             }
           },
           {
+            "type": "IMMEDIATE_TOKEN",
+            "content": {
+              "type": "STRING",
+              "value": "."
+            }
+          },
+          {
+            "type": "IMMEDIATE_TOKEN",
+            "content": {
+              "type": "STRING",
+              "value": "-"
+            }
+          },
+          {
             "type": "ALIAS",
             "content": {
               "type": "SYMBOL",
@@ -4962,6 +5088,14 @@
             {
               "type": "STRING",
               "value": "+"
+            },
+            {
+              "type": "STRING",
+              "value": "."
+            },
+            {
+              "type": "STRING",
+              "value": "-"
             }
           ]
         },
@@ -5065,6 +5199,20 @@
                 "content": {
                   "type": "STRING",
                   "value": "+"
+                }
+              },
+              {
+                "type": "IMMEDIATE_TOKEN",
+                "content": {
+                  "type": "STRING",
+                  "value": "."
+                }
+              },
+              {
+                "type": "IMMEDIATE_TOKEN",
+                "content": {
+                  "type": "STRING",
+                  "value": "-"
                 }
               },
               {
@@ -5461,6 +5609,10 @@
     }
   ],
   "conflicts": [
+    [
+      "_expandable_identifier",
+      "variable"
+    ],
     [
       "_string_base"
     ],

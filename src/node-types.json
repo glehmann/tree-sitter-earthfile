@@ -2450,6 +2450,10 @@
     "named": false
   },
   {
+    "type": "-",
+    "named": false
+  },
+  {
     "type": "--",
     "named": false
   },
@@ -2519,6 +2523,10 @@
   },
   {
     "type": "-f",
+    "named": false
+  },
+  {
+    "type": ".",
     "named": false
   },
   {
