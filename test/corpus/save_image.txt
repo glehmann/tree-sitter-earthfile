@@ -75,12 +75,10 @@ foo:
         (block
           (save_image_command
             images: (images
-              (image_spec
-                name: (image_name
-                  (double_quoted_string
-                    (expansion
-                      (variable))))))))))
-
+              (string
+                (double_quoted_string
+                  (expansion
+                    (variable)))))))))
 
 ==================
 save image with quoted name and tag
@@ -97,12 +95,10 @@ foo:
         (block
           (save_image_command
             images: (images
-              (image_spec
-                name: (image_name
-                  (double_quoted_string
-                    (expansion
-                      (variable))))
-                tag: (image_tag
+              (string
+                (double_quoted_string
+                  (expansion
+                    (variable)))
+                (unquoted_string
                   (expansion
                     (variable)))))))))
-

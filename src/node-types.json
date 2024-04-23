@@ -853,6 +853,10 @@
           "named": true
         },
         {
+          "type": "string",
+          "named": true
+        },
+        {
           "type": "target_ref",
           "named": true
         }
@@ -1142,25 +1146,7 @@
   {
     "type": "image_name",
     "named": true,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "double_quoted_string",
-          "named": true
-        },
-        {
-          "type": "expansion",
-          "named": true
-        },
-        {
-          "type": "single_quoted_string",
-          "named": true
-        }
-      ]
-    }
+    "fields": {}
   },
   {
     "type": "image_spec",
