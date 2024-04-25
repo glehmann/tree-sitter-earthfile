@@ -19,11 +19,7 @@ module.exports = grammar({
     [$.earthfile_ref, $.image_name, $.unquoted_string],
     [$.earthfile_ref, $.target_ref_with_build_args],
     [$.earthfile_ref, $.unquoted_string],
-    [$.image_digest],
-    [$.image_name],
-    [$.image_name, $.string],
     [$.image_name, $.unquoted_string],
-    [$.image_tag],
     [$.shell_fragment],
     [$.string],
     [$.unquoted_string],
@@ -492,8 +488,6 @@ module.exports = grammar({
           choice(
             $._string_base,
             $.expansion,
-            $.double_quoted_string,
-            $.single_quoted_string
           ),
           repeat(
             choice(
@@ -505,8 +499,6 @@ module.exports = grammar({
               // token.immediate(":"),
               // token.immediate("@"),
               // token.immediate("="),
-              alias($._immediate_double_quoted_string, $.double_quoted_string),
-              alias($._immediate_double_quoted_string, $.single_quoted_string),
               alias($._immediate_expansion, $.expansion)
             )
           )
@@ -516,16 +508,12 @@ module.exports = grammar({
       repeat1(
         choice(
           token.immediate(/[^@\s\$=]+/),
-          alias($._immediate_double_quoted_string, $.double_quoted_string),
-          alias($._immediate_double_quoted_string, $.single_quoted_string),
           alias($._immediate_expansion, $.expansion)
         )
       ),
     image_digest: ($) =>
       repeat1(
         choice(
-          alias($._immediate_double_quoted_string, $.double_quoted_string),
-          alias($._immediate_double_quoted_string, $.single_quoted_string),
           token.immediate(/[a-zA-Z0-9:]+/),
           alias($._immediate_expansion, $.expansion)
         )
