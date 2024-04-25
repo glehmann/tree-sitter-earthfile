@@ -34,7 +34,7 @@ module.exports = grammar({
     // [$._secret_id, $.variable],
     // [$._string_base],
     // [$.earthfile_ref],
-    // [$.earthfile_ref, $.image_name],
+    [$.earthfile_ref, $.image_name],
     [$.earthfile_ref, $.image_name, $.unquoted_string],
     [$.earthfile_ref, $.target_ref_with_build_args],
     [$.earthfile_ref, $.unquoted_string],
@@ -485,12 +485,12 @@ module.exports = grammar({
       ),
     earthfile_ref: ($) =>
       seq(
-        choice($._string_base, $.expansion, ...extra_tokens("+$")),
+        choice($._string_base, $.expansion, ...extra_tokens("+$=")),
         repeat(
           prec.left(
             choice(
               $._immediate_string_base,
-              ...extra_immediate_tokens("+$"),
+              ...extra_immediate_tokens("+$="),
               alias($._immediate_escape_sequence, $.escape_sequence),
               alias($._immediate_expansion, $.expansion)
             )
@@ -519,7 +519,7 @@ module.exports = grammar({
       seq(
         $._string_base,
         repeat(
-          prec.left(1,
+          prec.left(
             choice(
               $._immediate_string_base,
               token.immediate("/"),

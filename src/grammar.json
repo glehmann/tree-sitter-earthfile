@@ -2397,10 +2397,6 @@
             },
             {
               "type": "STRING",
-              "value": "="
-            },
-            {
-              "type": "STRING",
               "value": "."
             },
             {
@@ -2489,13 +2485,6 @@
                   "content": {
                     "type": "STRING",
                     "value": "@"
-                  }
-                },
-                {
-                  "type": "IMMEDIATE_TOKEN",
-                  "content": {
-                    "type": "STRING",
-                    "value": "="
                   }
                 },
                 {
@@ -2665,7 +2654,7 @@
           "type": "REPEAT",
           "content": {
             "type": "PREC_LEFT",
-            "value": 1,
+            "value": 0,
             "content": {
               "type": "CHOICE",
               "members": [
@@ -5600,6 +5589,10 @@
     }
   ],
   "conflicts": [
+    [
+      "earthfile_ref",
+      "image_name"
+    ],
     [
       "earthfile_ref",
       "image_name",

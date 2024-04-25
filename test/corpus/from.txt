@@ -155,3 +155,17 @@ FROM --allow-privileged +build
           (target_ref
             name: (identifier)))))
 
+==================
+from command target with earthfile reference
+==================
+
+FROM github.com/earthly/earthly+base
+
+---
+
+    (source_file
+      base_target: (block
+        (from_command
+          (target_ref
+            earthfile: (earthfile_ref)
+            name: (identifier)))))
