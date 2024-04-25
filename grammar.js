@@ -687,7 +687,7 @@ module.exports = grammar({
       seq(
         token(prec(5, "--load")),
         choice(token.immediate(" "), token.immediate("=")),
-        optional(seq(field("image", $.image_spec), token.immediate("="))),
+        optional(seq(field("image", choice($.image_spec, $.string)), token.immediate("="))),
         field(
           "target",
           choice($.target_ref, $.target_ref_with_build_args, $.string)
@@ -714,7 +714,7 @@ module.exports = grammar({
       seq(
         token(prec(5, "--pull")),
         choice(token.immediate(" "), token.immediate("=")),
-        field("value", $.image_spec)
+        field("value", choice($.image_spec, $.string))
       ),
     push: ($) => token(prec(5, "--push")),
     raw_output: ($) => token(prec(5, "--raw-output")),
