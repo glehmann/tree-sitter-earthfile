@@ -206,6 +206,7 @@ module.exports = grammar({
     from_dockerfile_options: ($) =>
       repeat1(
         choice(
+          $.allow_privileged,
           $.docker_build_arg,
           $.docker_file,
           $.docker_target,
@@ -274,6 +275,7 @@ module.exports = grammar({
     run_options: ($) =>
       repeat1(
         choice(
+          $.aws,
           $.entrypoint,
           $.mount,
           $.network_none,
@@ -599,6 +601,7 @@ module.exports = grammar({
     // options
     allow_privileged: ($) => token(prec(5, "--allow-privileged")),
     auto_skip: ($) => token(prec(5, "--auto-skip")),
+    aws: ($) => token(prec(5, "--aws")),
     branch: ($) =>
       seq(
         token(prec(5, "--branch")),

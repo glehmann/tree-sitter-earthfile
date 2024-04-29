@@ -1422,6 +1422,10 @@
           "named": true
         },
         {
+          "type": "aws",
+          "named": true
+        },
+        {
           "type": "branch",
           "named": true
         },
@@ -2694,6 +2698,10 @@
   },
   {
     "type": "auto_skip",
+    "named": true
+  },
+  {
+    "type": "aws",
     "named": true
   },
   {

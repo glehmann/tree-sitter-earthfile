@@ -986,6 +986,10 @@
         "members": [
           {
             "type": "SYMBOL",
+            "name": "allow_privileged"
+          },
+          {
+            "type": "SYMBOL",
             "name": "docker_build_arg"
           },
           {
@@ -1390,6 +1394,10 @@
       "content": {
         "type": "CHOICE",
         "members": [
+          {
+            "type": "SYMBOL",
+            "name": "aws"
+          },
           {
             "type": "SYMBOL",
             "name": "entrypoint"
@@ -3071,6 +3079,17 @@
         "content": {
           "type": "STRING",
           "value": "--auto-skip"
+        }
+      }
+    },
+    "aws": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 5,
+        "content": {
+          "type": "STRING",
+          "value": "--aws"
         }
       }
     },
