@@ -32,10 +32,12 @@ foo:
             options: (options
               (push)
               (secret
-                id: (identifier))
+                id: (string
+                  (unquoted_string)))
               (secret
                 var: (variable)
-                id: (identifier)))
+                id: (string
+                  (unquoted_string))))
             command: (shell_fragment)))))
 
 
@@ -57,15 +59,17 @@ foo:
           (run_command
             options: (options
               (secret
-                id: (identifier
-                  (expansion
-                    (variable))))
+                id: (string
+                  (unquoted_string
+                    (expansion
+                      (variable)))))
               (line_continuation)
               (secret
                 var: (variable)
-                id: (identifier
-                  (expansion
-                    (variable)))))
+                id: (string
+                  (unquoted_string
+                    (expansion
+                      (variable))))))
             (line_continuation)
             command: (shell_fragment)))))
 

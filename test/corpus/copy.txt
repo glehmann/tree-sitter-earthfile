@@ -126,12 +126,10 @@ foo:
                 (expansion
                   (variable))))
             (line_continuation)
-            src: (target_artifact
-              (target_ref
-                name: (identifier
-                  (expansion
-                    (variable))))
-              (unquoted_string))
+            src: (string
+              (unquoted_string
+                (expansion
+                  (variable))))
             (line_continuation)
             src: (string
               (unquoted_string
@@ -144,13 +142,12 @@ foo:
                   (variable))))
             (line_continuation)
             src: (target_artifact_build_args
-              (target_ref
-                name: (identifier
+              (string
+                (unquoted_string
+                  (expansion
+                    (variable))
                   (expansion
                     (variable))))
-              (unquoted_string
-                (expansion
-                  (variable)))
               (build_args
                 (build_arg
                   name: (variable)

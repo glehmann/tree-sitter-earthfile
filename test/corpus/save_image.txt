@@ -99,6 +99,7 @@ foo:
                 (double_quoted_string
                   (expansion
                     (variable)))
+                (unquoted_string)
                 (unquoted_string
                   (expansion
                     (variable)))))))))
