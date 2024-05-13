@@ -5670,10 +5670,6 @@
     ],
     [
       "earthfile_ref",
-      "target_ref_with_build_args"
-    ],
-    [
-      "earthfile_ref",
       "unquoted_string"
     ],
     [
