@@ -156,7 +156,7 @@ FROM --allow-privileged +build
             name: (identifier)))))
 
 ==================
-from command target with earthfile reference
+from command target with remote earthfile reference
 ==================
 
 FROM github.com/earthly/earthly+base
@@ -167,5 +167,55 @@ FROM github.com/earthly/earthly+base
       base_target: (block
         (from_command
           (target_ref
-            earthfile: (earthfile_ref)
+            earthfile: (earthfile_ref
+              (remote_path))
             name: (identifier)))))
+
+==================
+from command target with import earthfile reference
+==================
+
+    FROM foo+docker
+
+---
+
+    (source_file
+      base_target: (block
+        (from_command
+          (target_ref
+            earthfile: (earthfile_ref
+              (identifier))
+            name: (identifier)))))
+
+==================
+from command target with local earthfile reference
+==================
+
+    FROM ./foo+docker
+
+---
+
+    (source_file
+      base_target: (block
+        (from_command
+          (target_ref
+            earthfile: (earthfile_ref
+              (local_path))
+            name: (identifier)))))
+
+==================
+from command target with upper local earthfile reference
+==================
+
+    FROM ../foo+docker
+
+---
+
+    (source_file
+      base_target: (block
+        (from_command
+          (target_ref
+            earthfile: (earthfile_ref
+              (local_path))
+            name: (identifier)))))
+

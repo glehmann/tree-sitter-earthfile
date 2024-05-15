@@ -597,11 +597,19 @@
     "named": true,
     "fields": {},
     "children": {
-      "multiple": true,
-      "required": false,
+      "multiple": false,
+      "required": true,
       "types": [
         {
-          "type": "escape_sequence",
+          "type": "identifier",
+          "named": true
+        },
+        {
+          "type": "local_path",
+          "named": true
+        },
+        {
+          "type": "remote_path",
           "named": true
         }
       ]
@@ -1340,6 +1348,21 @@
     }
   },
   {
+    "type": "local_path",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "escape_sequence",
+          "named": true
+        }
+      ]
+    }
+  },
+  {
     "type": "locally_command",
     "named": true,
     "fields": {},
@@ -1633,6 +1656,21 @@
           }
         ]
       }
+    }
+  },
+  {
+    "type": "remote_path",
+    "named": true,
+    "fields": {},
+    "children": {
+      "multiple": true,
+      "required": false,
+      "types": [
+        {
+          "type": "escape_sequence",
+          "named": true
+        }
+      ]
     }
   },
   {

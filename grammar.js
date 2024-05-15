@@ -22,18 +22,21 @@ module.exports = grammar({
 
   conflicts: ($) => [
     [$._immediate_identifier, $._immediate_string_base],
+    [$._immediate_string_base, $.identifier],
+    [$._immediate_string_base, $.variable],
+    [$._string_base, $.identifier],
+    [$._string_base, $.variable],
     [$._string_base],
     [$.build_arg],
-    [$.earthfile_ref, $.image_name, $.unquoted_string],
-    [$.earthfile_ref, $.unquoted_string],
+    [$.image_name, $.remote_path, $.unquoted_string],
     [$.image_name, $.unquoted_string],
+    [$.local_path, $.unquoted_string],
+    [$.remote_path, $.unquoted_string],
     [$.shell_fragment],
     [$.string],
     [$.target_ref, $.unquoted_string],
     [$.unquoted_string],
     [$.unquoted_string_with_spaces],
-    [$.variable, $._immediate_string_base],
-    [$.variable, $._string_base],
   ],
 
   rules: {
@@ -364,19 +367,7 @@ module.exports = grammar({
           ),
         ),
       ),
-    earthfile_ref: ($) =>
-      seq(
-        choice($._string_base, ...extra_tokens("+$=")),
-        repeat(
-          prec.left(
-            choice(
-              $._immediate_string_base,
-              ...extra_immediate_tokens("+$="),
-              alias($._immediate_escape_sequence, $.escape_sequence),
-            ),
-          ),
-        ),
-      ),
+    earthfile_ref: ($) => choice($.identifier, $.local_path, $.remote_path),
     function_ref: (_) => "dummy node to be used as an alias for target_ref",
     identifier: ($) =>
       seq(
@@ -423,9 +414,41 @@ module.exports = grammar({
     images: ($) => repeat1(choice($.image_spec, $.string)),
     label: ($) =>
       seq(field("label", $.identifier), choice(token.immediate(" "), token.immediate("=")), field("value", $.string)),
+    local_path: ($) =>
+      choice(
+        ".",
+        seq(".", token.immediate(".")),
+        seq(
+          ".",
+          optional(token.immediate(".")),
+          token.immediate("/"),
+          repeat(
+            prec.left(
+              choice(
+                $._immediate_string_base,
+                ...extra_immediate_tokens("+$="),
+                alias($._immediate_escape_sequence, $.escape_sequence),
+              ),
+            ),
+          ),
+        ),
+      ),
     number: (_) => /\d+/,
     options: (_) => "dummy node to use as an alias in the command options",
     port: ($) => seq($.number, optional(seq(token.immediate("/"), field("protocol", $.identifier)))),
+    remote_path: ($) =>
+      seq(
+        choice($._string_base),
+        repeat(
+          prec.left(
+            choice(
+              $._immediate_string_base,
+              ...extra_immediate_tokens("+$="),
+              alias($._immediate_escape_sequence, $.escape_sequence),
+            ),
+          ),
+        ),
+      ),
     shell_fragment: ($) =>
       repeat1(
         choice(
