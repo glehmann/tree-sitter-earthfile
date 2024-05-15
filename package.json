@@ -1,6 +1,6 @@
 {
   "name": "tree-sitter-earthfile",
-  "version": "0.3.0",
+  "version": "0.2.4",
   "description": "Earthfile tree-sitter grammar",
   "author": "Gaëtan Lehmann <gaetan.lehmann@gmail.com>",
   "main": "bindings/node",
@@ -12,6 +12,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "@biomejs/biome": "^1.7.3",
     "node-addon-api": "^7.1.0",
     "node-gyp-build": "^4.8.0"
   },
@@ -24,8 +25,8 @@
     }
   },
   "devDependencies": {
-    "tree-sitter-cli": "^0.22.1",
-    "prebuildify": "^6.0.0"
+    "prebuildify": "^6.0.0",
+    "tree-sitter-cli": "^0.22.1"
   },
   "files": [
     "grammar.js",
