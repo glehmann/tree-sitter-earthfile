@@ -33,7 +33,7 @@ fn release(args: &Release) -> anyhow::Result<()> {
     let version = &args.version;
 
     // update package.json
-    cmd!(sh, "npm version {version}").run()?;
+    cmd!(sh, "npm version --no-git-tag-version {version}").run()?;
 
     // update the workspace Cargo.toml
     let toml = std::fs::read_to_string("Cargo.toml")?;
@@ -53,7 +53,6 @@ fn release(args: &Release) -> anyhow::Result<()> {
     let content = re
         .replace_all(&content, format!("VERSION := {version}"))
         .to_string();
-    println!("{}", &content);
     std::fs::write("Makefile", content)?;
 
     // generate the parser and run tree-sitter tests
