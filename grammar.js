@@ -383,9 +383,9 @@ module.exports = grammar({
           ),
         ),
       ),
-    expr: ($) => /\$\(.+\)/,
-    function_ref: ($) => "dummy node to be used as an alias for target_ref",
-    identifier: ($) =>
+    expr: (_) => /\$\(.+\)/,
+    function_ref: (_) => "dummy node to be used as an alias for target_ref",
+    identifier: (_) =>
       seq(/[a-zA-Z_]/, optional(repeat(choice(token.immediate(/[a-zA-Z0-9_]+/), token.immediate(/[.-]+/))))),
     image_spec: ($) =>
       seq(
@@ -420,7 +420,7 @@ module.exports = grammar({
     label: ($) =>
       seq(field("label", $.identifier), choice(token.immediate(" "), token.immediate("=")), field("value", $.string)),
     number: (_) => /\d+/,
-    options: ($) => "dummy node to use as an alias in the command options",
+    options: (_) => "dummy node to use as an alias in the command options",
     port: ($) => seq($.number, optional(seq(token.immediate("/"), field("protocol", $.identifier)))),
     shell_fragment: ($) =>
       repeat1(
@@ -470,13 +470,13 @@ module.exports = grammar({
         optional($.build_args),
         token(prec(5, ")")),
       ),
-    variable: ($) => seq(/[a-zA-Z_]+/, optional(token.immediate(/[a-zA-Z0-9_]+/))),
-    version_major_minor: ($) => /[0-9]+\.[0-9]+/,
+    variable: (_) => seq(/[a-zA-Z_]+/, optional(token.immediate(/[a-zA-Z0-9_]+/))),
+    version_major_minor: (_) => /[0-9]+\.[0-9]+/,
 
     // options
-    allow_privileged: ($) => token(prec(5, "--allow-privileged")),
-    auto_skip: ($) => token(prec(5, "--auto-skip")),
-    aws: ($) => token(prec(5, "--aws")),
+    allow_privileged: (_) => token(prec(5, "--allow-privileged")),
+    auto_skip: (_) => token(prec(5, "--auto-skip")),
+    aws: (_) => token(prec(5, "--aws")),
     branch: ($) =>
       seq(token(prec(5, "--branch")), choice(token.immediate(" "), token.immediate("=")), field("value", $.string)),
     build_arg: ($) =>
@@ -493,14 +493,14 @@ module.exports = grammar({
       seq(token(prec(5, "--build-arg")), choice(token.immediate(" "), token.immediate("=")), field("value", $.string)),
     cache_from: ($) =>
       seq(token(prec(5, "--cache-from")), choice(token.immediate(" "), token.immediate("=")), field("value", $.string)),
-    cache_hint: ($) => token(prec(5, "--cache-hint")),
+    cache_hint: (_) => token(prec(5, "--cache-hint")),
     chmod: ($) =>
       seq(token(prec(5, "--chmod")), choice(token.immediate(" "), token.immediate("=")), field("value", $.string)),
     chown: ($) =>
       seq(token(prec(5, "--chown")), choice(token.immediate(" "), token.immediate("=")), field("value", $.string)),
     compose: ($) =>
       seq(token(prec(5, "--compose")), choice(token.immediate(" "), token.immediate("=")), field("value", $.string)),
-    dir: ($) => token(prec(5, "--dir")),
+    dir: (_) => token(prec(5, "--dir")),
     docker_build_arg: ($) =>
       seq(
         token(prec(5, "--build-arg")),
@@ -517,14 +517,14 @@ module.exports = grammar({
       ),
     docker_target: ($) =>
       seq(token(prec(5, "--target")), choice(token.immediate(" "), token.immediate("=")), field("value", $.identifier)),
-    entrypoint: ($) => token(prec(5, "--entrypoint")),
-    feature_flag: ($) => /--[a-zA-Z0-9\-]+/,
-    force: ($) => token(prec(5, "--force")),
-    global: ($) => token(prec(5, "--global")),
+    entrypoint: (_) => token(prec(5, "--entrypoint")),
+    feature_flag: (_) => /--[a-zA-Z0-9\-]+/,
+    force: (_) => token(prec(5, "--force")),
+    global: (_) => token(prec(5, "--global")),
     id: ($) => seq(token(prec(5, "--id")), choice(token.immediate(" "), token.immediate("=")), $.identifier),
-    if_exists: ($) => token(prec(5, "--if-exists")),
-    keep_own: ($) => token(prec(5, "--keep-own")),
-    keep_ts: ($) => token(prec(5, "--keep-ts")),
+    if_exists: (_) => token(prec(5, "--if-exists")),
+    keep_own: (_) => token(prec(5, "--keep-own")),
+    keep_ts: (_) => token(prec(5, "--keep-ts")),
     load: ($) =>
       seq(
         token(prec(5, "--load")),
@@ -534,22 +534,22 @@ module.exports = grammar({
       ),
     mount: ($) =>
       seq(token(prec(5, "--mount")), choice(token.immediate(" "), token.immediate("=")), field("value", $.string)),
-    network_none: ($) => token(prec(5, "--network=none")),
-    no_cache: ($) => token(prec(5, "--no-cache")),
-    pass_args: ($) => token(prec(5, "--pass-args")),
-    persist: ($) => token(prec(5, "--persist")),
+    network_none: (_) => token(prec(5, "--network=none")),
+    no_cache: (_) => token(prec(5, "--no-cache")),
+    pass_args: (_) => token(prec(5, "--pass-args")),
+    persist: (_) => token(prec(5, "--persist")),
     platform: ($) =>
       seq(token(prec(5, "--platform")), choice(token.immediate(" "), token.immediate("=")), field("value", $.string)),
-    privileged: ($) => token(prec(5, "--privileged")),
+    privileged: (_) => token(prec(5, "--privileged")),
     pull: ($) =>
       seq(
         token(prec(5, "--pull")),
         choice(token.immediate(" "), token.immediate("=")),
         field("value", choice($.image_spec, $.string)),
       ),
-    push: ($) => token(prec(5, "--push")),
-    raw_output: ($) => token(prec(5, "--raw-output")),
-    required: ($) => token(prec(5, "--required")),
+    push: (_) => token(prec(5, "--push")),
+    raw_output: (_) => token(prec(5, "--raw-output")),
+    required: (_) => token(prec(5, "--required")),
     secret: ($) =>
       seq(
         token(prec(5, "--secret")),
@@ -568,12 +568,12 @@ module.exports = grammar({
     service: ($) =>
       seq(token(prec(5, "--service")), choice(token.immediate(" "), token.immediate("=")), field("value", $.string)),
     sharing: ($) => seq(token(prec(5, "--sharing")), choice(token.immediate(" "), token.immediate("=")), $.identifier),
-    ssh: ($) => token(prec(5, "--ssh")),
-    symlink_no_follow: ($) => token(prec(5, "--symlink-no-follow")),
+    ssh: (_) => token(prec(5, "--ssh")),
+    symlink_no_follow: (_) => token(prec(5, "--symlink-no-follow")),
 
     // string stuff
-    _string_base: ($) => string_base_regex,
-    _immediate_string_base: ($) => token.immediate(string_base_regex),
+    _string_base: (_) => string_base_regex,
+    _immediate_string_base: (_) => token.immediate(string_base_regex),
     double_quoted_string: ($) =>
       seq(
         '"',
@@ -688,9 +688,9 @@ module.exports = grammar({
           seq(token.immediate("("), $.shell_fragment, token.immediate(")")),
         ),
       ),
-    _immediate_variable: ($) => token.immediate(/[a-zA-Z_][a-zA-Z0-9_]*/),
+    _immediate_variable: (_) => token.immediate(/[a-zA-Z_][a-zA-Z0-9_]*/),
 
-    shell_expr: ($) => /[a-zA-Z0-9_ ]+/,
+    shell_expr: (_) => /[a-zA-Z0-9_ ]+/,
 
     // extra tokens, eol, …
     _immediate_escape_sequence: (_) => /\\./,
