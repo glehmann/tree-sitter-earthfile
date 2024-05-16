@@ -1420,6 +1420,10 @@
           },
           {
             "type": "SYMBOL",
+            "name": "oidc"
+          },
+          {
+            "type": "SYMBOL",
             "name": "push"
           },
           {
@@ -1614,6 +1618,10 @@
           {
             "type": "SYMBOL",
             "name": "push"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "without_earthly_labels"
           }
         ]
       }
@@ -1911,6 +1919,10 @@
           {
             "type": "SYMBOL",
             "name": "allow_privileged"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "cache_id"
           },
           {
             "type": "SYMBOL",
@@ -3268,6 +3280,49 @@
         }
       ]
     },
+    "cache_id": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "TOKEN",
+          "content": {
+            "type": "PREC",
+            "value": 5,
+            "content": {
+              "type": "STRING",
+              "value": "--cache-id"
+            }
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "IMMEDIATE_TOKEN",
+              "content": {
+                "type": "STRING",
+                "value": " "
+              }
+            },
+            {
+              "type": "IMMEDIATE_TOKEN",
+              "content": {
+                "type": "STRING",
+                "value": "="
+              }
+            }
+          ]
+        },
+        {
+          "type": "FIELD",
+          "name": "value",
+          "content": {
+            "type": "SYMBOL",
+            "name": "string"
+          }
+        }
+      ]
+    },
     "cache_from": {
       "type": "SEQ",
       "members": [
@@ -3898,6 +3953,49 @@
         }
       }
     },
+    "oidc": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "TOKEN",
+          "content": {
+            "type": "PREC",
+            "value": 5,
+            "content": {
+              "type": "STRING",
+              "value": "--oidc"
+            }
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "IMMEDIATE_TOKEN",
+              "content": {
+                "type": "STRING",
+                "value": " "
+              }
+            },
+            {
+              "type": "IMMEDIATE_TOKEN",
+              "content": {
+                "type": "STRING",
+                "value": "="
+              }
+            }
+          ]
+        },
+        {
+          "type": "FIELD",
+          "name": "spec",
+          "content": {
+            "type": "SYMBOL",
+            "name": "string"
+          }
+        }
+      ]
+    },
     "pass_args": {
       "type": "TOKEN",
       "content": {
@@ -4302,6 +4400,17 @@
         "content": {
           "type": "STRING",
           "value": "--symlink-no-follow"
+        }
+      }
+    },
+    "without_earthly_labels": {
+      "type": "TOKEN",
+      "content": {
+        "type": "PREC",
+        "value": 5,
+        "content": {
+          "type": "STRING",
+          "value": "--without-earthly-labels"
         }
       }
     },

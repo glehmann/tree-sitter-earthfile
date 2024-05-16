@@ -221,6 +221,7 @@ module.exports = grammar({
           $.network_none,
           $.no_cache,
           $.privileged,
+          $.oidc,
           $.push,
           $.raw_output,
           $.secret,
@@ -246,7 +247,7 @@ module.exports = grammar({
         optional(field("images", $.images)),
         $._eol,
       ),
-    save_image_options: ($) => repeat1(choice($.cache_from, $.cache_hint, $.push)),
+    save_image_options: ($) => repeat1(choice($.cache_from, $.cache_hint, $.push, $.without_earthly_labels)),
 
     set_command: ($) =>
       seq(
@@ -290,7 +291,8 @@ module.exports = grammar({
         "END",
         $._eol,
       ),
-    with_docker_options: ($) => repeat1(choice($.allow_privileged, $.compose, $.load, $.platform, $.pull, $.service)),
+    with_docker_options: ($) =>
+      repeat1(choice($.allow_privileged, $.cache_id, $.compose, $.load, $.platform, $.pull, $.service)),
 
     workdir_command: ($) => seq("WORKDIR", $.string, $._eol),
 
@@ -491,6 +493,8 @@ module.exports = grammar({
     build_args: ($) => repeat1($.build_arg),
     build_arg_deprecated: ($) =>
       seq(token(prec(5, "--build-arg")), choice(token.immediate(" "), token.immediate("=")), field("value", $.string)),
+    cache_id: ($) =>
+      seq(token(prec(5, "--cache-id")), choice(token.immediate(" "), token.immediate("=")), field("value", $.string)),
     cache_from: ($) =>
       seq(token(prec(5, "--cache-from")), choice(token.immediate(" "), token.immediate("=")), field("value", $.string)),
     cache_hint: (_) => token(prec(5, "--cache-hint")),
@@ -536,6 +540,8 @@ module.exports = grammar({
       seq(token(prec(5, "--mount")), choice(token.immediate(" "), token.immediate("=")), field("value", $.string)),
     network_none: (_) => token(prec(5, "--network=none")),
     no_cache: (_) => token(prec(5, "--no-cache")),
+    oidc: ($) =>
+      seq(token(prec(5, "--oidc")), choice(token.immediate(" "), token.immediate("=")), field("spec", $.string)),
     pass_args: (_) => token(prec(5, "--pass-args")),
     persist: (_) => token(prec(5, "--persist")),
     platform: ($) =>
@@ -570,6 +576,7 @@ module.exports = grammar({
     sharing: ($) => seq(token(prec(5, "--sharing")), choice(token.immediate(" "), token.immediate("=")), $.identifier),
     ssh: (_) => token(prec(5, "--ssh")),
     symlink_no_follow: (_) => token(prec(5, "--symlink-no-follow")),
+    without_earthly_labels: (_) => token(prec(5, "--without-earthly-labels")),
 
     // string stuff
     _string_base: (_) => string_base_regex,

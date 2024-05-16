@@ -344,6 +344,22 @@
     }
   },
   {
+    "type": "cache_id",
+    "named": true,
+    "fields": {
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "chmod",
     "named": true,
     "fields": {
@@ -1406,6 +1422,22 @@
     }
   },
   {
+    "type": "oidc",
+    "named": true,
+    "fields": {
+      "spec": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "options",
     "named": true,
     "fields": {},
@@ -1439,6 +1471,10 @@
         },
         {
           "type": "cache_hint",
+          "named": true
+        },
+        {
+          "type": "cache_id",
           "named": true
         },
         {
@@ -1518,6 +1554,10 @@
           "named": true
         },
         {
+          "type": "oidc",
+          "named": true
+        },
+        {
           "type": "pass_args",
           "named": true
         },
@@ -1571,6 +1611,10 @@
         },
         {
           "type": "symlink_no_follow",
+          "named": true
+        },
+        {
+          "type": "without_earthly_labels",
           "named": true
         }
       ]
@@ -2453,6 +2497,10 @@
     "named": false
   },
   {
+    "type": "--cache-id",
+    "named": false
+  },
+  {
     "type": "--chmod",
     "named": false
   },
@@ -2474,6 +2522,10 @@
   },
   {
     "type": "--mount",
+    "named": false
+  },
+  {
+    "type": "--oidc",
     "named": false
   },
   {
@@ -2798,6 +2850,10 @@
   },
   {
     "type": "version_major_minor",
+    "named": true
+  },
+  {
+    "type": "without_earthly_labels",
     "named": true
   },
   {
