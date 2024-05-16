@@ -8,7 +8,7 @@ import tree_sitter as ts
 class TestPackage(test.TestCase):
     def setUp(self) -> None:
         self.source = b'VERSION 0.8\n'
-        language = ts.Language(tse.language(), "earthfile")
+        language = ts.Language(tse.language())
         parser = ts.Parser()
         parser.set_language(language)
         self.tree = parser.parse(self.source)
