@@ -53,7 +53,7 @@ module.exports = grammar({
         optional(seq("=", field("default_value", optional(alias($.string_with_spaces, $.string))))),
         $._eol,
       ),
-    arg_options: ($) => repeat1(choice($.required, $.global)),
+    arg_options: ($) => repeat1(choice($.required, $.global, $.unknown_option)),
 
     build_command: ($) =>
       seq(
@@ -64,7 +64,9 @@ module.exports = grammar({
         $._eol,
       ),
     build_options: ($) =>
-      repeat1(choice($.auto_skip, $.allow_privileged, $.build_arg_deprecated, $.pass_args, $.platform)),
+      repeat1(
+        choice($.auto_skip, $.allow_privileged, $.build_arg_deprecated, $.pass_args, $.platform, $.unknown_option),
+      ),
 
     cache_command: ($) =>
       seq(
@@ -73,7 +75,7 @@ module.exports = grammar({
         field("mount_point", $.string),
         $._eol,
       ),
-    cache_options: ($) => repeat1(choice($.chmod, $.id, $.persist, $.sharing)),
+    cache_options: ($) => repeat1(choice($.chmod, $.id, $.persist, $.sharing, $.unknown_option)),
 
     cmd_command: ($) => seq("CMD", choice($.shell_fragment, $.string_array), $._eol),
 
@@ -98,6 +100,7 @@ module.exports = grammar({
           $.pass_args,
           $.platform,
           $.symlink_no_follow,
+          $.unknown_option,
         ),
       ),
 
@@ -108,7 +111,7 @@ module.exports = grammar({
         alias($.target_ref, $.function_ref),
         optional($.build_args),
       ),
-    do_options: ($) => repeat1(choice($.allow_privileged, $.pass_args)),
+    do_options: ($) => repeat1(choice($.allow_privileged, $.pass_args, $.unknown_option)),
 
     entrypoint_command: ($) => seq("ENTRYPOINT", choice($.shell_fragment, $.string_array), $._eol),
 
@@ -135,7 +138,7 @@ module.exports = grammar({
         "END",
         $._eol,
       ),
-    for_options: ($) => repeat1(choice($.sep, $.privileged, $.ssh, $.no_cache, $.mount, $.secret)),
+    for_options: ($) => repeat1(choice($.sep, $.privileged, $.ssh, $.no_cache, $.mount, $.secret, $.unknown_option)),
 
     from_command: ($) =>
       seq(
@@ -145,7 +148,7 @@ module.exports = grammar({
         optional($.build_args),
         $._eol,
       ),
-    from_options: ($) => repeat1(choice($.platform, $.allow_privileged, $.pass_args)),
+    from_options: ($) => repeat1(choice($.platform, $.allow_privileged, $.pass_args, $.unknown_option)),
 
     from_dockerfile_command: ($) =>
       seq(
@@ -155,7 +158,9 @@ module.exports = grammar({
         $._eol,
       ),
     from_dockerfile_options: ($) =>
-      repeat1(choice($.allow_privileged, $.docker_build_arg, $.docker_file, $.docker_target, $.platform)),
+      repeat1(
+        choice($.allow_privileged, $.docker_build_arg, $.docker_file, $.docker_target, $.platform, $.unknown_option),
+      ),
 
     function_command: ($) => seq(choice("FUNCTION", "COMMAND"), $._eol),
 
@@ -167,7 +172,7 @@ module.exports = grammar({
         field("dest", $.string),
         $._eol,
       ),
-    git_clone_options: ($) => repeat1(choice($.branch, $.keep_ts)),
+    git_clone_options: ($) => repeat1(choice($.branch, $.keep_ts, $.unknown_option)),
 
     host_command: ($) => seq("HOST", field("name", $.identifier), / +/, field("ip", $.string), $._eol),
 
@@ -189,7 +194,7 @@ module.exports = grammar({
         optional(seq("AS", field("alias", $.identifier))),
         $._eol,
       ),
-    import_options: ($) => repeat1(choice($.allow_privileged)),
+    import_options: ($) => repeat1(choice($.allow_privileged, $.unknown_option)),
 
     let_command: ($) =>
       seq(
@@ -226,6 +231,7 @@ module.exports = grammar({
           $.raw_output,
           $.secret,
           $.ssh,
+          $.unknown_option,
         ),
       ),
 
@@ -238,7 +244,8 @@ module.exports = grammar({
         optional(seq("AS LOCAL", field("local_dest", $.string))),
         $._eol,
       ),
-    save_artifact_options: ($) => repeat1(choice($.if_exists, $.force, $.keep_own, $.keep_ts, $.symlink_no_follow)),
+    save_artifact_options: ($) =>
+      repeat1(choice($.if_exists, $.force, $.keep_own, $.keep_ts, $.symlink_no_follow, $.unknown_option)),
 
     save_image_command: ($) =>
       seq(
@@ -247,7 +254,8 @@ module.exports = grammar({
         optional(field("images", $.images)),
         $._eol,
       ),
-    save_image_options: ($) => repeat1(choice($.cache_from, $.cache_hint, $.push, $.without_earthly_labels)),
+    save_image_options: ($) =>
+      repeat1(choice($.cache_from, $.cache_hint, $.push, $.without_earthly_labels, $.unknown_option)),
 
     set_command: ($) =>
       seq(
@@ -287,12 +295,15 @@ module.exports = grammar({
       seq(
         "WITH DOCKER",
         field("options", optional(alias($.with_docker_options, $.options))),
+        $._eol,
         $.run_command,
         "END",
         $._eol,
       ),
     with_docker_options: ($) =>
-      repeat1(choice($.allow_privileged, $.cache_id, $.compose, $.load, $.platform, $.pull, $.service)),
+      repeat1(
+        choice($.allow_privileged, $.cache_id, $.compose, $.load, $.platform, $.pull, $.service, $.unknown_option),
+      ),
 
     workdir_command: ($) => seq("WORKDIR", $.string, $._eol),
 
@@ -341,7 +352,8 @@ module.exports = grammar({
         $._eol,
         field("body", optional($.block)),
       ),
-    _conditional_block_options: ($) => repeat1(choice($.ssh, $.privileged, $.no_cache, $.mount, $.secret)),
+    _conditional_block_options: ($) =>
+      repeat1(choice($.ssh, $.privileged, $.no_cache, $.mount, $.secret, $.unknown_option)),
     elif_block: ($) => seq("ELSE IF", $._conditional_block),
     else_block: ($) => seq("ELSE", field("body", $.block)),
 
@@ -370,7 +382,7 @@ module.exports = grammar({
       ),
     earthfile_ref: ($) =>
       seq(
-        choice($._string_base, $.expansion, "(", ")", ":", "@", "="),
+        choice($._string_base, $.expansion, ":", "@", "="),
         repeat(
           choice(
             $._immediate_string_base,
@@ -577,6 +589,8 @@ module.exports = grammar({
     ssh: (_) => token(prec(5, "--ssh")),
     symlink_no_follow: (_) => token(prec(5, "--symlink-no-follow")),
     without_earthly_labels: (_) => token(prec(5, "--without-earthly-labels")),
+    unknown_option: ($) =>
+      seq(token(prec(3, /--[a-z0-9-]*/)), optional(seq(token.immediate("="), field("value", $.string)))),
 
     // string stuff
     _string_base: (_) => string_base_regex,

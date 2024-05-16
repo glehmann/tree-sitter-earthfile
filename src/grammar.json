@@ -272,6 +272,10 @@
           {
             "type": "SYMBOL",
             "name": "global"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "unknown_option"
           }
         ]
       }
@@ -359,6 +363,10 @@
           {
             "type": "SYMBOL",
             "name": "platform"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "unknown_option"
           }
         ]
       }
@@ -425,6 +433,10 @@
           {
             "type": "SYMBOL",
             "name": "sharing"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "unknown_option"
           }
         ]
       }
@@ -565,6 +577,10 @@
           {
             "type": "SYMBOL",
             "name": "symlink_no_follow"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "unknown_option"
           }
         ]
       }
@@ -632,6 +648,10 @@
           {
             "type": "SYMBOL",
             "name": "pass_args"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "unknown_option"
           }
         ]
       }
@@ -837,6 +857,10 @@
           {
             "type": "SYMBOL",
             "name": "secret"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "unknown_option"
           }
         ]
       }
@@ -920,6 +944,10 @@
           {
             "type": "SYMBOL",
             "name": "pass_args"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "unknown_option"
           }
         ]
       }
@@ -1003,6 +1031,10 @@
           {
             "type": "SYMBOL",
             "name": "platform"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "unknown_option"
           }
         ]
       }
@@ -1091,6 +1123,10 @@
           {
             "type": "SYMBOL",
             "name": "keep_ts"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "unknown_option"
           }
         ]
       }
@@ -1247,6 +1283,10 @@
           {
             "type": "SYMBOL",
             "name": "allow_privileged"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "unknown_option"
           }
         ]
       }
@@ -1437,6 +1477,10 @@
           {
             "type": "SYMBOL",
             "name": "ssh"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "unknown_option"
           }
         ]
       }
@@ -1548,6 +1592,10 @@
           {
             "type": "SYMBOL",
             "name": "symlink_no_follow"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "unknown_option"
           }
         ]
       }
@@ -1622,6 +1670,10 @@
           {
             "type": "SYMBOL",
             "name": "without_earthly_labels"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "unknown_option"
           }
         ]
       }
@@ -1899,6 +1951,10 @@
         },
         {
           "type": "SYMBOL",
+          "name": "_eol"
+        },
+        {
+          "type": "SYMBOL",
           "name": "run_command"
         },
         {
@@ -1943,6 +1999,10 @@
           {
             "type": "SYMBOL",
             "name": "service"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "unknown_option"
           }
         ]
       }
@@ -2178,6 +2238,10 @@
           {
             "type": "SYMBOL",
             "name": "secret"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "unknown_option"
           }
         ]
       }
@@ -2331,14 +2395,6 @@
             {
               "type": "SYMBOL",
               "name": "expansion"
-            },
-            {
-              "type": "STRING",
-              "value": "("
-            },
-            {
-              "type": "STRING",
-              "value": ")"
             },
             {
               "type": "STRING",
@@ -4413,6 +4469,50 @@
           "value": "--without-earthly-labels"
         }
       }
+    },
+    "unknown_option": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "TOKEN",
+          "content": {
+            "type": "PREC",
+            "value": 3,
+            "content": {
+              "type": "PATTERN",
+              "value": "--[a-z0-9-]*"
+            }
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "IMMEDIATE_TOKEN",
+                  "content": {
+                    "type": "STRING",
+                    "value": "="
+                  }
+                },
+                {
+                  "type": "FIELD",
+                  "name": "value",
+                  "content": {
+                    "type": "SYMBOL",
+                    "name": "string"
+                  }
+                }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
+        }
+      ]
     },
     "_string_base": {
       "type": "PATTERN",
