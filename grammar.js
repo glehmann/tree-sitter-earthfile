@@ -9,7 +9,6 @@ module.exports = grammar({
 
   conflicts: ($) => [
     [$.earthfile_ref, $.image_name, $.unquoted_string],
-    [$.earthfile_ref, $.target_ref_with_build_args],
     [$.earthfile_ref, $.unquoted_string],
     [$.image_name, $.unquoted_string],
     [$.shell_fragment],
