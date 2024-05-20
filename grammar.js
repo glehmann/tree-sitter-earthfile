@@ -212,7 +212,7 @@ module.exports = grammar({
       seq(
         "RUN",
         field("options", optional(alias($.run_options, $.options))),
-        choice(" -- ", / +/),
+        choice(token(prec(5, " -- ")), / +/),
         field("command", choice($.string_array, $.shell_fragment)),
         $._eol,
       ),

@@ -40,6 +40,25 @@ foo:
 
 
 ==================
+run with options and separator
+==================
+
+foo:
+    RUN --push -- --hop echo foo
+
+---
+
+    (source_file
+      (target
+        name: (identifier)
+        (block
+          (run_command
+            options: (options
+              (push))
+            command: (shell_fragment)))))
+
+
+==================
 run with expanded secret
 ==================
 
