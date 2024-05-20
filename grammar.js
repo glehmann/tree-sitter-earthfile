@@ -538,6 +538,7 @@ module.exports = grammar({
     global: (_) => token(prec(5, "--global")),
     id: ($) => seq(token(prec(5, "--id")), choice(token.immediate(" "), token.immediate("=")), $.identifier),
     if_exists: (_) => token(prec(5, "--if-exists")),
+    interactive: (_) => choice(token(prec(5, "--interactive")), token(prec(5, "--interactive-keep"))),
     keep_own: (_) => token(prec(5, "--keep-own")),
     keep_ts: (_) => token(prec(5, "--keep-ts")),
     load: ($) =>

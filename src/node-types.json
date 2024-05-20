@@ -2537,6 +2537,14 @@
     "named": false
   },
   {
+    "type": "--interactive",
+    "named": false
+  },
+  {
+    "type": "--interactive-keep",
+    "named": false
+  },
+  {
     "type": "--load",
     "named": false
   },
