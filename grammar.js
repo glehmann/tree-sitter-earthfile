@@ -221,6 +221,7 @@ module.exports = grammar({
         choice(
           $.aws,
           $.entrypoint,
+          $.interactive,
           $.mount,
           $.network_none,
           $.no_cache,

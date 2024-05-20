@@ -1272,6 +1272,11 @@
     }
   },
   {
+    "type": "interactive",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "label",
     "named": true,
     "fields": {
@@ -1527,6 +1532,10 @@
         },
         {
           "type": "if_exists",
+          "named": true
+        },
+        {
+          "type": "interactive",
           "named": true
         },
         {
