@@ -1401,6 +1401,10 @@
           },
           {
             "type": "SYMBOL",
+            "name": "interactive"
+          },
+          {
+            "type": "SYMBOL",
             "name": "mount"
           },
           {
@@ -3824,6 +3828,33 @@
           "value": "--if-exists"
         }
       }
+    },
+    "interactive": {
+      "type": "CHOICE",
+      "members": [
+        {
+          "type": "TOKEN",
+          "content": {
+            "type": "PREC",
+            "value": 5,
+            "content": {
+              "type": "STRING",
+              "value": "--interactive"
+            }
+          }
+        },
+        {
+          "type": "TOKEN",
+          "content": {
+            "type": "PREC",
+            "value": 5,
+            "content": {
+              "type": "STRING",
+              "value": "--interactive-keep"
+            }
+          }
+        }
+      ]
     },
     "keep_own": {
       "type": "TOKEN",
