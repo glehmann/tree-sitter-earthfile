@@ -3,7 +3,7 @@ do command
 ==================
 
 foo:
-  DO +hop --foo=bar
+  DO +BUILD --foo=bar
 
 ---
 

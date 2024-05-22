@@ -129,6 +129,7 @@ module.exports = grammar({
         field("options", optional(alias($.do_options, $.options))),
         choice(alias($.target_ref, $.function_ref), $.string),
         optional($.build_args),
+        $._eol,
       ),
     do_options: ($) => repeat1(choice($.allow_privileged, $.pass_args, $.unknown_option)),
 
@@ -209,7 +210,7 @@ module.exports = grammar({
       seq(
         "IMPORT",
         field("options", optional(alias($.import_options, $.options))),
-        $.earthfile_ref,
+        choice($.earthfile_ref, $.string),
         optional(seq("AS", field("alias", $.identifier))),
         $._eol,
       ),

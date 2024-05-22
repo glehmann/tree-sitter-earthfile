@@ -513,6 +513,10 @@
           "named": true
         },
         {
+          "type": "comment",
+          "named": true
+        },
+        {
           "type": "function_ref",
           "named": true
         },
@@ -1231,6 +1235,10 @@
         },
         {
           "type": "earthfile_ref",
+          "named": true
+        },
+        {
+          "type": "string",
           "named": true
         }
       ]

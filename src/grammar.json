@@ -642,6 +642,10 @@
               "type": "BLANK"
             }
           ]
+        },
+        {
+          "type": "SYMBOL",
+          "name": "_eol"
         }
       ]
     },
@@ -1246,8 +1250,17 @@
           }
         },
         {
-          "type": "SYMBOL",
-          "name": "earthfile_ref"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "earthfile_ref"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "string"
+            }
+          ]
         },
         {
           "type": "CHOICE",
