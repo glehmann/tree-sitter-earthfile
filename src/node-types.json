@@ -1542,6 +1542,10 @@
         {
           "type": "symlink_no_follow",
           "named": true
+        },
+        {
+          "type": "unknown_option",
+          "named": true
         }
       ]
     }
@@ -2165,6 +2169,22 @@
           "named": true
         }
       ]
+    }
+  },
+  {
+    "type": "unknown_option",
+    "named": true,
+    "fields": {
+      "value": {
+        "multiple": false,
+        "required": false,
+        "types": [
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      }
     }
   },
   {
