@@ -177,7 +177,9 @@ module.exports = grammar({
         $._eol,
       ),
     from_dockerfile_options: ($) =>
-      repeat1(choice($.docker_build_arg, $.docker_file, $.docker_target, $.platform, $.unknown_option)),
+      repeat1(
+        choice($.allow_privileged, $.docker_build_arg, $.docker_file, $.docker_target, $.platform, $.unknown_option),
+      ),
 
     function_command: ($) => seq(choice("FUNCTION", "COMMAND"), $._eol),
 
@@ -237,6 +239,7 @@ module.exports = grammar({
     run_options: ($) =>
       repeat1(
         choice(
+          $.aws,
           $.entrypoint,
           $.interactive,
           $.mount,
@@ -493,6 +496,7 @@ module.exports = grammar({
     // options
     allow_privileged: (_) => token(prec(5, "--allow-privileged")),
     auto_skip: (_) => token(prec(5, "--auto-skip")),
+    aws: ($) => token(prec(5, "--aws")),
     branch: ($) =>
       seq(token(prec(5, "--branch")), choice(token.immediate(" "), token.immediate("=")), field("value", $.string)),
     build_arg: ($) =>
