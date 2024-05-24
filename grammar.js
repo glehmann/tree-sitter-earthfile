@@ -100,7 +100,7 @@ module.exports = grammar({
 
     copy_command: ($) =>
       seq(
-        "COPY", // FIXME: foo!
+        "COPY",
         field("options", optional(alias($.copy_options, $.options))),
         repeat1(field("src", choice($.target_artifact, $.target_artifact_build_args, $.string))),
         field("dest", $.string),
@@ -110,6 +110,7 @@ module.exports = grammar({
       repeat1(
         choice(
           $.allow_privileged,
+          $.build_arg_deprecated,
           $.chmod,
           $.chown,
           $.dir,

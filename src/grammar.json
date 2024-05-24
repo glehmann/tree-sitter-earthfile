@@ -544,6 +544,10 @@
           },
           {
             "type": "SYMBOL",
+            "name": "build_arg_deprecated"
+          },
+          {
+            "type": "SYMBOL",
             "name": "chmod"
           },
           {
