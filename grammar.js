@@ -1,4 +1,17 @@
-const string_base_regex = /[^"'\s\\\$()+:@=]+/;
+const _string_base_tokens = "()[]{}$/,:@=+.-";
+function extra_tokens(except) {
+  let res = [];
+  for (const c of _string_base_tokens) {
+    if (!except.includes(c)) {
+      res.push(c);
+    }
+  }
+  return res;
+}
+
+function extra_immediate_tokens(except) {
+  return extra_tokens(except).map((t) => token.immediate(t));
+}
 
 module.exports = grammar({
   name: "earthfile",
@@ -8,12 +21,19 @@ module.exports = grammar({
   extras: ($) => [/[ \t]+/, "\n", "\r\n", "\f", $.line_continuation, $.comment, $.line_continuation_comment],
 
   conflicts: ($) => [
+    [$._immediate_identifier, $._immediate_string_base],
+    [$._string_base],
+    [$.build_arg],
     [$.earthfile_ref, $.image_name, $.unquoted_string],
     [$.earthfile_ref, $.unquoted_string],
     [$.image_name, $.unquoted_string],
     [$.shell_fragment],
     [$.string],
+    [$.target_ref, $.unquoted_string],
     [$.unquoted_string],
+    [$.unquoted_string_with_spaces],
+    [$.variable, $._immediate_string_base],
+    [$.variable, $._string_base],
   ],
 
   rules: {
@@ -90,6 +110,7 @@ module.exports = grammar({
       repeat1(
         choice(
           $.allow_privileged,
+          $.build_arg_deprecated,
           $.chmod,
           $.chown,
           $.dir,
@@ -107,8 +128,9 @@ module.exports = grammar({
       seq(
         "DO",
         field("options", optional(alias($.do_options, $.options))),
-        alias($.target_ref, $.function_ref),
+        choice(alias($.target_ref, $.function_ref), $.string),
         optional($.build_args),
+        $._eol,
       ),
     do_options: ($) => repeat1(choice($.allow_privileged, $.pass_args, $.unknown_option)),
 
@@ -143,7 +165,7 @@ module.exports = grammar({
       seq(
         "FROM",
         field("options", optional(alias($.from_options, $.options))),
-        choice($.image_spec, $.target_ref, $.string),
+        choice($.target_ref, $.image_spec, $.string),
         optional($.build_args),
         $._eol,
       ),
@@ -173,7 +195,7 @@ module.exports = grammar({
       ),
     git_clone_options: ($) => repeat1(choice($.branch, $.keep_ts, $.unknown_option)),
 
-    host_command: ($) => seq("HOST", field("name", $.identifier), / +/, field("ip", $.string), $._eol),
+    host_command: ($) => seq("HOST", field("name", $.identifier), field("ip", $.string), $._eol),
 
     if_command: ($) =>
       seq(
@@ -189,7 +211,7 @@ module.exports = grammar({
       seq(
         "IMPORT",
         field("options", optional(alias($.import_options, $.options))),
-        $.earthfile_ref,
+        choice($.earthfile_ref, $.string),
         optional(seq("AS", field("alias", $.identifier))),
         $._eol,
       ),
@@ -358,49 +380,44 @@ module.exports = grammar({
     else_block: ($) => seq("ELSE", field("body", $.block)),
 
     // command elements
-    _expandable_identifier: ($) =>
-      seq(
-        choice(/[a-zA-Z_]+/, $.expansion),
-        repeat(
-          choice(
-            token.immediate(/[a-zA-Z0-9_]+/),
-            token.immediate(/[.-]+/),
-            alias($._immediate_expansion, $.expansion),
-          ),
-        ),
-      ),
     _immediate_identifier: ($) =>
       seq(
-        choice(token.immediate(/[a-zA-Z_]+/), alias($._immediate_expansion, $.expansion)),
+        $._immediate_string_base_alpha,
         repeat(
           choice(
-            token.immediate(/[a-zA-Z0-9_]+/),
-            token.immediate(/[.-]+/),
-            alias($._immediate_expansion, $.expansion),
+            $._immediate_string_base_alpha,
+            $._immediate_string_base_num,
+            token.immediate("."),
+            token.immediate("-"),
           ),
         ),
       ),
     earthfile_ref: ($) =>
       seq(
-        choice($._string_base, $.expansion, ":", "@", "="),
+        choice($._string_base, ...extra_tokens("+$=")),
         repeat(
-          choice(
-            $._immediate_string_base,
-            alias($._immediate_escape_sequence, $.escape_sequence),
-            token.immediate("("),
-            token.immediate(")"),
-            // token.immediate("+"),
-            token.immediate(":"),
-            token.immediate("@"),
-            token.immediate("="),
-            alias($._immediate_expansion, $.expansion),
+          prec.left(
+            choice(
+              $._immediate_string_base,
+              ...extra_immediate_tokens("+$="),
+              alias($._immediate_escape_sequence, $.escape_sequence),
+            ),
           ),
         ),
       ),
-    expr: (_) => /\$\(.+\)/,
     function_ref: (_) => "dummy node to be used as an alias for target_ref",
-    identifier: (_) =>
-      seq(/[a-zA-Z_]/, optional(repeat(choice(token.immediate(/[a-zA-Z0-9_]+/), token.immediate(/[.-]+/))))),
+    identifier: ($) =>
+      seq(
+        $._string_base_alpha,
+        repeat(
+          choice(
+            $._immediate_string_base_alpha,
+            $._immediate_string_base_num,
+            token.immediate("."),
+            token.immediate("-"),
+          ),
+        ),
+      ),
     image_spec: ($) =>
       seq(
         field("name", $.image_name),
@@ -408,29 +425,30 @@ module.exports = grammar({
         optional(seq(token.immediate("@"), field("digest", $.image_digest))),
       ),
     image_name: ($) =>
-      prec(
-        // higher precedence than the string rules
-        10,
-        seq(
-          choice($._string_base, $.expansion),
-          repeat(
-            choice(
-              $._immediate_string_base,
-              // alias($._immediate_escape_sequence, $.escape_sequence),
-              // token.immediate("("),
-              // token.immediate(")"),
-              // token.immediate("+"),
-              // token.immediate(":"),
-              // token.immediate("@"),
-              // token.immediate("="),
-              alias($._immediate_expansion, $.expansion),
-            ),
+      seq(
+        $._string_base,
+        repeat(
+          prec.left(choice($._immediate_string_base, token.immediate("/"), token.immediate("-"), token.immediate("."))),
+        ),
+      ),
+    image_tag: ($) =>
+      seq(
+        choice($._immediate_string_base_alpha, $._immediate_string_base_num),
+        repeat(
+          choice(
+            $._immediate_string_base_alpha,
+            $._immediate_string_base_num,
+            token.immediate("."),
+            token.immediate("-"),
           ),
         ),
       ),
-    image_tag: ($) => repeat1(choice(token.immediate(/[^@\s\$=]+/), alias($._immediate_expansion, $.expansion))),
-    image_digest: ($) => repeat1(choice(token.immediate(/[a-zA-Z0-9:]+/), alias($._immediate_expansion, $.expansion))),
-    images: ($) => repeat1(choice($.string, $.image_spec)),
+    image_digest: ($) =>
+      seq(
+        choice($._immediate_string_base_alpha, $._immediate_string_base_num),
+        repeat(choice($._immediate_string_base_alpha, $._immediate_string_base_num, token.immediate(":"))),
+      ),
+    images: ($) => repeat1(choice($.image_spec, $.string)),
     label: ($) =>
       seq(field("label", $.identifier), choice(token.immediate(" "), token.immediate("=")), field("value", $.string)),
     number: (_) => /\d+/,
@@ -439,66 +457,53 @@ module.exports = grammar({
     shell_fragment: ($) =>
       repeat1(
         choice(
-          // A shell fragment is broken into the same tokens as other
-          // constructs because the lexer prefers the longer tokens
-          // when it has a choice. The example below shows the tokenization
-          // of the --mount parameter.
-          //
-          //   RUN --mount=foo=bar,baz=42 ls --all
-          //       ^^     ^   ^   ^   ^
-          //         ^^^^^ ^^^ ^^^ ^^^ ^^
-          //       |--------param-------|
-          //                              |--shell_command--|
-          //
-          /[,=-]/,
-          /[^)"\\\n#\s,=-][^)"\\\n]*/,
-          /\\[^"\n,=-]/,
-          ")",
-          seq(
-            '"',
-            repeat(
-              choice(token.immediate(prec(15, /[^"\\]+/)), alias($._immediate_escape_sequence, $.escape_sequence)),
-            ),
-            '"',
-          ),
+          $._string_base,
+          $.comment,
+          ...extra_tokens("\"'"),
+          alias($.escape_sequence, $._immediate_escape_sequence),
+          seq('"', repeat(choice(token.immediate(prec(15, /[^"\\]+/)), $._immediate_escape_sequence)), '"'),
+          seq("'", repeat(choice(token.immediate(prec(15, /[^'\\]+/)), $._immediate_escape_sequence)), "'"),
         ),
       ),
     string_array: ($) =>
       choice(
         seq(token(prec(5, "[")), "]"),
-        seq(token(prec(5, "[")), $.double_quoted_string, "]"),
         seq(token(prec(5, "[")), repeat(seq($.double_quoted_string, ",")), $.double_quoted_string, "]"),
       ),
     target_ref: ($) =>
       seq(
         optional(field("earthfile", $.earthfile_ref)),
-        token(prec(5, "+")),
+        "+",
         field("name", alias($._immediate_identifier, $.identifier)),
       ),
-    target_ref_with_build_args: ($) => seq("(", $.target_ref, $.build_args, token(prec(5, ")"))),
-    target_artifact: ($) => seq($.target_ref, token.immediate("/"), $.unquoted_string),
+    target_ref_with_build_args: ($) => seq(token(prec(5, "(")), $.target_ref, $.build_args, token(prec(5, ")"))),
+    // TODO: use fields
+    target_artifact: ($) =>
+      seq($.target_ref, token.immediate("/"), alias($._immediate_unquoted_string, $.unquoted_string)),
+    // TODO: use fields
     target_artifact_build_args: ($) =>
       seq(
         token(prec(5, "(")),
-        choice(seq($.target_ref, token.immediate("/"), $.unquoted_string), $.string),
+        choice(
+          seq($.target_ref, token.immediate("/"), alias($._immediate_unquoted_string, $.unquoted_string)),
+          $.string,
+        ),
         optional($.build_args),
         token(prec(5, ")")),
       ),
-    variable: (_) => seq(/[a-zA-Z_]+/, optional(token.immediate(/[a-zA-Z0-9_]+/))),
+    variable: ($) =>
+      seq($._string_base_alpha, repeat(choice($._immediate_string_base_alpha, $._immediate_string_base_num))),
     version_major_minor: (_) => /[0-9]+\.[0-9]+/,
 
     // options
     allow_privileged: (_) => token(prec(5, "--allow-privileged")),
     auto_skip: (_) => token(prec(5, "--auto-skip")),
-    aws: (_) => token(prec(5, "--aws")),
+    aws: ($) => token(prec(5, "--aws")),
     branch: ($) =>
       seq(token(prec(5, "--branch")), choice(token.immediate(" "), token.immediate("=")), field("value", $.string)),
     build_arg: ($) =>
       seq(
-        choice(
-          token(prec(5, "--")),
-          token(/-/), // use a regex here so it has the same precedence as the other tokens
-        ),
+        choice(token(prec(5, "--")), "-"),
         field("name", alias($._immediate_variable, $.variable)),
         choice(seq(token.immediate("="), optional(field("value", $.string))), field("value", $.string)),
       ),
@@ -574,12 +579,8 @@ module.exports = grammar({
         token(prec(5, "--secret")),
         choice(token.immediate(" "), token.immediate("=")),
         choice(
-          field("id", alias($._expandable_identifier, $.identifier)),
-          seq(
-            field("var", $.variable),
-            token.immediate(prec(5, "=")),
-            field("id", choice(alias($._immediate_identifier, $.identifier), $.string)),
-          ),
+          field("id", $.string),
+          seq(field("var", choice($.variable, $.string)), token.immediate(prec(5, "=")), field("id", $.string)),
         ),
       ),
     sep: ($) =>
@@ -589,102 +590,144 @@ module.exports = grammar({
     sharing: ($) => seq(token(prec(5, "--sharing")), choice(token.immediate(" "), token.immediate("=")), $.identifier),
     ssh: (_) => token(prec(5, "--ssh")),
     symlink_no_follow: (_) => token(prec(5, "--symlink-no-follow")),
-    without_earthly_labels: (_) => token(prec(5, "--without-earthly-labels")),
     unknown_option: ($) =>
       seq(token(prec(3, /--[a-z0-9-]*/)), optional(seq(token.immediate("="), field("value", $.string)))),
+    without_earthly_labels: (_) => token(prec(5, "--without-earthly-labels")),
 
     // string stuff
-    _string_base: (_) => string_base_regex,
-    _immediate_string_base: (_) => token.immediate(string_base_regex),
+    _string_base: ($) =>
+      seq(choice($._string_base_other, $._string_base_alpha, $._string_base_num), optional($._immediate_string_base)),
+    _string_base_other: (_) => /[^"'\s\\\$()\[\]{}+,:@=a-zA-Z0-9_/.-]+/,
+    _string_base_alpha: (_) => /[a-zA-Z_]+/,
+    _string_base_num: (_) => /[0-9]+/,
+    _immediate_string_base: ($) =>
+      prec(
+        2,
+        repeat1(choice($._immediate_string_base_other, $._immediate_string_base_alpha, $._immediate_string_base_num)),
+      ),
+    _immediate_string_base_other: (_) => token.immediate(/[^"'\s\\\$()\[\]{}+,:@=a-zA-Z0-9_/.-]+/),
+    _immediate_string_base_alpha: (_) => token.immediate(/[a-zA-Z_]+/),
+    _immediate_string_base_num: (_) => token.immediate(/[0-9]+/),
     double_quoted_string: ($) =>
-      seq(
-        '"',
-        repeat(
-          choice(
-            token.immediate(prec(15, /[^"\\\$]+/)),
-            alias($._immediate_escape_sequence, $.escape_sequence),
-            alias($._immediate_expansion, $.expansion),
+      prec.dynamic(
+        -1,
+        seq(
+          '"',
+          repeat(
+            choice(
+              token.immediate(prec(15, /[^"\\\$]+/)),
+              alias($._immediate_escape_sequence, $.escape_sequence),
+              alias($._immediate_expansion, $.expansion),
+            ),
           ),
+          '"',
         ),
-        '"',
       ),
     _immediate_double_quoted_string: ($) =>
-      seq(
-        token.immediate('"'),
-        repeat(
-          choice(
-            token.immediate(prec(15, /[^"\\\$]+/)),
-            alias($._immediate_escape_sequence, $.escape_sequence),
-            alias($._immediate_expansion, $.expansion),
+      prec(
+        2,
+        seq(
+          token.immediate('"'),
+          repeat(
+            choice(
+              token.immediate(prec(15, /[^"\\\$]+/)),
+              alias($._immediate_escape_sequence, $.escape_sequence),
+              alias($._immediate_expansion, $.expansion),
+            ),
           ),
+          token.immediate('"'),
         ),
-        token.immediate('"'),
       ),
     single_quoted_string: ($) =>
-      seq(
-        token.immediate("'"),
-        repeat(choice(token.immediate(/[^'\n\\]+/), alias($._immediate_escape_sequence, $.escape_sequence))),
-        token.immediate("'"),
-      ),
-    _immediate_single_quoted_string: ($) =>
-      seq(
-        "'",
-        repeat(choice(token.immediate(/[^'\n\\]+/), alias($._immediate_escape_sequence, $.escape_sequence))),
-        "'",
-      ),
-    unquoted_string: ($) =>
-      seq(choice($._string_base, $.expansion, "(", ")", "+", ":", "@", "="), optional($._immediate_unquoted_string)),
-    _immediate_unquoted_string: ($) =>
-      repeat1(
-        choice(
-          $._immediate_string_base,
-          alias($._immediate_escape_sequence, $.escape_sequence),
-          token.immediate("("),
-          token.immediate(")"),
-          token.immediate("+"),
-          token.immediate(":"),
-          token.immediate("@"),
-          token.immediate("="),
-          alias($._immediate_expansion, $.expansion),
+      prec.dynamic(
+        -1,
+        seq(
+          token.immediate("'"),
+          repeat(choice(token.immediate(/[^'\n\\]+/), alias($._immediate_escape_sequence, $.escape_sequence))),
+          token.immediate("'"),
         ),
       ),
-    unquoted_string_with_spaces: ($) =>
-      seq(
-        choice($._string_base, $.expansion, "(", ")", "+", ":", "@", "="),
-        repeat(
+    _immediate_single_quoted_string: ($) =>
+      prec(
+        2,
+        seq(
+          "'",
+          repeat(choice(token.immediate(/[^'\n\\]+/), alias($._immediate_escape_sequence, $.escape_sequence))),
+          "'",
+        ),
+      ),
+    unquoted_string: ($) =>
+      prec.dynamic(
+        -1,
+        seq(
+          choice($._string_base, $.expansion, $.escape_sequence, ...extra_tokens("$'\"")),
+          repeat(
+            choice(
+              $._immediate_string_base,
+              alias($._immediate_escape_sequence, $.escape_sequence),
+              ...extra_immediate_tokens("$'\""),
+              alias($._immediate_expansion, $.expansion),
+            ),
+          ),
+        ),
+      ),
+    _immediate_unquoted_string: ($) =>
+      prec(
+        2,
+        repeat1(
           choice(
             $._immediate_string_base,
             alias($._immediate_escape_sequence, $.escape_sequence),
-            token.immediate("("),
-            token.immediate(")"),
-            token.immediate("+"),
-            token.immediate(":"),
-            token.immediate("@"),
-            token.immediate("="),
-            token.immediate(/[ \t]+/),
+            ...extra_immediate_tokens("$'\""),
             alias($._immediate_expansion, $.expansion),
+          ),
+        ),
+      ),
+    unquoted_string_with_spaces: ($) =>
+      prec.dynamic(
+        -1,
+        seq(
+          choice($._string_base, $.expansion, $.escape_sequence, ...extra_tokens("$'\"")),
+          repeat(
+            choice(
+              $._immediate_string_base,
+              alias($._immediate_escape_sequence, $.escape_sequence),
+              ...extra_immediate_tokens("$'\""),
+              token.immediate(/[ \t]+/),
+              alias($._immediate_expansion, $.expansion),
+            ),
           ),
         ),
       ),
     string_with_spaces: ($) =>
-      seq(
-        choice(alias($.unquoted_string_with_spaces, $.unquoted_string), $.double_quoted_string, $.single_quoted_string),
-        repeat(
+      prec.dynamic(
+        -1,
+        seq(
           choice(
             alias($.unquoted_string_with_spaces, $.unquoted_string),
             $.double_quoted_string,
             $.single_quoted_string,
           ),
+          repeat(
+            choice(
+              alias($.unquoted_string_with_spaces, $.unquoted_string),
+              $.double_quoted_string,
+              $.single_quoted_string,
+            ),
+          ),
         ),
       ),
     string: ($) =>
-      seq(
-        choice($.unquoted_string, $.double_quoted_string, $.single_quoted_string),
-        repeat(
-          choice(
-            alias($._immediate_unquoted_string, $.unquoted_string),
-            alias($._immediate_double_quoted_string, $.double_quoted_string),
-            alias($._immediate_double_quoted_string, $.single_quoted_string),
+      prec.dynamic(
+        -1,
+        seq(
+          choice($.unquoted_string, $.double_quoted_string, $.single_quoted_string),
+          repeat(
+            choice(
+              alias($._immediate_unquoted_string, $.unquoted_string),
+              alias($._immediate_double_quoted_string, $.double_quoted_string),
+              alias($._immediate_double_quoted_string, $.single_quoted_string),
+            ),
           ),
         ),
       ),
@@ -698,7 +741,7 @@ module.exports = grammar({
         choice(
           alias($._immediate_variable, $.variable),
           seq(token.immediate("{"), alias($._immediate_variable, $.variable), "}"),
-          seq(token.immediate("("), $.shell_fragment, ")"),
+          seq(token.immediate("("), $.shell_fragment, token(prec(10, ")"))),
         ),
       ),
     _immediate_expansion: ($) =>
@@ -710,9 +753,14 @@ module.exports = grammar({
           seq(token.immediate("("), $.shell_fragment, token.immediate(")")),
         ),
       ),
-    _immediate_variable: (_) => token.immediate(/[a-zA-Z_][a-zA-Z0-9_]*/),
-
-    shell_expr: (_) => /[a-zA-Z0-9_ ]+/,
+    _immediate_variable: ($) =>
+      prec.left(
+        2,
+        seq(
+          $._immediate_string_base_alpha,
+          repeat(choice($._immediate_string_base_alpha, $._immediate_string_base_num)),
+        ),
+      ),
 
     // extra tokens, eol, …
     _immediate_escape_sequence: (_) => /\\./,

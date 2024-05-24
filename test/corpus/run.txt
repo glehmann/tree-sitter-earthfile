@@ -32,10 +32,12 @@ foo:
             options: (options
               (push)
               (secret
-                id: (identifier))
+                id: (string
+                  (unquoted_string)))
               (secret
                 var: (variable)
-                id: (identifier)))
+                id: (string
+                  (unquoted_string))))
             command: (shell_fragment)))))
 
 
@@ -76,15 +78,17 @@ foo:
           (run_command
             options: (options
               (secret
-                id: (identifier
-                  (expansion
-                    (variable))))
+                id: (string
+                  (unquoted_string
+                    (expansion
+                      (variable)))))
               (line_continuation)
               (secret
                 var: (variable)
-                id: (identifier
-                  (expansion
-                    (variable)))))
+                id: (string
+                  (unquoted_string
+                    (expansion
+                      (variable))))))
             (line_continuation)
             command: (shell_fragment)))))
 
@@ -147,6 +151,24 @@ server:
         (block
           (run_command
             command: (shell_fragment
-              (escape_sequence)
               (line_continuation)
               (line_continuation))))))
+
+
+==================
+run with options and separator
+==================
+
+foo:
+    RUN --push -- --hop echo foo
+
+---
+
+    (source_file
+      (target
+        name: (identifier)
+        (block
+          (run_command
+            options: (options
+              (push))
+            command: (shell_fragment)))))
