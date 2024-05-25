@@ -145,7 +145,7 @@ module.exports = grammar({
         $._eol,
       ),
 
-    expose_command: ($) => seq("EXPOSE", repeat($.port), $._eol),
+    expose_command: ($) => seq("EXPOSE", repeat($.string), $._eol),
 
     for_command: ($) =>
       seq(
@@ -453,7 +453,6 @@ module.exports = grammar({
       seq(field("label", $.identifier), choice(token.immediate(" "), token.immediate("=")), field("value", $.string)),
     number: (_) => /\d+/,
     options: (_) => "dummy node to use as an alias in the command options",
-    port: ($) => seq($.number, optional(seq(token.immediate("/"), field("protocol", $.identifier)))),
     shell_fragment: ($) =>
       repeat1(
         choice(

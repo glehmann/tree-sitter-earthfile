@@ -12,9 +12,7 @@ foo:
         name: (identifier)
         (block
           (expose_command
-            (port
-              (number)
-              protocol: (identifier))
-            (port
-              (number))))))
- 
+            (string
+              (unquoted_string))
+            (string
+              (unquoted_string))))))

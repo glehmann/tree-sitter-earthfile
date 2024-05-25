@@ -763,7 +763,7 @@
           "type": "REPEAT",
           "content": {
             "type": "SYMBOL",
-            "name": "port"
+            "name": "string"
           }
         },
         {
@@ -2829,43 +2829,6 @@
     "options": {
       "type": "STRING",
       "value": "dummy node to use as an alias in the command options"
-    },
-    "port": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "SYMBOL",
-          "name": "number"
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "IMMEDIATE_TOKEN",
-                  "content": {
-                    "type": "STRING",
-                    "value": "/"
-                  }
-                },
-                {
-                  "type": "FIELD",
-                  "name": "protocol",
-                  "content": {
-                    "type": "SYMBOL",
-                    "name": "identifier"
-                  }
-                }
-              ]
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        }
-      ]
     },
     "shell_fragment": {
       "type": "REPEAT1",

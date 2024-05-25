@@ -785,7 +785,7 @@
           "named": true
         },
         {
-          "type": "port",
+          "type": "string",
           "named": true
         }
       ]
@@ -1620,32 +1620,6 @@
           }
         ]
       }
-    }
-  },
-  {
-    "type": "port",
-    "named": true,
-    "fields": {
-      "protocol": {
-        "multiple": false,
-        "required": false,
-        "types": [
-          {
-            "type": "identifier",
-            "named": true
-          }
-        ]
-      }
-    },
-    "children": {
-      "multiple": false,
-      "required": true,
-      "types": [
-        {
-          "type": "number",
-          "named": true
-        }
-      ]
     }
   },
   {
