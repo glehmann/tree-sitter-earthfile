@@ -19,7 +19,7 @@ ga-qemu:
 
 ga-no-qemu-group1:
     BUILD --pass-args ./autocompletion+test-all
-    BUILD --pass-args ./dockerfile+test
+    BUILD --pass-args ./dockerfile+test-all
     BUILD --pass-args ./dockerfile2/subdir+test
     BUILD --pass-args ./locally-in-command+all
     BUILD --pass-args ./locally-in-function+all
@@ -27,16 +27,22 @@ ga-no-qemu-group1:
     BUILD --pass-args ./import+build
     BUILD --pass-args ./import+build-imported
     BUILD +privileged-test
+
+ga-no-qemu-group2:
     BUILD +copy-test
     BUILD +copy-test-verbose-output
     BUILD +copy-tilde-test
     BUILD +copy-keep-own-test
     BUILD +copy-test-empty-src
+    BUILD +copy-test-if-exists-wildcard
+    BUILD +copy-test-wildcard
     BUILD +git-clone-test
     BUILD +builtin-args-invalid-default-test
     BUILD +builtin-args-invalid-pass-test
     BUILD +builtin-args-cli-tests
     BUILD +parser-smoke-test
+
+ga-no-qemu-group3:
     BUILD --pass-args ./invalid+test-all
     BUILD +excludes-test
     BUILD +secrets-test
@@ -54,6 +60,8 @@ ga-no-qemu-group1:
     BUILD +transitive-args-test
     BUILD +transitive-args-test2
     BUILD +non-transitive-args-test
+
+ga-no-qemu-group4:
     BUILD +star-test
     BUILD +dockerfile-test
     BUILD +fail-test
@@ -75,10 +83,7 @@ ga-no-qemu-group1:
     BUILD +escape-test
     BUILD +escape-dir-test
     BUILD +fail-invalid-artifact-test
-    BUILD +wildcard-build
-    BUILD +wildcard-build-remote
-
-ga-no-qemu-group2:
+    BUILD +wildcard-all
     BUILD +target-first-line
     BUILD +absolute-reference-with-relative
     BUILD +end-comment
@@ -88,6 +93,8 @@ ga-no-qemu-group2:
     BUILD +save-artifact-dir-as-dot
     BUILD +save-artifact-force-overwrite
     BUILD +save-remote-artifact-selective
+
+ga-no-qemu-group5:
     BUILD +push-build
     BUILD +build-arg-repeat
     BUILD +arg-scope-requires-shellout-anywhere
@@ -129,6 +136,7 @@ ga-no-qemu-group2:
     BUILD +test-init-golang
     BUILD +pass-args-test
     BUILD +pass-args-defaults-test
+    BUILD +pass-args-no-builtins-via-function-test
     BUILD +test-reserved-label
     BUILD +test-cache-mount-mode
     BUILD +test-cache-mode
@@ -136,6 +144,9 @@ ga-no-qemu-group2:
     BUILD +test-cache-persist
     BUILD +test-visited-upfront-hash-collection
     BUILD +test-exec-stats
+    BUILD +test-aws-flag-envs
+    BUILD +test-aws-flag-configs
+    BUILD +test-aws-flag-none
 
     # Forcing the implicit global wait/end block, causes some tests, which rely
     # on the ability to have two different targets issue the same SAVE IMAGE tag name
@@ -150,7 +161,7 @@ ga-no-qemu-group2:
         BUILD --pass-args ./with-docker-via-command+test
     END
 
-ga-no-qemu-group3:
+ga-no-qemu-group6:
     BUILD +cache-test
     BUILD --pass-args ./do-not-track+test-all
     BUILD --pass-args ./scrub-https-credentials+all
@@ -163,12 +174,12 @@ ga-no-qemu-group3:
     BUILD +remote-test
     BUILD +save-artifact-dont-overwrite
     BUILD --pass-args ./with-docker-expose+all
+    BUILD --pass-args ./logbus+test-all
 
-ga-no-qemu-group4:
+ga-no-qemu-group7:
     BUILD +cache-mount-arg
     BUILD +infinite-recursion
     BUILD +save-artifact-selective
-    BUILD --pass-args ./autoskip+test-all
     BUILD +if-exists
     BUILD +let-set
     BUILD +let-scope
@@ -178,19 +189,39 @@ ga-no-qemu-group4:
     BUILD --pass-args ./with-docker-compose+all
     BUILD +dotenv-test
     BUILD +allow-privileged-test
+
+ga-no-qemu-group8:
     BUILD --pass-args ./with-docker-registry+all
     BUILD +test-ssh-command-config-via-remote-target
     BUILD +test-ssh-command-config-via-git-clone-earthfile-command
     BUILD --pass-args ./propagate-args-to-base+test-all
     BUILD --pass-args ./pass-args-default+test
+    BUILD --pass-args ./pass-args-no-builtins+test
     BUILD --pass-args ./pass-args-global+test
     BUILD --pass-args ./pass-args-default-via-function+test
     BUILD --pass-args ./pass-args-global-via-function+test
     BUILD --pass-args ./pass-args-via-function-with-override+test
+    BUILD --pass-args ./raw-output+test-all
+
+ga-no-qemu-group9:
+    BUILD --pass-args ./autoskip+test-group1
+
+ga-no-qemu-group10:
+    BUILD --pass-args ./autoskip+test-group2
+
+ga-no-qemu-group11:
+    BUILD --pass-args ./autoskip+test-group3
+
+ga-no-qemu-group12:
+    BUILD --pass-args ./warn-if-not-logged-in+test
+    BUILD --pass-args ./with-docker-validate-labels+all
+    BUILD --pass-args +test-aws-oidc
+
 
 ga-no-qemu-slow:
     BUILD +server
     BUILD --pass-args ./with-docker+all
+    BUILD --pass-args ./with-docker-cache+test
     # this has been moved to a seperate target until we get the flakey "tell me who you are" bug
     # fixed; see https://github.com/earthly/earthly/issues/2567
     #BUILD --pass-args ./git-metadata+test
@@ -206,6 +237,14 @@ ga-no-qemu:
     BUILD +ga-no-qemu-group2
     BUILD +ga-no-qemu-group3
     BUILD +ga-no-qemu-group4
+    BUILD +ga-no-qemu-group5
+    BUILD +ga-no-qemu-group6
+    BUILD +ga-no-qemu-group7
+    BUILD +ga-no-qemu-group8
+    BUILD +ga-no-qemu-group9
+    BUILD +ga-no-qemu-group10
+    BUILD +ga-no-qemu-group11
+    BUILD +ga-no-qemu-group12
     BUILD +ga-no-qemu-slow
 
 # Note that this target is split up under github action workflows
@@ -216,6 +255,7 @@ tests-that-require-earthly-technologies-account-access:
     BUILD --pass-args ./account+test
     BUILD --pass-args ./registry-command+test
     BUILD --pass-args ./web+test
+    BUILD --pass-args ./oidc+test
 
 # tests that only run on linux amd64
 # Note: this target is used to validate the USERPLATFORM user arg,
@@ -246,9 +286,20 @@ copy-test:
     DO +RUN_EARTHLY --earthfile=copy.earth --output_does_not_contain="which does not expand to a home directory"
 
 copy-test-empty-src:
-    # Regression tests for 'COPY --if-exists "" <dst>' (empty string)
     DO +RUN_EARTHLY --earthfile=copy.earth --target=+copy-empty-src
     DO +RUN_EARTHLY --earthfile=copy.earth --target=+copy-empty-src-if-exists
+
+copy-test-wildcard:
+    DO +RUN_EARTHLY --earthfile=copy.earth --target=+copy-wildcard
+
+copy-test-if-exists-wildcard:
+    DO +RUN_EARTHLY --earthfile=copy.earth --target=+copy-if-exists-wildcard
+
+    RUN mkdir existing_folder
+    DO +RUN_EARTHLY --earthfile=copy.earth --target="+copy-if-exists-wildcard-exists-empty"
+
+    RUN touch existing_folder/foo
+    DO +RUN_EARTHLY --earthfile=copy.earth --target="+copy-if-exists-wildcard-exists"
 
 copy-test-verbose-output:
     RUN mkdir -p subdir/a.txt && \
@@ -510,7 +561,7 @@ dockerfile-test:
     RUN --privileged \
         --entrypoint \
         --mount=type=tmpfs,target=/tmp/earthly \
-        -- --no-output +test
+        -- --allow-privileged --no-output +test-all
 
 fail-test:
     DO +RUN_EARTHLY --earthfile=fail.earth --should_fail=true --verbose=0 --target=+test --post_command="2>output.txt"
@@ -518,13 +569,13 @@ fail-test:
     # The output of the failed command should have been printed twice.
     RUN cat output.txt | grep 'ZmFpbCA3YjcyZTAyNC01ZTIxLTRlMWItOTZlNC02NTVjMzk4NzYxMDcK' | test "$(wc -l)" -eq 2
     RUN cat output.txt | grep 'Repeating the failure error...'
-    RUN cat output.txt | grep 'ERROR Earthfile line 10:4'
+    RUN cat output.txt | grep 'ERROR Earthfile:10:4'
     RUN cat output.txt | grep 'RUN echo "fail 7b72e024-5e21-4e1b-96e4-655c39876107" | base64; false'
     RUN cat output.txt | grep 'did not complete successfully. Exit code 1'
     DO +RUN_EARTHLY --earthfile=fail.earth --should_fail=true --verbose=0 --target=+test-copy --post_command="2>output.txt"
     RUN cat output.txt
     RUN cat output.txt | grep 'Repeating the failure error...'
-    RUN cat output.txt | grep 'ERROR Earthfile line 14:4'
+    RUN cat output.txt | grep 'ERROR Earthfile:14:4'
     RUN cat output.txt | grep 'COPY ./does-not-exist ./'
     RUN cat output.txt | grep 'failed: "/does-not-exist": not found'
     RUN cat output.txt | grep 'Should not be reached'; test "$?" -eq 1
@@ -565,6 +616,9 @@ pass-args-defaults-test:
     RUN sed -i 's/hello/hellofromcli/g' Earthfile
     DO +RUN_EARTHLY --extra_args="--build-arg foo=hellofromcli"
 
+pass-args-no-builtins-via-function-test:
+    DO +RUN_EARTHLY --earthfile=pass-args-no-builtins-via-function.earth --target=+test --output_contains="MY_FUNC IS OK"
+
 required-arg-test:
     # test that build arg is required
     DO +RUN_EARTHLY --earthfile=required-args.earth --should_fail=true --target=+test-accept-valid-required-arg
@@ -585,8 +639,26 @@ fail-invalid-artifact-test:
     DO +RUN_EARTHLY --earthfile=fail-invalid-artifact.earth --should_fail=true --target="--artifact +test/foo /tmp/stuff" \
         --output_contains="cannot save artifact +test/foo, since it does not exist"
 
+wildcard-all:
+    # wildcard BUILD tests
+    BUILD +wildcard-build
+    BUILD +wildcard-build-pwd
+    BUILD +wildcard-build-auto-skip
+    BUILD +wildcard-build-pwd-rel
+    BUILD +wildcard-build-rel-dir
+    BUILD +wildcard-build-remote
+    # wildcard COPY tests
+    BUILD +wildcard-copy
+    BUILD +wildcard-copy-pwd
+    BUILD +wildcard-copy-pwd-rel
+    BUILD +wildcard-copy-rel-dir
+    BUILD +wildcard-copy-remote
+    BUILD +wildcard-copy-with-flags
+    BUILD +wildcard-copy-multi
+    BUILD +wildcard-copy-with-args
+
 wildcard-build:
-    COPY --dir wildcard-build .
+    COPY --dir wildcard .
     DO +RUN_EARTHLY --earthfile=wildcard-build.earth --target=+wildcard-build
     RUN cat earthly.output | acbgrep 'hello world 1'
     RUN cat earthly.output | acbgrep 'hello world 2'
@@ -600,6 +672,38 @@ wildcard-build:
     RUN cat earthly.output | acbgrep -v 'hello world 1'
     RUN cat earthly.output | acbgrep -v 'not-test run'
 
+wildcard-build-pwd:
+    COPY wildcard .
+    DO +RUN_EARTHLY --earthfile=wildcard-build.earth --target=+wildcard-build-pwd
+    RUN cat earthly.output | acbgrep 'hello world 1'
+    RUN cat earthly.output | acbgrep 'hello world 2'
+    RUN cat earthly.output | acbgrep 'hello world 3'
+    RUN cat earthly.output | acbgrep -v 'not-test run'
+
+wildcard-build-auto-skip:
+    COPY wildcard .
+    DO +RUN_EARTHLY --earthfile=wildcard-build.earth --target=+wildcard-build-auto-skip
+
+wildcard-build-pwd-rel:
+    COPY wildcard subdir
+    COPY wildcard-build.earth subdir/Earthfile
+    DO +RUN_EARTHLY --target=./subdir+wildcard-build-pwd
+    RUN cat earthly.output | acbgrep 'hello world 1'
+    RUN cat earthly.output | acbgrep 'hello world 2'
+    RUN cat earthly.output | acbgrep 'hello world 3'
+    RUN cat earthly.output | acbgrep -v 'not-test run'
+
+wildcard-build-rel-dir:
+    WORKDIR /root/some-dir
+    RUN mkdir -p /tmp/other-dir
+    COPY wildcard /tmp/other-dir
+
+    DO +RUN_EARTHLY --earthfile=wildcard-build.earth --target=+wildcard-build-rel-dir
+    RUN cat earthly.output | acbgrep 'hello world 1'
+    RUN cat earthly.output | acbgrep 'hello world 2'
+    RUN cat earthly.output | acbgrep 'hello world 3'
+    RUN cat earthly.output | acbgrep -v 'not-test run'
+
 wildcard-build-remote:
     DO +RUN_EARTHLY --earthfile=wildcard-build.earth --target=+wildcard-remote
     RUN cat earthly.output | acbgrep 'hello world 1'
@@ -611,6 +715,68 @@ wildcard-build-remote:
     RUN cat earthly.output | acbgrep 'hello world 2'
     RUN cat earthly.output | acbgrep 'hello world 3'
     RUN cat earthly.output | acbgrep -v 'hello world 1'
+    RUN cat earthly.output | acbgrep -v 'not-test run'
+
+wildcard-copy:
+    COPY --dir wildcard .
+    DO +RUN_EARTHLY --earthfile=wildcard-copy.earth --target=+wildcard-copy
+    RUN cat earthly.output | acbgrep -v 'not-test run'
+    DO +RUN_EARTHLY --earthfile=wildcard-copy.earth --target=+wildcard-globstar --should_fail=true --output_contains="pattern not yet supported"
+
+    DO +RUN_EARTHLY --earthfile=wildcard-copy.earth --target=+wildcard-glob
+    RUN cat earthly.output | acbgrep -v 'not-test run'
+
+wildcard-copy-pwd:
+    COPY wildcard .
+    DO +RUN_EARTHLY --earthfile=wildcard-copy.earth --target=+wildcard-copy-pwd
+    RUN cat earthly.output | acbgrep -v 'not-test run'
+
+wildcard-copy-pwd-rel:
+    COPY wildcard subdir
+    COPY wildcard-copy.earth subdir/Earthfile
+    DO +RUN_EARTHLY --target=./subdir+wildcard-copy-pwd
+    RUN cat earthly.output | acbgrep -v 'not-test run'
+
+wildcard-copy-rel-dir:
+    WORKDIR /root/some-dir
+    RUN mkdir -p /tmp/other-dir
+    COPY wildcard /tmp/other-dir
+
+    DO +RUN_EARTHLY --earthfile=wildcard-copy.earth --target=+wildcard-copy-rel-dir
+    RUN cat earthly.output | acbgrep -v 'not-test run'
+
+wildcard-copy-remote:
+    DO +RUN_EARTHLY --earthfile=wildcard-copy.earth --target=+wildcard-remote
+    RUN cat earthly.output | acbgrep -v 'not-test run'
+
+    DO +RUN_EARTHLY --earthfile=wildcard-copy.earth --target=+wildcard-remote-glob
+    RUN cat earthly.output | acbgrep -v 'not-test run'
+
+wildcard-copy-with-flags:
+    COPY --dir wildcard .
+    DO +RUN_EARTHLY --earthfile=wildcard-copy.earth --target=+wildcard-if-exists
+    RUN cat earthly.output | acbgrep -v 'not-test run'
+    DO +RUN_EARTHLY --earthfile=wildcard-copy.earth --target=+wildcard-dir
+    RUN cat earthly.output | acbgrep -v 'not-test run'
+    DO +RUN_EARTHLY --earthfile=wildcard-copy.earth --target=+wildcard-with-artifact-args
+    RUN cat earthly.output | acbgrep -v 'not-test run'
+    DO +RUN_EARTHLY --earthfile=wildcard-copy.earth --target=+wildcard-multi-with-artifact-args
+    RUN cat earthly.output | acbgrep -v 'not-test run'
+
+wildcard-copy-multi:
+    COPY --dir wildcard .
+    DO +RUN_EARTHLY --earthfile=wildcard-copy.earth --target=+wildcard-multi
+    RUN cat earthly.output | acbgrep -v 'not-test run'
+    DO +RUN_EARTHLY --earthfile=wildcard-copy.earth --target=+wildcard-multi-mix
+    RUN cat earthly.output | acbgrep -v 'not-test run'
+    DO +RUN_EARTHLY --earthfile=wildcard-copy.earth --target=+wildcard-multi-with-flags
+    RUN cat earthly.output | acbgrep -v 'not-test run'
+
+wildcard-copy-with-args:
+    COPY --dir wildcard .
+    DO +RUN_EARTHLY --earthfile=wildcard-copy.earth --target=+wildcard-with-args
+    RUN cat earthly.output | acbgrep -v 'not-test run'
+    DO +RUN_EARTHLY --earthfile=wildcard-copy.earth --target=+wildcard-multi-with-args
     RUN cat earthly.output | acbgrep -v 'not-test run'
 
 push-test:
@@ -739,7 +905,7 @@ escape-test:
 
 escape-dir-test:
     RUN mkdir ./dir-with-+-in-it
-    COPY escape-dir2.earth ./dir-with--in-it/Earthfile
+    COPY escape-dir2.earth ./dir-with-+-in-it/Earthfile
     DO +RUN_EARTHLY --earthfile=escape-dir1.earth --extra_args="--no-output" --target=+test
 
 eine-test-base:
@@ -1328,6 +1494,7 @@ cache-cmd:
     RUN test "$(cat ./artifacts2/2)" = "artifact 2"
     DO +RUN_EARTHLY --earthfile=cache-cmd.earth --target=+test-no-sharing
     DO +RUN_EARTHLY --earthfile=cache-cmd.earth --target=+test-arg
+    DO +RUN_EARTHLY --earthfile=cache-cmd.earth --target=+test-id-expand-args
 
 ls:
     COPY ls.earth Earthfile
@@ -1376,6 +1543,7 @@ host:
     DO +RUN_EARTHLY --earthfile=host.earth --target=+add-single-host
     DO +RUN_EARTHLY --earthfile=host.earth --target=+add-multiple-host
     DO +RUN_EARTHLY --earthfile=host.earth --target=+add-ipv6
+    DO +RUN_EARTHLY --earthfile=host.earth --target=+expand-args
 
 host-invalid:
     DO +RUN_EARTHLY --earthfile=host.earth --should_fail=true --target=+invalid-ip --output_contains="invalid HOST ip"
@@ -1446,6 +1614,45 @@ test-init-golang:
     fi
     DO +RUN_EARTHLY --target "+build"
     DO +RUN_EARTHLY --target "+test"
+
+test-aws-flag-envs:
+   ENV AWS_ACCESS_KEY_ID=aws-access-key
+   ENV AWS_SECRET_ACCESS_KEY=aws-secret-key
+   ENV AWS_SESSION_TOKEN=aws-token
+   ENV AWS_REGION=us-west-1
+   DO +RUN_EARTHLY --earthfile=aws-flag.earth --target=+basic
+   RUN cat earthly.output | acbgrep "AWS_SESSION_TOKEN=aws-token"
+   RUN cat earthly.output | acbgrep "AWS_ACCESS_KEY_ID=aws-access-key"
+   RUN cat earthly.output | acbgrep "AWS_REGION=us-west-1"
+   RUN cat earthly.output | acbgrep "AWS_SECRET_ACCESS_KEY=aws-secret-key"
+
+# test-aws-oidc tests expected errors for misusing of oidc flag
+# for happy path test go to <repo>/tests/oidc
+test-aws-oidc:
+   DO +RUN_EARTHLY --earthfile=aws-flag.earth --target=+oidc --should_fail=true --output_contains="RUN --aws-oidc requires the --run-with-aws-oidc feature flag"
+   # enable flag
+   RUN sed -i "1s/VERSION \(.*\)/VERSION --run-with-aws-oidc \1/" Earthfile
+   # empty oidc flag
+   DO +RUN_EARTHLY --target=+oidc --should_fail=true --output_contains="role-arn must be specified"
+   # invalid oidc flag
+   DO +RUN_EARTHLY --target=+oidc --extra_args="--build-arg OIDC=\"foo=bar\"" --should_fail=true --output_contains="invalid value for oidc flag: 1 error(s) decoding"
+
+test-aws-flag-configs:
+   RUN mkdir -p /root/.aws
+   RUN echo "[default]
+aws_access_key_id = aws-access-key
+aws_secret_access_key = aws-secret-key
+aws_session_token = aws-token" > /root/.aws/credentials
+   RUN echo "[default]
+region = us-west-1" > /root/.aws/config
+   DO +RUN_EARTHLY --earthfile=aws-flag.earth --target=+basic
+   RUN cat earthly.output | acbgrep "AWS_SESSION_TOKEN=aws-token"
+   RUN cat earthly.output | acbgrep "AWS_ACCESS_KEY_ID=aws-access-key"
+   RUN cat earthly.output | acbgrep "AWS_REGION=us-west-1"
+   RUN cat earthly.output | acbgrep "AWS_SECRET_ACCESS_KEY=aws-secret-key"
+
+test-aws-flag-none:
+   DO +RUN_EARTHLY --earthfile=aws-flag.earth --target=+basic --should_fail=true --output_contains="failed to load AWS credentials"
 
 test-reserved-label:
    DO +RUN_EARTHLY \
@@ -1524,16 +1731,20 @@ test-visited-upfront-hash-collection:
   DO +RUN_EARTHLY \
       --earthfile=visited-upfront-hash-collection.earth \
       --target=+parallel
-  RUN order=$(cat earthly.output | grep -Eo "### [[:digit:]]+"  | cut -d' ' -f2- | tr '\n' ' ' | tr -d '[:space:]'); \
-      echo "order: $order"; \
-      # This regex matches successions of number trios like: 222111444333555, happening when the builds didn't run in parallel
-      match=$(echo $order | sed -nr '/^([[:digit:]])\1\1([[:digit:]])\2\2([[:digit:]])\3\3([[:digit:]])\4\4([[:digit:]])\5\5$/p'); \
-      if [[ $match ]]; then \
-        echo "no parallelization observed"; \
-        exit 1; \
-      else \
-         echo "parallelization checked"; \
-      fi
+  DO +TEST_PARALLELIZATION
+  DO +RUN_EARTHLY \
+      --earthfile=visited-upfront-hash-collection.earth \
+      --target=+parallel-dynamic-arg
+  DO +TEST_PARALLELIZATION
+  DO +RUN_EARTHLY \
+      --earthfile=visited-upfront-hash-collection.earth \
+      --target=+parallel-dynamic-let
+  DO +TEST_PARALLELIZATION
+  DO +RUN_EARTHLY \
+      --earthfile=visited-upfront-hash-collection.earth \
+      --target=+parallel-dynamic-set
+  DO +TEST_PARALLELIZATION
+
 
 test-exec-stats:
   DO +RUN_EARTHLY \
@@ -1584,6 +1795,19 @@ earthly --config \$earthly_config +test 2>&1 | tee output.txt;
 " >/tmp/run-earthly-with-bad-ssh-cipher && chmod +x /tmp/run-earthly-with-bad-ssh-cipher
     DO +RUN_EARTHLY --exec_cmd=/tmp/run-earthly-with-bad-ssh-cipher
     RUN cat output.txt | acbgrep "Unknown cipher type 'badcipher'"
+
+TEST_PARALLELIZATION:
+  FUNCTION
+  RUN order=$(cat earthly.output | grep -Eo "### [[:digit:]]+"  | cut -d' ' -f2- | tr '\n' ' ' | tr -d '[:space:]'); \
+      echo "order: $order"; \
+      # This regex matches successions of number trios like: 222111444333555, happening when the builds didn't run in parallel
+      match=$(echo $order | sed -nr '/^([[:digit:]])\1\1([[:digit:]])\2\2([[:digit:]])\3\3([[:digit:]])\4\4([[:digit:]])\5\5$/p'); \
+      if [[ $match ]]; then \
+        echo "no parallelization observed"; \
+        exit 1; \
+      else \
+         echo "parallelization checked"; \
+      fi
 
 RUN_EARTHLY:
     FUNCTION
@@ -1646,16 +1870,22 @@ RUN_EARTHLY:
             exit \$exit_code
         fi
 
-        if $should_fail; then
+        if [ \"$should_fail\" = maybe ]; then
+            # This is for times when we do not care about the exit code
+            echo \"INFO: earthly exited with exit_code=\$exit_code; maybe this is ok?\"
+        elif [ \"$should_fail\" = true ]; then
             if [ \$exit_code -eq 0 ]; then
                 echo ERROR: earthly should have failed but didn\'t.
                 exit 1
             fi
-        else
+        elif [ \"$should_fail\" = false ]; then
             if [ \$exit_code -ne 0 ]; then
                 echo ERROR: earthly failed with exit code \$exit_code.
                 exit \$exit_code
             fi
+        else
+            echo ERROR: unexpected value for should_fail: $should_fail
+            exit 1
         fi
         if [ -n \"$output_contains\" ]; then
             if ! grep $grep_flags \"$output_contains\" earthly.output >/dev/null; then

@@ -1,4 +1,4 @@
-VERSION --pass-args --use-function-keyword 0.7
+VERSION 0.8
 
 FROM --pass-args ..+base
 
@@ -9,6 +9,11 @@ PROJECT earthly-technologies/core
 WORKDIR /test
 
 test-all:
+    BUILD +test-group1
+    BUILD +test-group2
+    BUILD +test-group3
+
+test-group1:
     BUILD +test-files
     BUILD +test-with-subdir
     BUILD +test-requires-project
@@ -19,6 +24,8 @@ test-all:
     BUILD +test-expand-args
     BUILD +test-build-args
     BUILD +test-pass-args
+
+test-group2:
     BUILD +test-copy-target-args
     BUILD +test-arg-matrix
     BUILD +test-try-catch
@@ -29,7 +36,18 @@ test-all:
     BUILD +test-remote-targets
     BUILD +test-from-dockerfile
     BUILD +test-import
+
+test-group3:
     BUILD +test-copy-target-args-quoted
+    BUILD +test-build-flag
+    BUILD +test-flag-conflict
+    BUILD +test-init-failure
+    BUILD +test-arg-change
+    BUILD +test-expand-let
+    BUILD +test-copy-target-let
+    BUILD +test-expand-set
+    BUILD +test-copy-target-set
+	BUILD +test-multi-platform-build-failure
 
 test-files:
     RUN echo hello > my-file
@@ -162,6 +180,42 @@ test-arg-matrix:
     DO --pass-args +RUN_EARTHLY_ARGS --target=+arg-matrix --output_contains="Hello Sam. From Todd"
     DO --pass-args +RUN_EARTHLY_ARGS --target=+arg-matrix --output_contains="Target .* has already been run. Skipping."
 
+test-expand-let:
+    COPY glob/hello.txt .
+    DO --pass-args +RUN_EARTHLY_ARGS --earthfile=expand-let.earth --target=+basic --output_contains="COPY hello.txt"
+    DO --pass-args +RUN_EARTHLY_ARGS --earthfile=expand-let.earth --target=+basic --output_contains="Target .* has already been run. Skipping."
+
+    DO --pass-args +RUN_EARTHLY_ARGS --earthfile=expand-let.earth --target=+dynamic-build --output_contains="dynamic target ok"
+    DO --pass-args +RUN_EARTHLY_ARGS --earthfile=expand-let.earth --target=+dynamic-build --output_contains="Target .* has already been run. Skipping."
+
+    DO --pass-args +RUN_EARTHLY_ARGS --earthfile=expand-let.earth --target=+dynamic-arg --output_contains="hello bar"
+    DO --pass-args +RUN_EARTHLY_ARGS --earthfile=expand-let.earth --target=+dynamic-arg --output_contains="Target .* has already been run. Skipping."
+
+test-copy-target-let:
+    DO --pass-args +RUN_EARTHLY_ARGS --earthfile=expand-let.earth --target=+copy-target-dynamic --output_contains="+copy-target-dynamic | goodbye"
+    DO --pass-args +RUN_EARTHLY_ARGS --earthfile=expand-let.earth --target=+copy-target-dynamic --output_contains="Target .* has already been run. Skipping."
+
+    DO --pass-args +RUN_EARTHLY_ARGS --earthfile=expand-let.earth --target=+copy-target-dynamic-2 --output_contains="+copy-target-dynamic-2 | foobar"
+    DO --pass-args +RUN_EARTHLY_ARGS --earthfile=expand-let.earth --target=+copy-target-dynamic-2 --output_contains="Target .* has already been run. Skipping."
+
+test-expand-set:
+    COPY glob/hello.txt .
+    DO --pass-args +RUN_EARTHLY_ARGS --earthfile=expand-set.earth --target=+basic --output_contains="COPY hello.txt"
+    DO --pass-args +RUN_EARTHLY_ARGS --earthfile=expand-set.earth --target=+basic --output_contains="Target .* has already been run. Skipping."
+
+    DO --pass-args +RUN_EARTHLY_ARGS --earthfile=expand-set.earth --target=+dynamic-build --output_contains="dynamic target ok"
+    DO --pass-args +RUN_EARTHLY_ARGS --earthfile=expand-set.earth --target=+dynamic-build --output_contains="Target .* has already been run. Skipping."
+
+    DO --pass-args +RUN_EARTHLY_ARGS --earthfile=expand-set.earth --target=+dynamic-arg --output_contains="hello bar"
+    DO --pass-args +RUN_EARTHLY_ARGS --earthfile=expand-set.earth --target=+dynamic-arg --output_contains="Target .* has already been run. Skipping."
+
+test-copy-target-set:
+    DO --pass-args +RUN_EARTHLY_ARGS --earthfile=expand-set.earth --target=+copy-target-dynamic --output_contains="+copy-target-dynamic | goodbye"
+    DO --pass-args +RUN_EARTHLY_ARGS --earthfile=expand-set.earth --target=+copy-target-dynamic --output_contains="Target .* has already been run. Skipping."
+
+    DO --pass-args +RUN_EARTHLY_ARGS --earthfile=expand-set.earth --target=+copy-target-dynamic-2 --output_contains="+copy-target-dynamic-2 | foobar"
+    DO --pass-args +RUN_EARTHLY_ARGS --earthfile=expand-set.earth --target=+copy-target-dynamic-2 --output_contains="Target .* has already been run. Skipping."
+
 test-try-catch:
     DO --pass-args +RUN_EARTHLY_ARGS --earthfile=try-catch.earth --target=+basic --output_contains="Artifact +basic/hello.txt output as hello.txt"
     DO --pass-args +RUN_EARTHLY_ARGS --earthfile=try-catch.earth --target=+basic --output_contains="Target .* has already been run. Skipping."
@@ -244,6 +298,53 @@ test-import:
 
     DO --pass-args +RUN_EARTHLY_ARGS --earthfile=import.earth --target=+global
     DO --pass-args +RUN_EARTHLY_ARGS --earthfile=import.earth --target=+global --output_contains="Target .* has already been run. Skipping."
+
+test-build-flag:
+    DO --pass-args tests+RUN_EARTHLY --extra_args="--auto-skip-db-path=test.db" --earthfile=build-flag.earth --target=+basic
+    RUN cat earthly.output | acbgrep 'hello from a'
+    RUN cat earthly.output | acbgrep 'hello from b'
+
+    DO --pass-args tests+RUN_EARTHLY --extra_args="--auto-skip-db-path=test.db" --earthfile=build-flag.earth --target=+basic
+    RUN cat earthly.output | acbgrep 'hello from a'
+    RUN cat earthly.output | acbgrep -v 'hello from b'
+    RUN cat earthly.output | acbgrep 'Target +b .* has already been run'
+
+    DO --pass-args tests+RUN_EARTHLY --extra_args="--auto-skip-db-path=test.db" --earthfile=build-flag.earth --target=+remote
+    RUN cat earthly.output | acbgrep 'Hello World'
+    RUN cat earthly.output | acbgrep 'hello from b'
+
+    DO --pass-args tests+RUN_EARTHLY --extra_args="--auto-skip-db-path=test.db" --earthfile=build-flag.earth --target=+remote
+    RUN cat earthly.output | acbgrep -v 'Hello World'
+    RUN cat earthly.output | acbgrep 'Target github.com/earthly/test-remote:6accddaba346aeda062ab47bae62e65dcdcc513f+basic .* has already been run'
+    RUN cat earthly.output | acbgrep 'hello from b'
+
+test-multi-platform-build-failure:
+    COPY build-multiplatform-failure.earth Earthfile
+    DO --pass-args tests+RUN_EARTHLY --extra_args="--auto-skip-db-path=test.db" --target=+test --should_fail=true
+    # test that the first run didn't write to hash entry to test.db; running a second time should also fail
+    DO --pass-args tests+RUN_EARTHLY --extra_args="--auto-skip-db-path=test.db" --target=+test --should_fail=true
+
+test-flag-conflict:
+    DO --pass-args tests+RUN_EARTHLY --extra_args="--auto-skip-db-path=test.db --auto-skip --no-auto-skip" \
+                                     --earthfile=build-flag.earth --target=+basic --should_fail=true \
+                                     --output_contains="\-\-no-auto-skip cannot be used with \-\-auto-skip"
+
+test-init-failure:
+    DO --pass-args tests+RUN_EARTHLY --extra_args="--auto-skip-db-path=/tmp --auto-skip" \
+                                     --earthfile=build-flag.earth --target=+basic \
+                                     --output_contains="Failed to initialize auto-skip database"
+
+test-arg-change:
+    # These 2 distinct versions are pinned to ensure a version argument change
+    # triggers auto-skip cache-busting.
+    ARG V1="3.18.6"
+    ARG V2="3.19.1"
+    RUN acbtest "$V1" != "$V2" # Ensure that the values are kept distinct.
+    COPY arg-change.earth Earthfile
+    RUN sed -i "s/<VERSION>/$V1/g" Earthfile
+    DO --pass-args tests+RUN_EARTHLY --extra_args="--auto-skip-db-path=test.db" --target=+expand-args-from --output_contains="VERSION_ID=$V1"
+    RUN sed -i "s/$V1/$V2/g" Earthfile
+    DO --pass-args tests+RUN_EARTHLY --extra_args="--auto-skip-db-path=test.db" --target=+expand-args-from --output_contains="VERSION_ID=$V2"
 
 RUN_EARTHLY_ARGS:
     FUNCTION
