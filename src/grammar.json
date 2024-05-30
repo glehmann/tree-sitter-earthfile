@@ -5609,7 +5609,7 @@
                   "type": "ALIAS",
                   "content": {
                     "type": "SYMBOL",
-                    "name": "_immediate_double_quoted_string"
+                    "name": "_immediate_single_quoted_string"
                   },
                   "named": true,
                   "value": "single_quoted_string"

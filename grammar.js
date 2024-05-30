@@ -725,7 +725,7 @@ module.exports = grammar({
             choice(
               alias($._immediate_unquoted_string, $.unquoted_string),
               alias($._immediate_double_quoted_string, $.double_quoted_string),
-              alias($._immediate_double_quoted_string, $.single_quoted_string),
+              alias($._immediate_single_quoted_string, $.single_quoted_string),
             ),
           ),
         ),

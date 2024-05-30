@@ -1953,10 +1953,6 @@
         {
           "type": "escape_sequence",
           "named": true
-        },
-        {
-          "type": "expansion",
-          "named": true
         }
       ]
     }
