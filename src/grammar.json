@@ -5865,6 +5865,10 @@
           "value": "\f"
         },
         {
+          "type": "STRING",
+          "value": "\u0000"
+        },
+        {
           "type": "SYMBOL",
           "name": "comment"
         }
