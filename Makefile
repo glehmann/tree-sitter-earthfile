@@ -1,4 +1,4 @@
-VERSION := 0.5.2
+VERSION := 0.5.3
 
 LANGUAGE_NAME := tree-sitter-earthfile
 
