@@ -29,6 +29,8 @@ module.exports = grammar({
     [$.image_name, $.unquoted_string],
     [$.shell_fragment],
     [$.string],
+    [$.shell_fragment, $.string_array],
+    [$.string_array, $.unquoted_string],
     [$.target_artifact],
     [$.target_ref, $.unquoted_string],
     [$.unquoted_string],
@@ -310,7 +312,7 @@ module.exports = grammar({
         $._eol,
       ),
 
-    volume_command: ($) => seq("VOLUME", choice($.string_array, repeat($.string)), $._eol),
+    volume_command: ($) => seq("VOLUME", choice($.string_array, repeat1($.string)), $._eol),
 
     wait_command: ($) => seq("WAIT", $._eol, optional($.block), "END", $._eol),
 
@@ -466,9 +468,9 @@ module.exports = grammar({
         ),
       ),
     string_array: ($) =>
-      choice(
-        seq(token(prec(5, "[")), "]"),
-        seq(token(prec(5, "[")), repeat(seq($.double_quoted_string, ",")), $.double_quoted_string, "]"),
+      prec.dynamic(
+        10,
+        choice(seq("[", "]"), seq("[", repeat(seq($.double_quoted_string, ",")), $.double_quoted_string, "]")),
       ),
     target_ref: ($) =>
       seq(

@@ -153,3 +153,20 @@ server:
             command: (shell_fragment
               (line_continuation)
               (line_continuation))))))
+
+
+==================
+run with test shell fragment
+==================
+
+foo:
+    RUN [ -f /foo.txt ] echo foo
+
+---
+
+    (source_file
+      (target
+        name: (identifier)
+        (block
+          (run_command
+            command: (shell_fragment)))))

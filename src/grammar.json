@@ -1906,7 +1906,7 @@
               "name": "string_array"
             },
             {
-              "type": "REPEAT",
+              "type": "REPEAT1",
               "content": {
                 "type": "SYMBOL",
                 "name": "string"
@@ -2987,69 +2987,59 @@
       }
     },
     "string_array": {
-      "type": "CHOICE",
-      "members": [
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "TOKEN",
-              "content": {
-                "type": "PREC",
-                "value": 5,
+      "type": "PREC_DYNAMIC",
+      "value": 10,
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "["
+              },
+              {
+                "type": "STRING",
+                "value": "]"
+              }
+            ]
+          },
+          {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "STRING",
+                "value": "["
+              },
+              {
+                "type": "REPEAT",
                 "content": {
-                  "type": "STRING",
-                  "value": "["
+                  "type": "SEQ",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "double_quoted_string"
+                    },
+                    {
+                      "type": "STRING",
+                      "value": ","
+                    }
+                  ]
                 }
+              },
+              {
+                "type": "SYMBOL",
+                "name": "double_quoted_string"
+              },
+              {
+                "type": "STRING",
+                "value": "]"
               }
-            },
-            {
-              "type": "STRING",
-              "value": "]"
-            }
-          ]
-        },
-        {
-          "type": "SEQ",
-          "members": [
-            {
-              "type": "TOKEN",
-              "content": {
-                "type": "PREC",
-                "value": 5,
-                "content": {
-                  "type": "STRING",
-                  "value": "["
-                }
-              }
-            },
-            {
-              "type": "REPEAT",
-              "content": {
-                "type": "SEQ",
-                "members": [
-                  {
-                    "type": "SYMBOL",
-                    "name": "double_quoted_string"
-                  },
-                  {
-                    "type": "STRING",
-                    "value": ","
-                  }
-                ]
-              }
-            },
-            {
-              "type": "SYMBOL",
-              "name": "double_quoted_string"
-            },
-            {
-              "type": "STRING",
-              "value": "]"
-            }
-          ]
-        }
-      ]
+            ]
+          }
+        ]
+      }
     },
     "target_ref": {
       "type": "SEQ",
@@ -5942,6 +5932,14 @@
     ],
     [
       "string"
+    ],
+    [
+      "shell_fragment",
+      "string_array"
+    ],
+    [
+      "string_array",
+      "unquoted_string"
     ],
     [
       "target_artifact"
