@@ -20,7 +20,7 @@ include = [
 members = ["xtask"]
 
 [workspace.package]
-version = "0.5.3"
+version = "0.5.4"
 
 [lib]
 path = "bindings/rust/lib.rs"
