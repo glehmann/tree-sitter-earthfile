@@ -29,6 +29,7 @@ module.exports = grammar({
     [$.image_name, $.unquoted_string],
     [$.shell_fragment],
     [$.string],
+    [$.target_artifact],
     [$.target_ref, $.unquoted_string],
     [$.unquoted_string],
     [$.unquoted_string_with_spaces],
@@ -478,7 +479,7 @@ module.exports = grammar({
     target_ref_with_build_args: ($) => seq(token(prec(5, "(")), $.target_ref, $.build_args, token(prec(5, ")"))),
     // TODO: use fields
     target_artifact: ($) =>
-      seq($.target_ref, token.immediate("/"), alias($._immediate_unquoted_string, $.unquoted_string)),
+      seq($.target_ref, token.immediate("/"), optional(alias($._immediate_unquoted_string, $.unquoted_string))),
     // TODO: use fields
     target_artifact_build_args: ($) =>
       seq(

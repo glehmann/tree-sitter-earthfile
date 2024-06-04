@@ -3139,13 +3139,21 @@
           }
         },
         {
-          "type": "ALIAS",
-          "content": {
-            "type": "SYMBOL",
-            "name": "_immediate_unquoted_string"
-          },
-          "named": true,
-          "value": "unquoted_string"
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "ALIAS",
+              "content": {
+                "type": "SYMBOL",
+                "name": "_immediate_unquoted_string"
+              },
+              "named": true,
+              "value": "unquoted_string"
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         }
       ]
     },
@@ -5934,6 +5942,9 @@
     ],
     [
       "string"
+    ],
+    [
+      "target_artifact"
     ],
     [
       "target_ref",
