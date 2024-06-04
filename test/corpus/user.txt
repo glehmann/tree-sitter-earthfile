@@ -16,6 +16,26 @@ foo:
 
 
 ==================
+user command with expansion
+==================
+
+foo:
+  USER $username
+
+---
+
+    (source_file
+      (target
+        name: (identifier)
+        (block
+          (user_command
+            (string
+              (unquoted_string
+                (expansion
+                  (variable))))))))
+
+
+==================
 user command with group
 ==================
 

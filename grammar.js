@@ -22,7 +22,9 @@ module.exports = grammar({
 
   conflicts: ($) => [
     [$._immediate_identifier, $._immediate_string_base],
+    [$._immediate_string_base, $.identifier],
     [$._string_base],
+    [$._string_base, $.identifier],
     [$.build_arg],
     [$.earthfile_ref, $.image_name, $.unquoted_string],
     [$.earthfile_ref, $.unquoted_string],
@@ -307,8 +309,13 @@ module.exports = grammar({
     user_command: ($) =>
       seq(
         "USER",
-        field("user", choice($.identifier, $.number)),
-        optional(seq(token.immediate(":"), field("group", choice($.identifier, $.number)))),
+        choice(
+          seq(
+            field("user", choice($.identifier, $.number)),
+            optional(seq(token.immediate(":"), field("group", choice($.identifier, $.number)))),
+          ),
+          $.string,
+        ),
         $._eol,
       ),
 

@@ -1832,38 +1832,14 @@
           "value": "USER"
         },
         {
-          "type": "FIELD",
-          "name": "user",
-          "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "identifier"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "number"
-              }
-            ]
-          }
-        },
-        {
           "type": "CHOICE",
           "members": [
             {
               "type": "SEQ",
               "members": [
                 {
-                  "type": "IMMEDIATE_TOKEN",
-                  "content": {
-                    "type": "STRING",
-                    "value": ":"
-                  }
-                },
-                {
                   "type": "FIELD",
-                  "name": "group",
+                  "name": "user",
                   "content": {
                     "type": "CHOICE",
                     "members": [
@@ -1877,11 +1853,49 @@
                       }
                     ]
                   }
+                },
+                {
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "SEQ",
+                      "members": [
+                        {
+                          "type": "IMMEDIATE_TOKEN",
+                          "content": {
+                            "type": "STRING",
+                            "value": ":"
+                          }
+                        },
+                        {
+                          "type": "FIELD",
+                          "name": "group",
+                          "content": {
+                            "type": "CHOICE",
+                            "members": [
+                              {
+                                "type": "SYMBOL",
+                                "name": "identifier"
+                              },
+                              {
+                                "type": "SYMBOL",
+                                "name": "number"
+                              }
+                            ]
+                          }
+                        }
+                      ]
+                    },
+                    {
+                      "type": "BLANK"
+                    }
+                  ]
                 }
               ]
             },
             {
-              "type": "BLANK"
+              "type": "SYMBOL",
+              "name": "string"
             }
           ]
         },
@@ -5909,7 +5923,15 @@
       "_immediate_string_base"
     ],
     [
+      "_immediate_string_base",
+      "identifier"
+    ],
+    [
       "_string_base"
+    ],
+    [
+      "_string_base",
+      "identifier"
     ],
     [
       "build_arg"

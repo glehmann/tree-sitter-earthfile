@@ -2252,7 +2252,7 @@
       },
       "user": {
         "multiple": false,
-        "required": true,
+        "required": false,
         "types": [
           {
             "type": "identifier",
@@ -2266,11 +2266,15 @@
       }
     },
     "children": {
-      "multiple": false,
+      "multiple": true,
       "required": false,
       "types": [
         {
           "type": "comment",
+          "named": true
+        },
+        {
+          "type": "string",
           "named": true
         }
       ]
