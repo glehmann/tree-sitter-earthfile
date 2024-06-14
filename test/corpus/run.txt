@@ -113,6 +113,24 @@ foo:
 
 
 ==================
+run entrypoint
+==================
+
+foo:
+    RUN --entrypoint
+
+---
+
+    (source_file
+      (target
+        name: (identifier)
+        (block
+          (run_command
+            options: (options
+              (entrypoint))))))
+
+
+==================
 run with comments
 ==================
 
@@ -151,6 +169,7 @@ server:
         (block
           (run_command
             command: (shell_fragment
+              (escape_sequence)
               (line_continuation)
               (line_continuation))))))
 

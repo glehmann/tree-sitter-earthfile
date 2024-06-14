@@ -16,7 +16,7 @@ foo:
 
 
 ==================
-cmd command
+cmd command array
 ==================
 
 foo:

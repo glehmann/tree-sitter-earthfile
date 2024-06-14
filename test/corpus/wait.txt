@@ -32,6 +32,5 @@ foo:
       (target
         name: (identifier)
         (block
-          (wait_command
-            (block)))))
+          (wait_command))))
 

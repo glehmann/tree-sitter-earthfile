@@ -13,6 +13,7 @@ foo:
         (block
           (git_clone_command
             url: (string
+              (unquoted_string)
               (unquoted_string))
             dest: (string
               (unquoted_string))))))
@@ -38,6 +39,7 @@ foo:
                 value: (string
                   (unquoted_string))))
             url: (string
+              (unquoted_string)
               (unquoted_string))
             dest: (string
               (unquoted_string))))))

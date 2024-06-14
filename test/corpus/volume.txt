@@ -12,7 +12,26 @@ foo:
         name: (identifier)
         (block
           (volume_command
+            (strings
             (string
               (unquoted_string))
             (string
-              (unquoted_string))))))
+              (unquoted_string)))))))
+
+==================
+volume command with array
+==================
+
+foo:
+  VOLUME ["/foo", "/bar"]
+
+---
+
+    (source_file
+      (target
+        name: (identifier)
+        (block
+          (volume_command
+            (string_array
+              (double_quoted_string)
+              (double_quoted_string))))))

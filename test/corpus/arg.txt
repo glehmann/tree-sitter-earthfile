@@ -80,7 +80,9 @@ ARG foo='auie tsrn'
 arg command default value double quoted
 ==================
 
-ARG foo="it's ok"
+ARG foo="it's
+
+ok"
 
 ---
 
