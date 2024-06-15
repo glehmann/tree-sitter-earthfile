@@ -6418,6 +6418,10 @@
                 {
                   "type": "SYMBOL",
                   "name": "expansion"
+                },
+                {
+                  "type": "STRING",
+                  "value": "\\\n"
                 }
               ]
             }

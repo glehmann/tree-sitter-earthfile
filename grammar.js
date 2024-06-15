@@ -716,7 +716,10 @@ module.exports = grammar({
     _string_base_alpha: (_) => /[a-zA-Z_]+/,
     _string_base_num: (_) => /[0-9]+/,
     double_quoted_string: ($) =>
-      prec.dynamic(-1, seq('"', repeat(choice(token(prec(15, /[^"\\\$]+/)), $.escape_sequence, $.expansion)), '"')),
+      prec.dynamic(
+        -1,
+        seq('"', repeat(choice(token(prec(15, /[^"\\\$]+/)), $.escape_sequence, $.expansion, "\\\n")), '"'),
+      ),
     single_quoted_string: ($) => prec.dynamic(-1, seq("'", repeat(choice(/[^'\n\\]+/, $.escape_sequence)), "'")),
     unquoted_string: ($) =>
       prec.dynamic(

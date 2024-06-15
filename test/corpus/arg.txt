@@ -174,3 +174,23 @@ ARG foo=a bb  ccc   dddd    # comment
             (unquoted_string))
           (comment))))
 
+
+==================
+arg command default value with line continuations
+==================
+
+ARG foo="a \
+b \
+c \
+d"
+
+---
+
+    (source_file
+      base_target: (block
+        (arg_command
+          name: (variable)
+          default_value: (string
+            (double_quoted_string)))))
+
+
