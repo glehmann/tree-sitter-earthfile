@@ -211,3 +211,23 @@ d"
             command: (shell_fragment)))))
 
 
+==================
+run with quotes with line continuations
+==================
+
+# this is a comment
+RUN echo bar5# this is not a comment
+# this is a comment
+RUN echo bar # this is a comment
+
+---
+
+    (source_file
+      base_target: (block
+        (comment)
+        (run_command
+          command: (shell_fragment))
+        (comment)
+        (run_command
+          command: (shell_fragment)
+          (comment))))

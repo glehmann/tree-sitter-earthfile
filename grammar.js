@@ -52,11 +52,11 @@ function block($, kind) {
     $.workdir_command,
   );
   if (kind == "base") {
-    return repeat1(choice($._eol, commands));
+    return repeat1(choice($._eol, $.comment, commands));
   } else if (kind == "target") {
     return repeat1(choice($._eol, seq($._sep, commands)));
   } else if (kind == "other") {
-    return repeat1(choice($._eol, seq(optional($._sep), commands)));
+    return repeat1(choice($._eol, $.comment, seq(optional($._sep), commands)));
   }
 }
 module.exports = grammar({
@@ -119,11 +119,11 @@ module.exports = grammar({
     // it must be the first rule in the list
     source_file: ($) =>
       seq(
-        repeat($._eol),
+        repeat(choice($._eol, $.comment)),
         optional($.version_command),
         optional(seq(repeat($._eol), field("base_target", alias($.base_block, $.block)))),
-        repeat(seq(repeat($._eol), $.target)),
-        repeat($._eol),
+        repeat(seq(repeat(choice($._eol, $.comment)), $.target)),
+        repeat(choice($._eol, $.comment)),
       ),
 
     _sep: ($) => repeat1(choice(/[ \t]+/, $.line_continuation, $.line_continuation_comment)),
@@ -737,6 +737,16 @@ module.exports = grammar({
               $.expansion,
             ),
           ),
+          optional(
+            choice(
+              $._string_base_other,
+              $._string_base_alpha,
+              $._string_base_num,
+              $.expansion,
+              $.escape_sequence,
+              ...extra_tokens("$'\""),
+            ),
+          ),
         ),
       ),
     string_with_spaces: ($) =>
@@ -763,6 +773,7 @@ module.exports = grammar({
     line_continuation: (_) => "\\\n",
     comment: (_) => /#[^\n]*(\n|\r\n|\f)/,
     line_continuation_comment: (_) => /\\(\s*#.*\n)+/,
-    _eol: ($) => seq(optional(/[ \t]+/), choice("\n", "\r\n", "\f", "\0", $.comment)),
+    _eol: ($) =>
+      prec.dynamic(10, choice(seq(optional(/[ \t]+/), choice("\n", "\r\n", "\f", "\0")), seq(/[ \t]+/, $.comment))),
   },
 });

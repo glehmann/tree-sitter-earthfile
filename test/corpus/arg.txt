@@ -213,3 +213,22 @@ d'
           name: (variable)
           default_value: (string
             (single_quoted_string)))))
+
+
+==================
+arg command default value with line continuations
+==================
+
+ARG v=buildkitd:$VERSION # comment
+
+---
+
+    (source_file
+      base_target: (block
+        (arg_command
+          name: (variable)
+          default_value: (string
+            (unquoted_string
+              (expansion
+                (variable))))
+          (comment))))

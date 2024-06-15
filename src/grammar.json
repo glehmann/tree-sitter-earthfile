@@ -7,8 +7,17 @@
         {
           "type": "REPEAT",
           "content": {
-            "type": "SYMBOL",
-            "name": "_eol"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_eol"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "comment"
+              }
+            ]
           }
         },
         {
@@ -64,8 +73,17 @@
               {
                 "type": "REPEAT",
                 "content": {
-                  "type": "SYMBOL",
-                  "name": "_eol"
+                  "type": "CHOICE",
+                  "members": [
+                    {
+                      "type": "SYMBOL",
+                      "name": "_eol"
+                    },
+                    {
+                      "type": "SYMBOL",
+                      "name": "comment"
+                    }
+                  ]
                 }
               },
               {
@@ -78,8 +96,17 @@
         {
           "type": "REPEAT",
           "content": {
-            "type": "SYMBOL",
-            "name": "_eol"
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_eol"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "comment"
+              }
+            ]
           }
         }
       ]
@@ -3257,6 +3284,10 @@
             "name": "_eol"
           },
           {
+            "type": "SYMBOL",
+            "name": "comment"
+          },
+          {
             "type": "CHOICE",
             "members": [
               {
@@ -3546,6 +3577,10 @@
           {
             "type": "SYMBOL",
             "name": "_eol"
+          },
+          {
+            "type": "SYMBOL",
+            "name": "comment"
           },
           {
             "type": "SEQ",
@@ -6820,6 +6855,95 @@
                 }
               ]
             }
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "_string_base_other"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "_string_base_alpha"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "_string_base_num"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "expansion"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "escape_sequence"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "("
+                  },
+                  {
+                    "type": "STRING",
+                    "value": ")"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "["
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "]"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "{"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "}"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "/"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": ","
+                  },
+                  {
+                    "type": "STRING",
+                    "value": ":"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "@"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "="
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "+"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "."
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "-"
+                  }
+                ]
+              },
+              {
+                "type": "BLANK"
+              }
+            ]
           }
         ]
       }
@@ -6978,46 +7102,64 @@
       "value": "\\\\(\\s*#.*\\n)+"
     },
     "_eol": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "PATTERN",
-              "value": "[ \\t]+"
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "STRING",
-              "value": "\n"
-            },
-            {
-              "type": "STRING",
-              "value": "\r\n"
-            },
-            {
-              "type": "STRING",
-              "value": "\f"
-            },
-            {
-              "type": "STRING",
-              "value": "\u0000"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "comment"
-            }
-          ]
-        }
-      ]
+      "type": "PREC_DYNAMIC",
+      "value": 10,
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "PATTERN",
+                    "value": "[ \\t]+"
+                  },
+                  {
+                    "type": "BLANK"
+                  }
+                ]
+              },
+              {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "STRING",
+                    "value": "\n"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "\r\n"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "\f"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "\u0000"
+                  }
+                ]
+              }
+            ]
+          },
+          {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "PATTERN",
+                "value": "[ \\t]+"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "comment"
+              }
+            ]
+          }
+        ]
+      }
     }
   },
   "extras": [],
