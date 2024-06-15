@@ -743,73 +743,34 @@
           "value": "COPY"
         },
         {
-          "type": "REPEAT",
-          "content": {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "_sep"
-              },
-              {
-                "type": "FIELD",
-                "name": "option",
-                "content": {
-                  "type": "CHOICE",
-                  "members": [
-                    {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SEQ",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "_sep"
+                },
+                {
+                  "type": "FIELD",
+                  "name": "options",
+                  "content": {
+                    "type": "ALIAS",
+                    "content": {
                       "type": "SYMBOL",
-                      "name": "allow_privileged"
+                      "name": "copy_options"
                     },
-                    {
-                      "type": "SYMBOL",
-                      "name": "build_arg_deprecated"
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "chmod"
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "chown"
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "dir"
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "if_exists"
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "keep_own"
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "keep_ts"
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "pass_args"
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "platform"
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "symlink_no_follow"
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "unknown_option"
-                    }
-                  ]
+                    "named": true,
+                    "value": "options"
+                  }
                 }
-              }
-            ]
-          }
+              ]
+            },
+            {
+              "type": "BLANK"
+            }
+          ]
         },
         {
           "type": "REPEAT1",
@@ -859,6 +820,129 @@
         {
           "type": "SYMBOL",
           "name": "_eol"
+        }
+      ]
+    },
+    "copy_options": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "SYMBOL",
+              "name": "allow_privileged"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "build_arg_deprecated"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "chmod"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "chown"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "dir"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "if_exists"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "keep_own"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "keep_ts"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "pass_args"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "platform"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "symlink_no_follow"
+            },
+            {
+              "type": "SYMBOL",
+              "name": "unknown_option"
+            }
+          ]
+        },
+        {
+          "type": "REPEAT",
+          "content": {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_sep"
+              },
+              {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "SYMBOL",
+                    "name": "allow_privileged"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "build_arg_deprecated"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "chmod"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "chown"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "dir"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "if_exists"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "keep_own"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "keep_ts"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "pass_args"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "platform"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "symlink_no_follow"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "unknown_option"
+                  }
+                ]
+              }
+            ]
+          }
         }
       ]
     },
@@ -5983,41 +6067,45 @@
       }
     },
     "platform": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "TOKEN",
-          "content": {
-            "type": "PREC",
-            "value": 5,
+      "type": "PREC_DYNAMIC",
+      "value": 10,
+      "content": {
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "TOKEN",
             "content": {
-              "type": "STRING",
-              "value": "--platform"
+              "type": "PREC",
+              "value": 5,
+              "content": {
+                "type": "STRING",
+                "value": "--platform"
+              }
             }
-          }
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
+          },
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_sep"
+              },
+              {
+                "type": "STRING",
+                "value": "="
+              }
+            ]
+          },
+          {
+            "type": "FIELD",
+            "name": "value",
+            "content": {
               "type": "SYMBOL",
-              "name": "_sep"
-            },
-            {
-              "type": "STRING",
-              "value": "="
+              "name": "string"
             }
-          ]
-        },
-        {
-          "type": "FIELD",
-          "name": "value",
-          "content": {
-            "type": "SYMBOL",
-            "name": "string"
           }
-        }
-      ]
+        ]
+      }
     },
     "privileged": {
       "type": "TOKEN",
@@ -6971,6 +7059,9 @@
     ],
     [
       "copy_command"
+    ],
+    [
+      "copy_options"
     ],
     [
       "do_options"

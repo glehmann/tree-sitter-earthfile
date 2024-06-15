@@ -78,6 +78,7 @@ module.exports = grammar({
     [$.build_options],
     [$.cache_options],
     [$.copy_command],
+    [$.copy_options],
     [$.do_options],
     [$.double_quoted_string, $.shell_fragment],
     [$.earthfile_ref, $.image_name, $.unquoted_string],
@@ -179,52 +180,52 @@ module.exports = grammar({
     copy_command: ($) =>
       seq(
         "COPY",
-        // options($, $.copy_options),
-        repeat(
-          seq(
-            $._sep,
-            field(
-              "option",
-              choice(
-                $.allow_privileged,
-                $.build_arg_deprecated,
-                $.chmod,
-                $.chown,
-                $.dir,
-                $.if_exists,
-                $.keep_own,
-                $.keep_ts,
-                $.pass_args,
-                $.platform,
-                $.symlink_no_follow,
-                $.unknown_option,
-              ),
-            ),
-          ),
-        ),
+        options($, $.copy_options),
+        // repeat(
+        //   seq(
+        //     $._sep,
+        //     field(
+        //       "option",
+        //       choice(
+        //         $.allow_privileged,
+        //         $.build_arg_deprecated,
+        //         $.chmod,
+        //         $.chown,
+        //         $.dir,
+        //         $.if_exists,
+        //         $.keep_own,
+        //         $.keep_ts,
+        //         $.pass_args,
+        //         $.platform,
+        //         $.symlink_no_follow,
+        //         $.unknown_option,
+        //       ),
+        //     ),
+        //   ),
+        // ),
         repeat1(seq($._sep, field("src", choice($.target_artifact, $.target_artifact_build_args, $.string)))),
         $._sep,
         field("dest", $.string),
         $._eol,
       ),
-    // copy_options: ($) =>
-    //   repeat1_sep(
-    //     $,
-    //     choice(
-    //       $.allow_privileged,
-    //       $.build_arg_deprecated,
-    //       $.chmod,
-    //       $.chown,
-    //       $.dir,
-    //       $.if_exists,
-    //       $.keep_own,
-    //       $.keep_ts,
-    //       $.pass_args,
-    //       $.platform,
-    //       $.symlink_no_follow,
-    //       $.unknown_option,
-    //     ),
-    //   ),
+    copy_options: ($) =>
+      repeat1_sep(
+        $,
+        choice(
+          $.allow_privileged,
+          $.build_arg_deprecated,
+          $.chmod,
+          $.chown,
+          $.dir,
+          $.if_exists,
+          $.keep_own,
+          $.keep_ts,
+          $.pass_args,
+          $.platform,
+          $.symlink_no_follow,
+          $.unknown_option,
+        ),
+      ),
 
     do_command: ($) =>
       seq(
@@ -353,29 +354,6 @@ module.exports = grammar({
       seq(
         "RUN",
         options($, $.run_options),
-        // repeat(
-        //   seq(
-        //     $._sep,
-        //     field(
-        //       "option",
-        //       choice(
-        //         $.aws,
-        //         $.entrypoint,
-        //         $.interactive,
-        //         $.mount,
-        //         $.network_none,
-        //         $.no_cache,
-        //         $.privileged,
-        //         $.oidc,
-        //         $.push,
-        //         $.raw_output,
-        //         $.secret,
-        //         $.ssh,
-        //         $.unknown_option,
-        //       ),
-        //     ),
-        //   ),
-        // ),
         optional(
           seq(
             $._sep,
@@ -687,7 +665,7 @@ module.exports = grammar({
     oidc: ($) => seq(token(prec(5, "--oidc")), choice($._sep, "="), field("spec", $.string)),
     pass_args: (_) => token(prec(5, "--pass-args")),
     persist: (_) => token(prec(5, "--persist")),
-    platform: ($) => seq(token(prec(5, "--platform")), choice($._sep, "="), field("value", $.string)),
+    platform: ($) => prec.dynamic(10, seq(token(prec(5, "--platform")), choice($._sep, "="), field("value", $.string))),
     privileged: (_) => token(prec(5, "--privileged")),
     pull: ($) => seq(token(prec(5, "--pull")), choice($._sep, "="), field("value", choice($.image_spec, $.string))),
     push: (_) => token(prec(5, "--push")),

@@ -54,11 +54,12 @@ foo:
         name: (identifier)
         (block
           (copy_command
-            option: (dir)
-            option: (keep_ts)
-            option: (platform
-              value: (string
-                (unquoted_string)))
+            options: (options
+              (dir)
+              (keep_ts)
+              (platform
+                value: (string
+                  (unquoted_string))))
             src: (string
               (unquoted_string))
             dest: (string

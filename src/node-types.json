@@ -608,56 +608,12 @@
           }
         ]
       },
-      "option": {
-        "multiple": true,
+      "options": {
+        "multiple": false,
         "required": false,
         "types": [
           {
-            "type": "allow_privileged",
-            "named": true
-          },
-          {
-            "type": "build_arg_deprecated",
-            "named": true
-          },
-          {
-            "type": "chmod",
-            "named": true
-          },
-          {
-            "type": "chown",
-            "named": true
-          },
-          {
-            "type": "dir",
-            "named": true
-          },
-          {
-            "type": "if_exists",
-            "named": true
-          },
-          {
-            "type": "keep_own",
-            "named": true
-          },
-          {
-            "type": "keep_ts",
-            "named": true
-          },
-          {
-            "type": "pass_args",
-            "named": true
-          },
-          {
-            "type": "platform",
-            "named": true
-          },
-          {
-            "type": "symlink_no_follow",
-            "named": true
-          },
-          {
-            "type": "unknown_option",
+            "type": "options",
             "named": true
           }
         ]
@@ -1915,7 +1871,15 @@
           "named": true
         },
         {
+          "type": "chown",
+          "named": true
+        },
+        {
           "type": "compose",
+          "named": true
+        },
+        {
+          "type": "dir",
           "named": true
         },
         {
