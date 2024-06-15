@@ -733,7 +733,7 @@ module.exports = grammar({
               $._string_base_num,
               $.escape_sequence,
               ...extra_tokens("$'\""),
-              /[ \t]+/,
+              $._sep,
               $.expansion,
             ),
           ),

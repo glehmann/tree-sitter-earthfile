@@ -2828,6 +2828,14 @@
         {
           "type": "expansion",
           "named": true
+        },
+        {
+          "type": "line_continuation",
+          "named": true
+        },
+        {
+          "type": "line_continuation_comment",
+          "named": true
         }
       ]
     }

@@ -6846,8 +6846,8 @@
                   "value": "-"
                 },
                 {
-                  "type": "PATTERN",
-                  "value": "[ \\t]+"
+                  "type": "SYMBOL",
+                  "name": "_sep"
                 },
                 {
                   "type": "SYMBOL",
