@@ -4389,6 +4389,15 @@
               "name": "escape_sequence"
             },
             {
+              "type": "ALIAS",
+              "content": {
+                "type": "SYMBOL",
+                "name": "single_quoted_string"
+              },
+              "named": false,
+              "value": "sqs"
+            },
+            {
               "type": "SEQ",
               "members": [
                 {
@@ -4418,6 +4427,10 @@
                       {
                         "type": "SYMBOL",
                         "name": "escape_sequence"
+                      },
+                      {
+                        "type": "STRING",
+                        "value": "\\\n"
                       }
                     ]
                   }
@@ -4427,15 +4440,6 @@
                   "value": "\""
                 }
               ]
-            },
-            {
-              "type": "ALIAS",
-              "content": {
-                "type": "SYMBOL",
-                "name": "double_quoted_string"
-              },
-              "named": false,
-              "value": "dqs"
             }
           ]
         },
@@ -4559,6 +4563,10 @@
                         {
                           "type": "SYMBOL",
                           "name": "escape_sequence"
+                        },
+                        {
+                          "type": "STRING",
+                          "value": "\\\n"
                         }
                       ]
                     }
@@ -4697,6 +4705,10 @@
                           {
                             "type": "SYMBOL",
                             "name": "escape_sequence"
+                          },
+                          {
+                            "type": "STRING",
+                            "value": "\\\n"
                           }
                         ]
                       }
@@ -6928,11 +6940,11 @@
       "arg_options"
     ],
     [
-      "base_block"
-    ],
-    [
       "base_block",
       "source_file"
+    ],
+    [
+      "base_block"
     ],
     [
       "block"
@@ -6961,12 +6973,12 @@
     ],
     [
       "earthfile_ref",
-      "image_name"
+      "image_name",
+      "unquoted_string"
     ],
     [
       "earthfile_ref",
-      "image_name",
-      "unquoted_string"
+      "image_name"
     ],
     [
       "earthfile_ref",
@@ -6976,10 +6988,10 @@
       "for_options"
     ],
     [
-      "from_options"
+      "from_dockerfile_options"
     ],
     [
-      "from_dockerfile_options"
+      "from_options"
     ],
     [
       "git_clone_options"
@@ -6989,11 +7001,11 @@
       "unquoted_string"
     ],
     [
-      "images"
-    ],
-    [
       "image_name",
       "unquoted_string"
+    ],
+    [
+      "images"
     ],
     [
       "import_options"
@@ -7021,20 +7033,20 @@
       "string"
     ],
     [
-      "strings"
-    ],
-    [
       "string_array",
       "unquoted_string"
+    ],
+    [
+      "strings"
     ],
     [
       "target"
     ],
     [
-      "target_block"
+      "target_artifact_build_args"
     ],
     [
-      "target_artifact_build_args"
+      "target_block"
     ],
     [
       "target_ref",

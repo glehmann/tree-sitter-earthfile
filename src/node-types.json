@@ -874,25 +874,6 @@
     }
   },
   {
-    "type": "dqs",
-    "named": false,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "escape_sequence",
-          "named": true
-        },
-        {
-          "type": "expansion",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
     "type": "earthfile_ref",
     "named": true,
     "fields": {},
@@ -1756,6 +1737,11 @@
         }
       ]
     }
+  },
+  {
+    "type": "line_continuation",
+    "named": true,
+    "fields": {}
   },
   {
     "type": "load",
@@ -3431,6 +3417,10 @@
     "named": false
   },
   {
+    "type": "\\\n",
+    "named": false
+  },
+  {
     "type": "]",
     "named": false
   },
@@ -3488,10 +3478,6 @@
   },
   {
     "type": "keep_ts",
-    "named": true
-  },
-  {
-    "type": "line_continuation",
     "named": true
   },
   {

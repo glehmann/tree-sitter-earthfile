@@ -189,3 +189,25 @@ foo:
         (block
           (run_command
             command: (shell_fragment)))))
+
+
+==================
+run with quotes with line continuations
+==================
+
+server:
+    RUN echo "a \
+b \
+c \
+d"
+
+---
+
+    (source_file
+      (target
+        name: (identifier)
+        (block
+          (run_command
+            command: (shell_fragment)))))
+
+
