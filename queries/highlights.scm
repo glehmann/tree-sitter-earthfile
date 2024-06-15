@@ -20,6 +20,7 @@
     "IMPORT"
     "LABEL"
     "LET"
+    "LOCALLY"
     "PROJECT"
     "RUN"
     "SAVE ARTIFACT"
