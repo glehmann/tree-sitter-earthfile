@@ -72,4 +72,4 @@
 (build_arg) @variable
 (options (_) @variable.parameter)
 
-"=" @operator
+["=" ","] @operator
