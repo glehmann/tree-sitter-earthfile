@@ -6455,6 +6455,10 @@
                 {
                   "type": "SYMBOL",
                   "name": "escape_sequence"
+                },
+                {
+                  "type": "STRING",
+                  "value": "\\\n"
                 }
               ]
             }

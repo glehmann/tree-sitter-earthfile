@@ -720,7 +720,8 @@ module.exports = grammar({
         -1,
         seq('"', repeat(choice(token(prec(15, /[^"\\\$]+/)), $.escape_sequence, $.expansion, "\\\n")), '"'),
       ),
-    single_quoted_string: ($) => prec.dynamic(-1, seq("'", repeat(choice(/[^'\n\\]+/, $.escape_sequence)), "'")),
+    single_quoted_string: ($) =>
+      prec.dynamic(-1, seq("'", repeat(choice(/[^'\n\\]+/, $.escape_sequence, "\\\n")), "'")),
     unquoted_string: ($) =>
       prec.dynamic(
         -1,
