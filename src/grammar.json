@@ -2242,7 +2242,7 @@
                           "type": "TOKEN",
                           "content": {
                             "type": "PREC",
-                            "value": 5,
+                            "value": 3,
                             "content": {
                               "type": "STRING",
                               "value": "--"

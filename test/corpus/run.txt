@@ -230,3 +230,22 @@ RUN echo bar # this is a comment
         (run_command
           command: (shell_fragment)
           (comment))))
+
+
+==================
+run with broken option
+==================
+
+foo:
+  RUN --broken-option pwd
+
+---
+
+    (source_file
+      (target
+        name: (identifier)
+        (block
+          (run_command
+            options: (options
+              (unknown_option))
+            command: (shell_fragment)))))

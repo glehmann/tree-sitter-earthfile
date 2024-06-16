@@ -358,7 +358,7 @@ module.exports = grammar({
         optional(
           seq(
             $._sep,
-            optional(seq(token(prec(5, "--")), $._sep)),
+            optional(seq(token(prec(3, "--")), $._sep)),
             field("command", choice($.string_array, $.shell_fragment)),
           ),
         ),
