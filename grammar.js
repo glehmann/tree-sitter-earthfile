@@ -62,7 +62,6 @@ function block($, kind) {
 module.exports = grammar({
   name: "earthfile",
 
-  // extras: ($) => [/[ \t]+/, "\n", "\r\n", "\f", $.line_continuation, $.comment, $.line_continuation_comment],
   extras: ($) => [],
 
   conflicts: ($) => [
