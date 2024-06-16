@@ -1,4 +1,4 @@
-const _string_base_tokens = "()[]{}$/,:@=+.-";
+const _string_base_tokens = "()[]{}$/,:@=+.-#";
 function extra_tokens(except) {
   let res = [];
   for (const c of _string_base_tokens) {
@@ -82,7 +82,6 @@ module.exports = grammar({
     [$.do_options],
     [$.double_quoted_string, $.shell_fragment],
     [$.earthfile_ref, $.image_name, $.unquoted_string],
-    [$.earthfile_ref, $.image_name],
     [$.earthfile_ref, $.unquoted_string],
     [$.escape_sequence, $.shell_fragment],
     [$.for_options],
@@ -691,7 +690,7 @@ module.exports = grammar({
 
     // string stuff
     // _string_base: ($) => repeat1(choice($._string_base_other, $._string_base_alpha, $._string_base_num)),
-    _string_base_other: (_) => /[^"'\s\\\$()\[\]{}+,:@=a-zA-Z0-9_/.-]+/,
+    _string_base_other: (_) => /[^"'\s\\\$()\[\]{}+,:@=a-zA-Z0-9_/.#-]+/,
     _string_base_alpha: (_) => /[a-zA-Z_]+/,
     _string_base_num: (_) => /[0-9]+/,
     double_quoted_string: ($) =>
@@ -704,14 +703,24 @@ module.exports = grammar({
     unquoted_string: ($) =>
       prec.dynamic(
         -1,
-        repeat1(
+        seq(
           choice(
             $._string_base_other,
             $._string_base_alpha,
             $._string_base_num,
             $.expansion,
             $.escape_sequence,
-            ...extra_tokens("$'\""),
+            ...extra_tokens("$'\"#"),
+          ),
+          repeat(
+            choice(
+              $._string_base_other,
+              $._string_base_alpha,
+              $._string_base_num,
+              $.expansion,
+              $.escape_sequence,
+              ...extra_tokens("$'\""),
+            ),
           ),
         ),
       ),
@@ -725,7 +734,7 @@ module.exports = grammar({
             $._string_base_num,
             $.expansion,
             $.escape_sequence,
-            ...extra_tokens("$'\""),
+            ...extra_tokens("$'\"#"),
           ),
           repeat(
             choice(

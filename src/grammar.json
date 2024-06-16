@@ -4025,6 +4025,10 @@
             {
               "type": "STRING",
               "value": "-"
+            },
+            {
+              "type": "STRING",
+              "value": "#"
             }
           ]
         },
@@ -4095,6 +4099,10 @@
                 {
                   "type": "STRING",
                   "value": "-"
+                },
+                {
+                  "type": "STRING",
+                  "value": "#"
                 },
                 {
                   "type": "SYMBOL",
@@ -4504,6 +4512,10 @@
               "value": "-"
             },
             {
+              "type": "STRING",
+              "value": "#"
+            },
+            {
               "type": "PATTERN",
               "value": "\\\\."
             },
@@ -4662,6 +4674,10 @@
               {
                 "type": "STRING",
                 "value": "-"
+              },
+              {
+                "type": "STRING",
+                "value": "#"
               },
               {
                 "type": "PATTERN",
@@ -4828,6 +4844,10 @@
                 {
                   "type": "STRING",
                   "value": "-"
+                },
+                {
+                  "type": "STRING",
+                  "value": "#"
                 },
                 {
                   "type": "PATTERN",
@@ -6570,7 +6590,7 @@
     },
     "_string_base_other": {
       "type": "PATTERN",
-      "value": "[^\"'\\s\\\\\\$()\\[\\]{}+,:@=a-zA-Z0-9_/.-]+"
+      "value": "[^\"'\\s\\\\\\$()\\[\\]{}+,:@=a-zA-Z0-9_/.#-]+"
     },
     "_string_base_alpha": {
       "type": "PATTERN",
@@ -6669,88 +6689,178 @@
       "type": "PREC_DYNAMIC",
       "value": -1,
       "content": {
-        "type": "REPEAT1",
-        "content": {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "_string_base_other"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "_string_base_alpha"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "_string_base_num"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "expansion"
-            },
-            {
-              "type": "SYMBOL",
-              "name": "escape_sequence"
-            },
-            {
-              "type": "STRING",
-              "value": "("
-            },
-            {
-              "type": "STRING",
-              "value": ")"
-            },
-            {
-              "type": "STRING",
-              "value": "["
-            },
-            {
-              "type": "STRING",
-              "value": "]"
-            },
-            {
-              "type": "STRING",
-              "value": "{"
-            },
-            {
-              "type": "STRING",
-              "value": "}"
-            },
-            {
-              "type": "STRING",
-              "value": "/"
-            },
-            {
-              "type": "STRING",
-              "value": ","
-            },
-            {
-              "type": "STRING",
-              "value": ":"
-            },
-            {
-              "type": "STRING",
-              "value": "@"
-            },
-            {
-              "type": "STRING",
-              "value": "="
-            },
-            {
-              "type": "STRING",
-              "value": "+"
-            },
-            {
-              "type": "STRING",
-              "value": "."
-            },
-            {
-              "type": "STRING",
-              "value": "-"
+        "type": "SEQ",
+        "members": [
+          {
+            "type": "CHOICE",
+            "members": [
+              {
+                "type": "SYMBOL",
+                "name": "_string_base_other"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "_string_base_alpha"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "_string_base_num"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "expansion"
+              },
+              {
+                "type": "SYMBOL",
+                "name": "escape_sequence"
+              },
+              {
+                "type": "STRING",
+                "value": "("
+              },
+              {
+                "type": "STRING",
+                "value": ")"
+              },
+              {
+                "type": "STRING",
+                "value": "["
+              },
+              {
+                "type": "STRING",
+                "value": "]"
+              },
+              {
+                "type": "STRING",
+                "value": "{"
+              },
+              {
+                "type": "STRING",
+                "value": "}"
+              },
+              {
+                "type": "STRING",
+                "value": "/"
+              },
+              {
+                "type": "STRING",
+                "value": ","
+              },
+              {
+                "type": "STRING",
+                "value": ":"
+              },
+              {
+                "type": "STRING",
+                "value": "@"
+              },
+              {
+                "type": "STRING",
+                "value": "="
+              },
+              {
+                "type": "STRING",
+                "value": "+"
+              },
+              {
+                "type": "STRING",
+                "value": "."
+              },
+              {
+                "type": "STRING",
+                "value": "-"
+              }
+            ]
+          },
+          {
+            "type": "REPEAT",
+            "content": {
+              "type": "CHOICE",
+              "members": [
+                {
+                  "type": "SYMBOL",
+                  "name": "_string_base_other"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "_string_base_alpha"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "_string_base_num"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "expansion"
+                },
+                {
+                  "type": "SYMBOL",
+                  "name": "escape_sequence"
+                },
+                {
+                  "type": "STRING",
+                  "value": "("
+                },
+                {
+                  "type": "STRING",
+                  "value": ")"
+                },
+                {
+                  "type": "STRING",
+                  "value": "["
+                },
+                {
+                  "type": "STRING",
+                  "value": "]"
+                },
+                {
+                  "type": "STRING",
+                  "value": "{"
+                },
+                {
+                  "type": "STRING",
+                  "value": "}"
+                },
+                {
+                  "type": "STRING",
+                  "value": "/"
+                },
+                {
+                  "type": "STRING",
+                  "value": ","
+                },
+                {
+                  "type": "STRING",
+                  "value": ":"
+                },
+                {
+                  "type": "STRING",
+                  "value": "@"
+                },
+                {
+                  "type": "STRING",
+                  "value": "="
+                },
+                {
+                  "type": "STRING",
+                  "value": "+"
+                },
+                {
+                  "type": "STRING",
+                  "value": "."
+                },
+                {
+                  "type": "STRING",
+                  "value": "-"
+                },
+                {
+                  "type": "STRING",
+                  "value": "#"
+                }
+              ]
             }
-          ]
-        }
+          }
+        ]
       }
     },
     "unquoted_string_with_spaces": {
@@ -6918,6 +7028,10 @@
                   "value": "-"
                 },
                 {
+                  "type": "STRING",
+                  "value": "#"
+                },
+                {
                   "type": "SYMBOL",
                   "name": "_sep"
                 },
@@ -7009,6 +7123,10 @@
                   {
                     "type": "STRING",
                     "value": "-"
+                  },
+                  {
+                    "type": "STRING",
+                    "value": "#"
                   }
                 ]
               },
@@ -7288,10 +7406,6 @@
       "earthfile_ref",
       "image_name",
       "unquoted_string"
-    ],
-    [
-      "earthfile_ref",
-      "image_name"
     ],
     [
       "earthfile_ref",
