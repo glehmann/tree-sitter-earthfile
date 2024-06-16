@@ -1008,6 +1008,11 @@
     }
   },
   {
+    "type": "escape_sequence",
+    "named": true,
+    "fields": {}
+  },
+  {
     "type": "expansion",
     "named": true,
     "fields": {},
@@ -2469,10 +2474,6 @@
       "required": false,
       "types": [
         {
-          "type": "escape_sequence",
-          "named": true
-        },
-        {
           "type": "line_continuation",
           "named": true
         },
@@ -2527,21 +2528,6 @@
         },
         {
           "type": "version_command",
-          "named": true
-        }
-      ]
-    }
-  },
-  {
-    "type": "sqs",
-    "named": false,
-    "fields": {},
-    "children": {
-      "multiple": true,
-      "required": false,
-      "types": [
-        {
-          "type": "escape_sequence",
           "named": true
         }
       ]
@@ -3422,10 +3408,6 @@
   },
   {
     "type": "entrypoint",
-    "named": true
-  },
-  {
-    "type": "escape_sequence",
     "named": true
   },
   {
