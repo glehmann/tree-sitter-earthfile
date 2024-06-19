@@ -1,7 +1,6 @@
 ==================
 volume command
 ==================
-
 foo:
   VOLUME /foo /bar
 
@@ -21,7 +20,6 @@ foo:
 ==================
 volume command with array
 ==================
-
 foo:
   VOLUME ["/foo", "/bar"]
 

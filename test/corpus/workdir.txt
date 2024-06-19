@@ -1,7 +1,6 @@
 ==================
 workdir command
 ==================
-
 foo:
   WORKDIR /foo
 

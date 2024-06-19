@@ -1,7 +1,6 @@
 ==================
 user command
 ==================
-
 foo:
   USER foo
 
@@ -18,7 +17,6 @@ foo:
 ==================
 user command with expansion
 ==================
-
 foo:
   USER $username
 
@@ -38,7 +36,6 @@ foo:
 ==================
 user command with group
 ==================
-
 foo:
   USER foo:admin
 
@@ -56,7 +53,6 @@ foo:
 ==================
 user command with udi/gid
 ==================
-
 foo:
   USER 10:10
 

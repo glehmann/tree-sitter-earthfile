@@ -1,7 +1,6 @@
 ==================
 entrypoint command
 ==================
-
 foo:
   ENTRYPOINT /server foo
 
@@ -18,7 +17,6 @@ foo:
 ==================
 entrypoint command array variant
 ==================
-
 foo:
   ENTRYPOINT ["/server", "foo"]
 

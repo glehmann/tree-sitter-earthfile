@@ -1,7 +1,6 @@
 ==================
 label command
 ==================
-
 foo:
   LABEL foo=bar \
       simple_quoted='a b c d' \

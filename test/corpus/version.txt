@@ -7,8 +7,9 @@ VERSION 0.8
 ---
 
 (source_file
-  (version_command
-    version: (version_major_minor)))
+  base_target: (block
+    (version_command
+      version: (version_major_minor))))
 
 ==================
 version command with features
@@ -19,12 +20,12 @@ VERSION --pass-args --try 0.8
 ---
 
     (source_file
-      (version_command
-        options: (options
-          (feature_flag)
-          (feature_flag))
-        version: (version_major_minor)))
-
+      base_target: (block
+        (version_command
+          options: (options
+            (feature_flag)
+            (feature_flag))
+          version: (version_major_minor))))
 
 
 ==================
@@ -39,12 +40,13 @@ VERSION \
 ---
 
     (source_file
-      (version_command
-        (line_continuation)
-        options: (options
-          (feature_flag)
+      base_target: (block
+        (version_command
           (line_continuation)
-          (feature_flag))
-        (line_continuation)
-        version: (version_major_minor)))
+          options: (options
+            (feature_flag)
+            (line_continuation)
+            (feature_flag))
+          (line_continuation)
+          version: (version_major_minor))))
 

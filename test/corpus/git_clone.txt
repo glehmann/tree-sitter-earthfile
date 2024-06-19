@@ -1,7 +1,6 @@
 ==================
 git clone command
 ==================
-
 foo:
     GIT CLONE git@github.com/glehmann/foo.git ./
 
@@ -22,7 +21,6 @@ foo:
 ==================
 git clone command with options
 ==================
-
 foo:
     GIT CLONE --keep-ts --branch main git@github.com/glehmann/foo.git ./
 

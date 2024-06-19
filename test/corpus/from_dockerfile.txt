@@ -1,7 +1,6 @@
 ==================
 from dockerfile command
 ==================
-
 foo:
   FROM DOCKERFILE ./
 
@@ -19,7 +18,6 @@ foo:
 ==================
 from dockerfile with targets
 ==================
-
 foo:
   FROM DOCKERFILE -f +sometarget/Dockerfile +someothertarget/*
 
@@ -45,7 +43,6 @@ foo:
 ==================
 from dockerfile command with options
 ==================
-
 foo:
   FROM DOCKERFILE \
     -f Dockerfile.backend \

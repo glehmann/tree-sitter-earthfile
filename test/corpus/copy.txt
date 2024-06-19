@@ -1,7 +1,6 @@
 ==================
 copy command
 ==================
-
 foo:
     COPY foo bar
 
@@ -21,7 +20,6 @@ foo:
 ==================
 copy command multi sources
 ==================
-
 foo:
     COPY "foo" bar hop
 
@@ -43,7 +41,6 @@ foo:
 ==================
 copy command with options
 ==================
-
 foo:
     COPY --dir --keep-ts --platform=linux/arm64 foo bar
 
@@ -69,7 +66,6 @@ foo:
 ==================
 copy command target artifacts
 ==================
-
 foo:
     COPY (+build/foo --from=+debian) +build/bar /
 
@@ -100,7 +96,6 @@ foo:
 ==================
 copy command target artifacts with expansions
 ==================
-
 foo:
     COPY \
         +build/${foo} \

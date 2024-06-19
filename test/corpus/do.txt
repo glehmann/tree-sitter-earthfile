@@ -1,7 +1,6 @@
 ==================
 do command
 ==================
-
 foo:
   DO +BUILD --foo=bar
 

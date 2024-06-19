@@ -1,7 +1,6 @@
 ==================
 wait command
 ==================
-
 foo:
   WAIT
     RUN echo "foo"
@@ -21,7 +20,6 @@ foo:
 ==================
 wait command empty
 ==================
-
 foo:
   WAIT
   END

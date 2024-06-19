@@ -1,7 +1,6 @@
 ==================
 save artifact
 ==================
-
 foo:
     SAVE ARTIFACT /foo
 
@@ -19,7 +18,6 @@ foo:
 ==================
 save artifact with dest
 ==================
-
 foo:
     SAVE ARTIFACT /foo /bar
 
@@ -39,7 +37,6 @@ foo:
 ==================
 save artifact with dest as local
 ==================
-
 foo:
     SAVE ARTIFACT /foo /bar AS LOCAL /bar
 
@@ -61,7 +58,6 @@ foo:
 ==================
 save artifact with options
 ==================
-
 foo:
     SAVE ARTIFACT --keep-ts --force /foo
 

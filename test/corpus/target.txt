@@ -1,7 +1,6 @@
 ==================
 target
 ==================
-
 foo:
 
 ---
@@ -10,10 +9,10 @@ foo:
   (target
     name: (identifier)))
 
+
 ==================
 target with comment
 ==================
-
 foo: # the foo target
 
 ---
@@ -23,10 +22,10 @@ foo: # the foo target
     name: (identifier)
     (comment)))
 
+
 ==================
 target with command
 ==================
-
 foo:
     ARG bar
 
@@ -39,3 +38,32 @@ foo:
           (arg_command
             name: (variable)))))
 
+
+==================
+target with comments
+==================
+# a comment
+    # a comment
+foo:
+    # another comment
+    ARG bar
+# a comment
+    ARG foo # comment
+    # comment
+
+---
+    (source_file
+      base_target: (block
+        (comment)
+        (comment))
+      (target
+        name: (identifier)
+        (block
+          (comment)
+          (arg_command
+            name: (variable))
+          (comment)
+          (arg_command
+            name: (variable)
+            (comment))
+          (comment))))

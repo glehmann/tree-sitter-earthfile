@@ -2,114 +2,29 @@
   "name": "earthfile",
   "rules": {
     "source_file": {
-      "type": "SEQ",
-      "members": [
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "CHOICE",
-            "members": [
-              {
+      "type": "REPEAT",
+      "content": {
+        "type": "CHOICE",
+        "members": [
+          {
+            "type": "FIELD",
+            "name": "base_target",
+            "content": {
+              "type": "ALIAS",
+              "content": {
                 "type": "SYMBOL",
-                "name": "_eol"
+                "name": "base_block"
               },
-              {
-                "type": "SYMBOL",
-                "name": "comment"
-              }
-            ]
-          }
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SYMBOL",
-              "name": "version_command"
-            },
-            {
-              "type": "BLANK"
+              "named": true,
+              "value": "block"
             }
-          ]
-        },
-        {
-          "type": "CHOICE",
-          "members": [
-            {
-              "type": "SEQ",
-              "members": [
-                {
-                  "type": "REPEAT",
-                  "content": {
-                    "type": "SYMBOL",
-                    "name": "_eol"
-                  }
-                },
-                {
-                  "type": "FIELD",
-                  "name": "base_target",
-                  "content": {
-                    "type": "ALIAS",
-                    "content": {
-                      "type": "SYMBOL",
-                      "name": "base_block"
-                    },
-                    "named": true,
-                    "value": "block"
-                  }
-                }
-              ]
-            },
-            {
-              "type": "BLANK"
-            }
-          ]
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "SEQ",
-            "members": [
-              {
-                "type": "REPEAT",
-                "content": {
-                  "type": "CHOICE",
-                  "members": [
-                    {
-                      "type": "SYMBOL",
-                      "name": "_eol"
-                    },
-                    {
-                      "type": "SYMBOL",
-                      "name": "comment"
-                    }
-                  ]
-                }
-              },
-              {
-                "type": "SYMBOL",
-                "name": "target"
-              }
-            ]
+          },
+          {
+            "type": "SYMBOL",
+            "name": "target"
           }
-        },
-        {
-          "type": "REPEAT",
-          "content": {
-            "type": "CHOICE",
-            "members": [
-              {
-                "type": "SYMBOL",
-                "name": "_eol"
-              },
-              {
-                "type": "SYMBOL",
-                "name": "comment"
-              }
-            ]
-          }
-        }
-      ]
+        ]
+      }
     },
     "_sep": {
       "type": "REPEAT1",
@@ -3284,8 +3199,25 @@
             "name": "_eol"
           },
           {
-            "type": "SYMBOL",
-            "name": "comment"
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "PATTERN",
+                    "value": "[ \\t]+"
+                  },
+                  {
+                    "type": "BLANK"
+                  }
+                ]
+              },
+              {
+                "type": "SYMBOL",
+                "name": "comment"
+              }
+            ]
           },
           {
             "type": "CHOICE",
@@ -3400,6 +3332,10 @@
               },
               {
                 "type": "SYMBOL",
+                "name": "version_command"
+              },
+              {
+                "type": "SYMBOL",
                 "name": "volume_command"
               },
               {
@@ -3427,6 +3363,27 @@
           {
             "type": "SYMBOL",
             "name": "_eol"
+          },
+          {
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "PATTERN",
+                    "value": "[ \\t]+"
+                  },
+                  {
+                    "type": "BLANK"
+                  }
+                ]
+              },
+              {
+                "type": "SYMBOL",
+                "name": "comment"
+              }
+            ]
           },
           {
             "type": "SEQ",
@@ -3548,6 +3505,10 @@
                   },
                   {
                     "type": "SYMBOL",
+                    "name": "version_command"
+                  },
+                  {
+                    "type": "SYMBOL",
                     "name": "volume_command"
                   },
                   {
@@ -3579,8 +3540,25 @@
             "name": "_eol"
           },
           {
-            "type": "SYMBOL",
-            "name": "comment"
+            "type": "SEQ",
+            "members": [
+              {
+                "type": "CHOICE",
+                "members": [
+                  {
+                    "type": "PATTERN",
+                    "value": "[ \\t]+"
+                  },
+                  {
+                    "type": "BLANK"
+                  }
+                ]
+              },
+              {
+                "type": "SYMBOL",
+                "name": "comment"
+              }
+            ]
           },
           {
             "type": "SEQ",
@@ -3589,8 +3567,8 @@
                 "type": "CHOICE",
                 "members": [
                   {
-                    "type": "SYMBOL",
-                    "name": "_sep"
+                    "type": "PATTERN",
+                    "value": "[ \\t]+"
                   },
                   {
                     "type": "BLANK"
@@ -3707,6 +3685,10 @@
                   {
                     "type": "SYMBOL",
                     "name": "user_command"
+                  },
+                  {
+                    "type": "SYMBOL",
+                    "name": "version_command"
                   },
                   {
                     "type": "SYMBOL",
@@ -7292,7 +7274,7 @@
       "value": "\\\\(\\s*#.*\\n)+"
     },
     "_eol": {
-      "type": "PREC_DYNAMIC",
+      "type": "PREC",
       "value": 10,
       "content": {
         "type": "CHOICE",
@@ -7361,15 +7343,7 @@
       "_conditional_block_options"
     ],
     [
-      "_eol",
-      "arg_command"
-    ],
-    [
       "arg_options"
-    ],
-    [
-      "base_block",
-      "source_file"
     ],
     [
       "base_block"
@@ -7456,9 +7430,6 @@
     ],
     [
       "shell_fragment"
-    ],
-    [
-      "source_file"
     ],
     [
       "string"

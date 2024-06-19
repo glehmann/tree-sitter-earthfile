@@ -1,7 +1,6 @@
 ==================
 run
 ==================
-
 foo:
     RUN echo foo
 
@@ -18,7 +17,6 @@ foo:
 ==================
 run with options
 ==================
-
 foo:
     RUN --push --secret api_key --secret foo=bar echo foo
 
@@ -44,7 +42,6 @@ foo:
 ==================
 run with options and separator
 ==================
-
 foo:
     RUN --push -- --hop echo foo
 
@@ -63,7 +60,6 @@ foo:
 ==================
 run with expanded secret
 ==================
-
 foo:
     RUN --secret ${secret_arg} \
         --secret foo=${bar} \
@@ -96,7 +92,6 @@ foo:
 ==================
 run array
 ==================
-
 foo:
     RUN ["echo", "foo"]
 
@@ -115,7 +110,6 @@ foo:
 ==================
 run entrypoint
 ==================
-
 foo:
     RUN --entrypoint
 
@@ -133,7 +127,6 @@ foo:
 ==================
 run with comments
 ==================
-
 foo:
     RUN echo \
     # some comments
@@ -155,7 +148,6 @@ foo:
 ==================
 run with quotes
 ==================
-
 server:
     RUN echo -e "#!/bin/sh\\ntouch /i-was-run" > /run-this \
       && chmod +x /run-this \
@@ -176,7 +168,6 @@ server:
 ==================
 run with test shell fragment
 ==================
-
 foo:
     RUN [ -f /foo.txt ] echo foo
 
@@ -193,7 +184,6 @@ foo:
 ==================
 run with quotes with line continuations
 ==================
-
 server:
     RUN echo "a \
 b \
@@ -213,7 +203,6 @@ d"
 ==================
 run with quotes with line continuations
 ==================
-
 # this is a comment
 RUN echo bar5# this is not a comment
 # this is a comment
@@ -235,7 +224,6 @@ RUN echo bar # this is a comment
 ==================
 run with broken option
 ==================
-
 foo:
   RUN --broken-option pwd
 

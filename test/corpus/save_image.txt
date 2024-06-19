@@ -1,7 +1,6 @@
 ==================
 save image
 ==================
-
 foo:
     SAVE IMAGE ghcr.io/glehmann/foo
 
@@ -20,7 +19,6 @@ foo:
 ==================
 save image with options
 ==================
-
 foo:
     SAVE IMAGE --push ghcr.io/glehmann/foo:latest ghcr.io/glehmann/foo:1.2.3
 
@@ -45,7 +43,6 @@ foo:
 ==================
 save image cache hint
 ==================
-
 foo:
     SAVE IMAGE --cache-hint
 
@@ -63,7 +60,6 @@ foo:
 ==================
 save image with quoted string
 ==================
-
 foo:
     SAVE IMAGE "ghcr.io/$org/foo"
 
@@ -83,7 +79,6 @@ foo:
 ==================
 save image with quoted name and tag
 ==================
-
 foo:
     SAVE IMAGE "ghcr.io/$org/foo":$tag
 

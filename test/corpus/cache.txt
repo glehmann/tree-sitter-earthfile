@@ -1,7 +1,6 @@
 ==================
 cache command
 ==================
-
 foo:
   CACHE --persist /foo
 

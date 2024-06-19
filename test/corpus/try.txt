@@ -1,7 +1,6 @@
 ==================
 try command
 ==================
-
 foo:
     TRY
         RUN echo $v

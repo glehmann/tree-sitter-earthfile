@@ -1,7 +1,6 @@
 ==================
 cmd command
 ==================
-
 foo:
   CMD /server foo
 
@@ -18,7 +17,6 @@ foo:
 ==================
 cmd command array
 ==================
-
 foo:
   CMD ["/server", "foo"]
 

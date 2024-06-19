@@ -1,7 +1,6 @@
 ==================
 for command
 ==================
-
 foo:
     FOR v IN 0 $(echo 1 2 3) 4
       RUN --no-cache echo $v
@@ -34,7 +33,6 @@ foo:
 ==================
 for command with options
 ==================
-
 foo:
     FOR --ssh v IN a b c
       RUN echo $v

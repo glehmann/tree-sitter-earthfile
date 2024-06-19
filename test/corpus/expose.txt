@@ -1,7 +1,6 @@
 ==================
 expose command
 ==================
-
 foo:
   EXPOSE 22/tcp 1234
 

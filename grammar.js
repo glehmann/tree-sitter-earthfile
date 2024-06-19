@@ -46,17 +46,18 @@ function block($, kind) {
     $.set_command,
     $.try_command,
     $.user_command,
+    $.version_command,
     $.volume_command,
     $.wait_command,
     $.with_docker_command,
     $.workdir_command,
   );
   if (kind == "base") {
-    return repeat1(choice($._eol, $.comment, commands));
+    return repeat1(choice($._eol, seq(optional(/[ \t]+/), $.comment), commands));
   } else if (kind == "target") {
-    return repeat1(choice($._eol, seq($._sep, commands)));
+    return repeat1(choice($._eol, seq(optional(/[ \t]+/), $.comment), seq($._sep, commands)));
   } else if (kind == "other") {
-    return repeat1(choice($._eol, $.comment, seq(optional($._sep), commands)));
+    return repeat1(choice($._eol, seq(optional(/[ \t]+/), $.comment), seq(optional(/[ \t]+/), commands)));
   }
 }
 module.exports = grammar({
@@ -67,9 +68,7 @@ module.exports = grammar({
   conflicts: ($) => [
     [$._conditional_block],
     [$._conditional_block_options],
-    [$._eol, $.arg_command],
     [$.arg_options],
-    [$.base_block, $.source_file],
     [$.base_block],
     [$.block],
     [$.build_arg],
@@ -96,7 +95,6 @@ module.exports = grammar({
     [$.save_image_options],
     [$.shell_fragment, $.string_array],
     [$.shell_fragment],
-    [$.source_file],
     [$.string],
     [$.string_array, $.unquoted_string],
     [$.strings],
@@ -116,14 +114,7 @@ module.exports = grammar({
   rules: {
     // main rule, for the whole file
     // it must be the first rule in the list
-    source_file: ($) =>
-      seq(
-        repeat(choice($._eol, $.comment)),
-        optional($.version_command),
-        optional(seq(repeat($._eol), field("base_target", alias($.base_block, $.block)))),
-        repeat(seq(repeat(choice($._eol, $.comment)), $.target)),
-        repeat(choice($._eol, $.comment)),
-      ),
+    source_file: ($) => repeat(choice(field("base_target", alias($.base_block, $.block)), $.target)),
 
     _sep: ($) => repeat1(choice(/[ \t]+/, $.line_continuation, $.line_continuation_comment)),
 
@@ -782,7 +773,6 @@ module.exports = grammar({
     line_continuation: (_) => "\\\n",
     comment: (_) => /#[^\n]*(\n|\r\n|\f)/,
     line_continuation_comment: (_) => /\\(\s*#.*\n)+/,
-    _eol: ($) =>
-      prec.dynamic(10, choice(seq(optional(/[ \t]+/), choice("\n", "\r\n", "\f", "\0")), seq(/[ \t]+/, $.comment))),
+    _eol: ($) => prec(10, choice(seq(optional(/[ \t]+/), choice("\n", "\r\n", "\f", "\0")), seq(/[ \t]+/, $.comment))),
   },
 });
