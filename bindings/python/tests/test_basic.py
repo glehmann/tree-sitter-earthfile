@@ -17,7 +17,7 @@ class TestPackage(test.TestCase):
         nodes = self.tree.root_node.named_children
         print(nodes)
         self.assertEqual(len(nodes), 1)
-        self.assertEqual(nodes[0].type, 'version_command')
+        self.assertEqual(nodes[0].type, 'block')
 
 if __name__ == '__main__':
     test.main(verbosity=2)
