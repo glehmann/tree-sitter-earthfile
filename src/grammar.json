@@ -1160,7 +1160,7 @@
           "name": "name",
           "content": {
             "type": "SYMBOL",
-            "name": "identifier"
+            "name": "string"
           }
         },
         {
@@ -5999,3 +5999,4 @@
   "inline": [],
   "supertypes": []
 }
+
