@@ -2506,6 +2506,7 @@
   {
     "type": "source_file",
     "named": true,
+    "root": true,
     "fields": {
       "base_target": {
         "multiple": true,

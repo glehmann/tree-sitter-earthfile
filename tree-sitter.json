@@ -1,0 +1,38 @@
+{
+  "grammars": [
+    {
+      "name": "earthfile",
+      "camelcase": "Earthfile",
+      "scope": "source.earthfile",
+      "path": ".",
+      "file-types": [
+        "Earthfile"
+      ],
+      "highlights": "queries/highlights.scm",
+      "injections": "queries/injections.scm",
+      "injection-regex": "earthfile"
+    }
+  ],
+  "metadata": {
+    "version": "0.5.4",
+    "license": "MIT",
+    "description": "Earthfile tree-sitter grammar",
+    "authors": [
+      {
+        "name": "Gaëtan Lehmann",
+        "email": "gaetan.lehmann@gmail.com"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/glehmann/tree-sitter-earthfile"
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": true,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": true
+  }
+}
