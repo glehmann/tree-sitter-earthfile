@@ -11,7 +11,8 @@ foo:
         name: (identifier)
         (block
           (host_command
-            name: (identifier)
+            name: (string
+              (unquoted_string))
             ip: (string
               (unquoted_string))))))
 

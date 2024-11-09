@@ -1336,7 +1336,7 @@
         "required": true,
         "types": [
           {
-            "type": "identifier",
+            "type": "string",
             "named": true
           }
         ]

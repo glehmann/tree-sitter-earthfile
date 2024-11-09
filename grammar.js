@@ -300,7 +300,7 @@ module.exports = grammar({
       ),
     git_clone_options: ($) => repeat1_sep($, choice($.branch, $.keep_ts, $.unknown_option)),
 
-    host_command: ($) => seq("HOST", $._sep, field("name", $.identifier), $._sep, field("ip", $.string), $._eol),
+    host_command: ($) => seq("HOST", $._sep, field("name", $.string), $._sep, field("ip", $.string), $._eol),
 
     if_command: ($) =>
       seq(
