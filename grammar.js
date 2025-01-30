@@ -773,6 +773,10 @@ module.exports = grammar({
     line_continuation: (_) => "\\\n",
     comment: (_) => /#[^\n]*(\n|\r\n|\f)/,
     line_continuation_comment: (_) => /\\(\s*#.*\n)+/,
-    _eol: ($) => prec(10, choice(seq(optional(/[ \t]+/), choice("\n", "\r\n", "\f", "\0")), seq(/[ \t]+/, $.comment))),
+    _eol: ($) =>
+      prec(
+        10,
+        choice(seq(optional(/[ \t]+/), /(\n|\r\n|\f)/), seq(optional(/[ \t]+/), "\0"), seq(/[ \t]+/, $.comment)),
+      ),
   },
 });

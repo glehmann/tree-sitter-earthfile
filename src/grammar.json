@@ -7296,25 +7296,29 @@
                 ]
               },
               {
+                "type": "PATTERN",
+                "value": "(\\n|\\r\\n|\\f)"
+              }
+            ]
+          },
+          {
+            "type": "SEQ",
+            "members": [
+              {
                 "type": "CHOICE",
                 "members": [
                   {
-                    "type": "STRING",
-                    "value": "\n"
+                    "type": "PATTERN",
+                    "value": "[ \\t]+"
                   },
                   {
-                    "type": "STRING",
-                    "value": "\r\n"
-                  },
-                  {
-                    "type": "STRING",
-                    "value": "\f"
-                  },
-                  {
-                    "type": "STRING",
-                    "value": "\u0000"
+                    "type": "BLANK"
                   }
                 ]
+              },
+              {
+                "type": "STRING",
+                "value": "\u0000"
               }
             ]
           },
