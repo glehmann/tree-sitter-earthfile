@@ -9,8 +9,7 @@ class TestPackage(test.TestCase):
     def setUp(self) -> None:
         self.source = b'VERSION 0.8\n'
         language = ts.Language(tse.language())
-        parser = ts.Parser()
-        parser.set_language(language)
+        parser = ts.Parser(language)
         self.tree = parser.parse(self.source)
 
     def test_parse(self):
