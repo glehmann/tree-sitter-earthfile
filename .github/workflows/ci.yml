@@ -23,7 +23,6 @@ jobs:
       - uses: tree-sitter/parser-test-action@v2
         with:
           test-node: true
-          node-version: 21.7.1
           test-rust: ${{ matrix.os != 'windows-latest' }}
           test-python: true
       - uses: tree-sitter/parse-action@v3

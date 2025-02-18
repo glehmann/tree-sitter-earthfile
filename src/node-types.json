@@ -1960,6 +1960,7 @@
   {
     "type": "source_file",
     "named": true,
+    "root": true,
     "fields": {
       "base_target": {
         "multiple": false,
@@ -2418,15 +2419,18 @@
   },
   {
     "type": "\n",
-    "named": false
+    "named": false,
+    "extra": true
   },
   {
     "type": "\f",
-    "named": false
+    "named": false,
+    "extra": true
   },
   {
     "type": "\r\n",
-    "named": false
+    "named": false,
+    "extra": true
   },
   {
     "type": " ",
@@ -2762,7 +2766,8 @@
   },
   {
     "type": "comment",
-    "named": true
+    "named": true,
+    "extra": true
   },
   {
     "type": "dir",
@@ -2798,11 +2803,13 @@
   },
   {
     "type": "line_continuation",
-    "named": true
+    "named": true,
+    "extra": true
   },
   {
     "type": "line_continuation_comment",
-    "named": true
+    "named": true,
+    "extra": true
   },
   {
     "type": "network_none",
