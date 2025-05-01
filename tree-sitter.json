@@ -1,0 +1,38 @@
+{
+  "$schema": "https://tree-sitter.github.io/tree-sitter/assets/schemas/config.schema.json",
+  "grammars": [
+    {
+      "name": "earthfile",
+      "camelcase": "Earthfile",
+      "title": "Earthfile",
+      "scope": "source.earthfile",
+      "file-types": [
+        "Earthfile"
+      ],
+      "injection-regex": "^earthfile$",
+      "class-name": "TreeSitterEarthfile"
+    }
+  ],
+  "metadata": {
+    "version": "0.6.0",
+    "license": "MIT",
+    "description": "Earthfile grammar for tree-sitter",
+    "authors": [
+      {
+        "name": "Gaëtan Lehmann"
+      }
+    ],
+    "links": {
+      "repository": "https://github.com/glehmann/tree-sitter-earthfile"
+    }
+  },
+  "bindings": {
+    "c": true,
+    "go": true,
+    "node": true,
+    "python": true,
+    "rust": true,
+    "swift": true,
+    "zig": false
+  }
+}
