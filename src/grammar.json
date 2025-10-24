@@ -561,6 +561,10 @@
           },
           {
             "type": "SYMBOL",
+            "name": "from"
+          },
+          {
+            "type": "SYMBOL",
             "name": "if_exists"
           },
           {
@@ -3705,6 +3709,49 @@
           "value": "--dir"
         }
       }
+    },
+    "from": {
+      "type": "SEQ",
+      "members": [
+        {
+          "type": "TOKEN",
+          "content": {
+            "type": "PREC",
+            "value": 5,
+            "content": {
+              "type": "STRING",
+              "value": "--from"
+            }
+          }
+        },
+        {
+          "type": "CHOICE",
+          "members": [
+            {
+              "type": "IMMEDIATE_TOKEN",
+              "content": {
+                "type": "STRING",
+                "value": " "
+              }
+            },
+            {
+              "type": "IMMEDIATE_TOKEN",
+              "content": {
+                "type": "STRING",
+                "value": "="
+              }
+            }
+          ]
+        },
+        {
+          "type": "FIELD",
+          "name": "value",
+          "content": {
+            "type": "SYMBOL",
+            "name": "string"
+          }
+        }
+      ]
     },
     "docker_build_arg": {
       "type": "SEQ",
