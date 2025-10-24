@@ -119,6 +119,7 @@ module.exports = grammar({
           $.chmod,
           $.chown,
           $.dir,
+          $.from,
           $.if_exists,
           $.keep_own,
           $.keep_ts,
@@ -531,6 +532,8 @@ module.exports = grammar({
     compose: ($) =>
       seq(token(prec(5, "--compose")), choice(token.immediate(" "), token.immediate("=")), field("value", $.string)),
     dir: (_) => token(prec(5, "--dir")),
+    from: ($) =>
+      seq(token(prec(5, "--from")), choice(token.immediate(" "), token.immediate("=")), field("value", $.string)),
     docker_build_arg: ($) =>
       seq(
         token(prec(5, "--build-arg")),

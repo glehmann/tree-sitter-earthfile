@@ -842,6 +842,22 @@
     }
   },
   {
+    "type": "from",
+    "named": true,
+    "fields": {
+      "value": {
+        "multiple": false,
+        "required": true,
+        "types": [
+          {
+            "type": "string",
+            "named": true
+          }
+        ]
+      }
+    }
+  },
+  {
     "type": "from_command",
     "named": true,
     "fields": {
@@ -1493,6 +1509,10 @@
         },
         {
           "type": "force",
+          "named": true
+        },
+        {
+          "type": "from",
           "named": true
         },
         {
@@ -2502,6 +2522,10 @@
   },
   {
     "type": "--compose",
+    "named": false
+  },
+  {
+    "type": "--from",
     "named": false
   },
   {
