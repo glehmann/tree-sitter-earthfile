@@ -532,8 +532,6 @@ module.exports = grammar({
     compose: ($) =>
       seq(token(prec(5, "--compose")), choice(token.immediate(" "), token.immediate("=")), field("value", $.string)),
     dir: (_) => token(prec(5, "--dir")),
-    from: ($) =>
-      seq(token(prec(5, "--from")), choice(token.immediate(" "), token.immediate("=")), field("value", $.string)),
     docker_build_arg: ($) =>
       seq(
         token(prec(5, "--build-arg")),
@@ -553,6 +551,8 @@ module.exports = grammar({
     entrypoint: (_) => token(prec(5, "--entrypoint")),
     feature_flag: (_) => /--[a-zA-Z0-9\-]+/,
     force: (_) => token(prec(5, "--force")),
+    from: ($) =>
+      seq(token(prec(5, "--from")), choice(token.immediate(" "), token.immediate("=")), field("value", $.string)),
     global: (_) => token(prec(5, "--global")),
     id: ($) => seq(token(prec(5, "--id")), choice(token.immediate(" "), token.immediate("=")), $.identifier),
     if_exists: (_) => token(prec(5, "--if-exists")),
