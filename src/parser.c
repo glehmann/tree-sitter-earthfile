@@ -121,12 +121,12 @@ enum ts_symbol_identifiers {
   anon_sym_DASH_DASHchown = 91,
   anon_sym_DASH_DASHcompose = 92,
   sym_dir = 93,
-  anon_sym_DASH_DASHfrom = 94,
-  anon_sym_DASHf = 95,
-  anon_sym_DASH_DASHtarget = 96,
-  sym_entrypoint = 97,
-  sym_feature_flag = 98,
-  sym_force = 99,
+  anon_sym_DASHf = 94,
+  anon_sym_DASH_DASHtarget = 95,
+  sym_entrypoint = 96,
+  sym_feature_flag = 97,
+  sym_force = 98,
+  anon_sym_DASH_DASHfrom = 99,
   sym_global = 100,
   anon_sym_DASH_DASHid = 101,
   sym_if_exists = 102,
@@ -260,10 +260,10 @@ enum ts_symbol_identifiers {
   sym_chmod = 230,
   sym_chown = 231,
   sym_compose = 232,
-  sym_from = 233,
-  sym_docker_build_arg = 234,
-  sym_docker_file = 235,
-  sym_docker_target = 236,
+  sym_docker_build_arg = 233,
+  sym_docker_file = 234,
+  sym_docker_target = 235,
+  sym_from = 236,
   sym_id = 237,
   sym_interactive = 238,
   sym_load = 239,
@@ -433,12 +433,12 @@ static const char * const ts_symbol_names[] = {
   [anon_sym_DASH_DASHchown] = "--chown",
   [anon_sym_DASH_DASHcompose] = "--compose",
   [sym_dir] = "dir",
-  [anon_sym_DASH_DASHfrom] = "--from",
   [anon_sym_DASHf] = "-f",
   [anon_sym_DASH_DASHtarget] = "--target",
   [sym_entrypoint] = "entrypoint",
   [sym_feature_flag] = "feature_flag",
   [sym_force] = "force",
+  [anon_sym_DASH_DASHfrom] = "--from",
   [sym_global] = "global",
   [anon_sym_DASH_DASHid] = "--id",
   [sym_if_exists] = "if_exists",
@@ -572,10 +572,10 @@ static const char * const ts_symbol_names[] = {
   [sym_chmod] = "chmod",
   [sym_chown] = "chown",
   [sym_compose] = "compose",
-  [sym_from] = "from",
   [sym_docker_build_arg] = "docker_build_arg",
   [sym_docker_file] = "docker_file",
   [sym_docker_target] = "docker_target",
+  [sym_from] = "from",
   [sym_id] = "id",
   [sym_interactive] = "interactive",
   [sym_load] = "load",
@@ -745,12 +745,12 @@ static const TSSymbol ts_symbol_map[] = {
   [anon_sym_DASH_DASHchown] = anon_sym_DASH_DASHchown,
   [anon_sym_DASH_DASHcompose] = anon_sym_DASH_DASHcompose,
   [sym_dir] = sym_dir,
-  [anon_sym_DASH_DASHfrom] = anon_sym_DASH_DASHfrom,
   [anon_sym_DASHf] = anon_sym_DASHf,
   [anon_sym_DASH_DASHtarget] = anon_sym_DASH_DASHtarget,
   [sym_entrypoint] = sym_entrypoint,
   [sym_feature_flag] = sym_feature_flag,
   [sym_force] = sym_force,
+  [anon_sym_DASH_DASHfrom] = anon_sym_DASH_DASHfrom,
   [sym_global] = sym_global,
   [anon_sym_DASH_DASHid] = anon_sym_DASH_DASHid,
   [sym_if_exists] = sym_if_exists,
@@ -884,10 +884,10 @@ static const TSSymbol ts_symbol_map[] = {
   [sym_chmod] = sym_chmod,
   [sym_chown] = sym_chown,
   [sym_compose] = sym_compose,
-  [sym_from] = sym_from,
   [sym_docker_build_arg] = sym_docker_build_arg,
   [sym_docker_file] = sym_docker_file,
   [sym_docker_target] = sym_docker_target,
+  [sym_from] = sym_from,
   [sym_id] = sym_id,
   [sym_interactive] = sym_interactive,
   [sym_load] = sym_load,
@@ -1339,10 +1339,6 @@ static const TSSymbolMetadata ts_symbol_metadata[] = {
     .visible = true,
     .named = true,
   },
-  [anon_sym_DASH_DASHfrom] = {
-    .visible = true,
-    .named = false,
-  },
   [anon_sym_DASHf] = {
     .visible = true,
     .named = false,
@@ -1362,6 +1358,10 @@ static const TSSymbolMetadata ts_symbol_metadata[] = {
   [sym_force] = {
     .visible = true,
     .named = true,
+  },
+  [anon_sym_DASH_DASHfrom] = {
+    .visible = true,
+    .named = false,
   },
   [sym_global] = {
     .visible = true,
@@ -1895,10 +1895,6 @@ static const TSSymbolMetadata ts_symbol_metadata[] = {
     .visible = true,
     .named = true,
   },
-  [sym_from] = {
-    .visible = true,
-    .named = true,
-  },
   [sym_docker_build_arg] = {
     .visible = true,
     .named = true,
@@ -1908,6 +1904,10 @@ static const TSSymbolMetadata ts_symbol_metadata[] = {
     .named = true,
   },
   [sym_docker_target] = {
+    .visible = true,
+    .named = true,
+  },
+  [sym_from] = {
     .visible = true,
     .named = true,
   },
@@ -10559,7 +10559,7 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
       if (lookahead == '-' ||
           ('0' <= lookahead && lookahead <= '9') ||
           ('A' <= lookahead && lookahead <= 'Z') ||
-          ('a' <= lookahead && lookahead <= 'z')) ADVANCE(502);
+          ('a' <= lookahead && lookahead <= 'z')) ADVANCE(501);
       END_STATE();
     case 329:
       if (eof) ADVANCE(334);
@@ -11114,7 +11114,7 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
     case 418:
       ACCEPT_TOKEN(anon_sym_DASH);
       if (lookahead == '-') ADVANCE(489);
-      if (lookahead == 'f') ADVANCE(499);
+      if (lookahead == 'f') ADVANCE(498);
       END_STATE();
     case 419:
       ACCEPT_TOKEN(anon_sym_DASH);
@@ -11127,7 +11127,7 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
     case 421:
       ACCEPT_TOKEN(anon_sym_DASH);
       if (lookahead == '-') ADVANCE(552);
-      if (lookahead == 'f') ADVANCE(499);
+      if (lookahead == 'f') ADVANCE(498);
       END_STATE();
     case 422:
       ACCEPT_TOKEN(anon_sym_DASH);
@@ -11217,7 +11217,7 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
     case 446:
       ACCEPT_TOKEN(anon_sym_DASH2);
       if (lookahead == '-') ADVANCE(489);
-      if (lookahead == 'f') ADVANCE(499);
+      if (lookahead == 'f') ADVANCE(498);
       END_STATE();
     case 447:
       ACCEPT_TOKEN(anon_sym_DASH2);
@@ -11230,7 +11230,7 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
     case 449:
       ACCEPT_TOKEN(anon_sym_DASH2);
       if (lookahead == '-') ADVANCE(552);
-      if (lookahead == 'f') ADVANCE(499);
+      if (lookahead == 'f') ADVANCE(498);
       END_STATE();
     case 450:
       ACCEPT_TOKEN(anon_sym_DASH2);
@@ -11436,26 +11436,26 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
       ACCEPT_TOKEN(sym_dir);
       END_STATE();
     case 498:
-      ACCEPT_TOKEN(anon_sym_DASH_DASHfrom);
-      END_STATE();
-    case 499:
       ACCEPT_TOKEN(anon_sym_DASHf);
       END_STATE();
-    case 500:
+    case 499:
       ACCEPT_TOKEN(anon_sym_DASH_DASHtarget);
       END_STATE();
-    case 501:
+    case 500:
       ACCEPT_TOKEN(sym_entrypoint);
       END_STATE();
-    case 502:
+    case 501:
       ACCEPT_TOKEN(sym_feature_flag);
       if (lookahead == '-' ||
           ('0' <= lookahead && lookahead <= '9') ||
           ('A' <= lookahead && lookahead <= 'Z') ||
-          ('a' <= lookahead && lookahead <= 'z')) ADVANCE(502);
+          ('a' <= lookahead && lookahead <= 'z')) ADVANCE(501);
+      END_STATE();
+    case 502:
+      ACCEPT_TOKEN(sym_force);
       END_STATE();
     case 503:
-      ACCEPT_TOKEN(sym_force);
+      ACCEPT_TOKEN(anon_sym_DASH_DASHfrom);
       END_STATE();
     case 504:
       ACCEPT_TOKEN(sym_global);
@@ -12065,7 +12065,7 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
       END_STATE();
     case 602:
       ACCEPT_TOKEN(aux_sym_unknown_option_token1);
-      if (lookahead == 'e') ADVANCE(503);
+      if (lookahead == 'e') ADVANCE(502);
       if (lookahead == '-' ||
           ('0' <= lookahead && lookahead <= '9') ||
           ('a' <= lookahead && lookahead <= 'z')) ADVANCE(815);
@@ -12717,7 +12717,7 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
       END_STATE();
     case 693:
       ACCEPT_TOKEN(aux_sym_unknown_option_token1);
-      if (lookahead == 'm') ADVANCE(498);
+      if (lookahead == 'm') ADVANCE(503);
       if (lookahead == '-' ||
           ('0' <= lookahead && lookahead <= '9') ||
           ('a' <= lookahead && lookahead <= 'z')) ADVANCE(815);
@@ -13315,7 +13315,7 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
       END_STATE();
     case 778:
       ACCEPT_TOKEN(aux_sym_unknown_option_token1);
-      if (lookahead == 't') ADVANCE(501);
+      if (lookahead == 't') ADVANCE(500);
       if (lookahead == '-' ||
           ('0' <= lookahead && lookahead <= '9') ||
           ('a' <= lookahead && lookahead <= 'z')) ADVANCE(815);
@@ -13329,7 +13329,7 @@ static bool ts_lex(TSLexer *lexer, TSStateId state) {
       END_STATE();
     case 780:
       ACCEPT_TOKEN(aux_sym_unknown_option_token1);
-      if (lookahead == 't') ADVANCE(500);
+      if (lookahead == 't') ADVANCE(499);
       if (lookahead == '-' ||
           ('0' <= lookahead && lookahead <= '9') ||
           ('a' <= lookahead && lookahead <= 'z')) ADVANCE(815);
