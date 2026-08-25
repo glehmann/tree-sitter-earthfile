@@ -127,6 +127,13 @@ bool tree_sitter_earthfile_external_scanner_scan(void *payload, TSLexer *lexer, 
         case ' ':
           skip(lexer);
           break;
+
+        // Any other whitespace that `isspace` accepts (e.g. vertical tab
+        // '\v') must still consume a character; without this the loop could
+        // spin forever without advancing the lexer, causing a hang.
+        default:
+          advance(lexer);
+          break;
       }
     } while (!lexer->eof(lexer) && isspace(lexer->lookahead));
 
